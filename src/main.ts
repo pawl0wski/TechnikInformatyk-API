@@ -8,6 +8,7 @@ import ExamRestorer from "./backup/restorer/examRestorer";
 import Question from "./database/models/question.model";
 import chalk from "chalk";
 import apiRouter from "./routes/api/api";
+import CDN from "./cdn/cdn";
 
 dotenv.config();
 let databaseService = DatabaseService.getInstance();
@@ -41,10 +42,18 @@ program
     });
 
 program
+    .command("rebuildCDN")
+    .description("Rebuild cdn folder.")
+    .action(async (str) => {
+        await new CDN().rebuild({ verbose: true });
+    });
+
+program
     .command("server")
     .description("Run Express server")
     .action(async (str, options) => {
         await databaseService.sync();
+        await new CDN().rebuildIfCDNEnabled({ verbose: true });
         const app = express();
 
         app.use(express.json());

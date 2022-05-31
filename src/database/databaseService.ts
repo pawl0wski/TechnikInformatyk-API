@@ -17,6 +17,7 @@ export default class DatabaseService {
             {
                 models: [Exam, ExamQuestion, Question, Report],
                 define: { timestamps: false },
+                logging: false,
             }
         );
     }
