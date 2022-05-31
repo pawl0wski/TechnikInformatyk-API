@@ -35,7 +35,9 @@ program
     .command("backup")
     .description("Backup all data to json files.")
     .argument("<string>", "output directory")
-    .action(async (str) => {});
+    .action(async (str) => {
+        console.log(chalk.red("Not implemented yet"));
+    });
 
 program
     .command("server")
