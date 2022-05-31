@@ -1,17 +1,22 @@
 import {
     Column,
     DataType,
+    HasMany,
     Model,
     PrimaryKey,
     Table,
     Unique,
 } from "sequelize-typescript";
+import Exam from "./exam.model";
 
 @Table
 export default class Question extends Model {
-    @PrimaryKey
-    @Unique
-    @Column(DataType.UUID)
+    @Column({
+        type: DataType.UUID,
+        allowNull: false,
+        unique: true,
+        primaryKey: true,
+    })
     uuid: string;
     @Column(DataType.STRING)
     content: string;
@@ -27,4 +32,6 @@ export default class Question extends Model {
     correct: number;
     @Column(DataType.BLOB)
     image: Uint8Array;
+    @HasMany(() => Exam)
+    exams: Exam[];
 }
