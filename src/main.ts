@@ -1,18 +1,24 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import DatabaseService from "./database/databaseService";
-dotenv.config();
+import { Command } from "commander";
 
+dotenv.config();
 let databaseService = new DatabaseService();
 const PORT = process.env.SERVER_PORT || 3000;
+const program = new Command();
 
-const app = express();
+program.name("TechnikInformatyk API");
 
-async function init() {
-    await databaseService.sync();
-    app.listen(PORT, () => {
-        console.log(`App started http://localhost:${PORT}`);
+program
+    .command("server")
+    .description("Run Express server")
+    .action(async (str, options) => {
+        const app = express();
+        await databaseService.sync();
+        app.listen(PORT, () => {
+            console.log(`App started http://localhost:${PORT}`);
+        });
     });
-}
 
-init();
+program.parse();
