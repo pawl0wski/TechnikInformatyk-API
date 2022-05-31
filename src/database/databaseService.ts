@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 import DatabaseConfig from "./config/config";
 
 export default class DatabaseService {
@@ -8,7 +8,8 @@ export default class DatabaseService {
     constructor() {
         this.databaseConfig = new DatabaseConfig({});
         this.sequelize = new Sequelize(
-            this.databaseConfig.generateConnectionPath()
+            this.databaseConfig.generateConnectionPath(),
+            { models: [__dirname + "/**/*.model.ts"] }
         );
     }
 
