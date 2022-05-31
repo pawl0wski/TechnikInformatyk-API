@@ -8,7 +8,7 @@ import {
 } from "sequelize-typescript";
 
 @Table
-export default class ExamModel extends Model {
+export default class Exam extends Model {
     @PrimaryKey
     @Unique
     @Column(DataType.UUID)
