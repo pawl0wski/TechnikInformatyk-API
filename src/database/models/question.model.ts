@@ -36,7 +36,7 @@ export default class Question extends Model {
     @Column(DataType.SMALLINT)
     correctAnswer: number;
 
-    @Column(DataType.BLOB)
+    @Column(DataType.BLOB("medium"))
     image: Uint8Array;
 
     @BelongsToMany(() => Exam, () => ExamQuestion)

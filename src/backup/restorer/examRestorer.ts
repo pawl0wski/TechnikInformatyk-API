@@ -18,8 +18,4 @@ export default class ExamRestorer extends Restorer {
     protected getModelName(): string {
         return Exam.name;
     }
-
-    protected afterSave(jsonData: { [p: string]: string }): Promise<void> {
-        return Promise.resolve(undefined);
-    }
 }

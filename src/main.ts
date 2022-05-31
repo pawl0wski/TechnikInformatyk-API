@@ -20,18 +20,22 @@ program
     .command("restore")
     .description("Restore all data by json files.")
     .argument("<string>", "directory with all json files")
-    .action(async (str, options) => {
-        const questionRestorer = new QuestionRestorer();
-        const examRestorer = new ExamRestorer();
-        let exam: Exam[] = await examRestorer.restore(
-            path.join(str, "Exam.json")
-        );
+    .action(async (str) => {
+        console.log(chalk.gray("Restoring data..."));
+        const questionRestorer = new QuestionRestorer(str);
+        const examRestorer = new ExamRestorer(str);
+        let exam: Exam[] = await examRestorer.restore();
         console.log(chalk.green(`Restored ${exam.length} exams.`));
-        let question: Question[] = await questionRestorer.restore(
-            path.join(str, "Question.json")
-        );
+        let question: Question[] = await questionRestorer.restore();
         console.log(chalk.green(`Restored ${question.length} questions.`));
+        console.log(chalk.gray("Wait a second..."));
     });
+
+program
+    .command("backup")
+    .description("Backup all data to json files.")
+    .argument("<string>", "output directory")
+    .action(async (str) => {});
 
 program
     .command("server")
