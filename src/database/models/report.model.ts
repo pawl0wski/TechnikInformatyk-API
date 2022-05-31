@@ -18,8 +18,10 @@ export default class Report extends Model {
         allowNull: false,
     })
     uuid: string;
+
     @Column(DataType.STRING)
     content: string;
+
     @ForeignKey(() => Question)
     @Column(DataType.STRING)
     questionUuid: string;

@@ -19,12 +19,16 @@ export default class Exam extends Model {
     })
     @ForeignKey(() => Question)
     uuid: string;
+
     @Column(DataType.STRING)
     name: string;
+
     @Column(DataType.STRING)
     description: string;
+
     @Column(DataType.STRING)
     icon: string;
+
     @Column(DataType.ENUM("subject", "main"))
     type: string;
 }
