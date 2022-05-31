@@ -1,13 +1,14 @@
 import { Sequelize } from "sequelize";
+import DatabaseConfig from "./config/config";
 
 export default class DatabaseService {
     private sequelize: Sequelize;
+    private databaseConfig: DatabaseConfig;
 
     constructor() {
-        const connectionPath = process.env["MYSQL_CONNECTION_PATH"];
-        if (!connectionPath) {
-            throw new Error("MYSQL_CONNECTION_PATH not definied");
-        }
-        this.sequelize = new Sequelize(connectionPath);
+        this.databaseConfig = new DatabaseConfig({});
+        this.sequelize = new Sequelize(
+            this.databaseConfig.generateConnectionPath()
+        );
     }
 }
