@@ -7,9 +7,10 @@ import QuestionRestorer from "./backup/restorer/questionRestorer";
 import ExamRestorer from "./backup/restorer/examRestorer";
 import Question from "./database/models/question.model";
 import chalk from "chalk";
+import apiRouter from "./routes/api/api";
 
 dotenv.config();
-let databaseService = new DatabaseService();
+let databaseService = DatabaseService.getInstance();
 const PORT = process.env.SERVER_PORT || 3000;
 const program = new Command();
 
@@ -45,6 +46,10 @@ program
     .action(async (str, options) => {
         await databaseService.sync();
         const app = express();
+
+        app.use(express.json());
+        app.use("/api", apiRouter);
+
         app.listen(PORT, () => {
             console.log(`App started http://localhost:${PORT}`);
         });

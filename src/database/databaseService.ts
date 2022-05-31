@@ -6,18 +6,34 @@ import Question from "./models/question.model";
 import Report from "./models/report.model";
 
 export default class DatabaseService {
+    private static instance: DatabaseService;
     private sequelize: Sequelize;
     private databaseConfig: DatabaseConfig;
 
-    constructor() {
+    private constructor() {
         this.databaseConfig = new DatabaseConfig({});
         this.sequelize = new Sequelize(
             this.databaseConfig.generateConnectionPath(),
-            { models: [Exam, ExamQuestion, Question, Report], logging: false }
+            {
+                models: [Exam, ExamQuestion, Question, Report],
+                logging: false,
+                define: { timestamps: false },
+            }
         );
+    }
+
+    public static getInstance(): DatabaseService {
+        if (!DatabaseService.instance) {
+            DatabaseService.instance = new DatabaseService();
+        }
+        return DatabaseService.instance;
     }
 
     async sync() {
         await this.sequelize.sync();
+    }
+
+    async getAllExams(): Promise<Exam[]> {
+        return await Exam.findAll();
     }
 }
