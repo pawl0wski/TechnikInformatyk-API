@@ -9,6 +9,7 @@ import Question from "./database/models/question.model";
 import chalk from "chalk";
 import apiRouter from "./routes/api/api";
 import CDN from "./cdn/cdn";
+import morgan from "morgan";
 
 dotenv.config();
 let databaseService = DatabaseService.getInstance();
@@ -57,10 +58,13 @@ program
         const app = express();
 
         app.use(express.json());
+        app.use(morgan("short"));
         app.use("/api", apiRouter);
 
         app.listen(PORT, () => {
-            console.log(`App started http://localhost:${PORT}`);
+            console.log(
+                chalk.green(`Api running on url: http://localhost:${PORT}`)
+            );
         });
     });
 

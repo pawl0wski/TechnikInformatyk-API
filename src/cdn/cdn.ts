@@ -11,7 +11,9 @@ export default class CDN {
     }
 
     isCDNEnabled(): boolean {
-        return !!process.env.ENABLE_CDN;
+        return (
+            process.env.ENABLE_CDN === "true" || process.env.ENABLE_CDN === "1"
+        );
     }
 
     createCDNFolder() {
@@ -25,7 +27,7 @@ export default class CDN {
         settings: { verbose: boolean } = { verbose: false }
     ) {
         if (this.isCDNEnabled()) {
-            await this.rebuild();
+            await this.rebuild(settings);
         }
     }
 
