@@ -1,13 +1,4 @@
-import {
-    Column,
-    DataType,
-    ForeignKey,
-    Model,
-    PrimaryKey,
-    Table,
-    Unique,
-} from "sequelize-typescript";
-import Question from "./question.model";
+import { Column, DataType, Model, Table } from "sequelize-typescript";
 
 @Table
 export default class Exam extends Model {
@@ -17,7 +8,6 @@ export default class Exam extends Model {
         unique: true,
         allowNull: false,
     })
-    @ForeignKey(() => Question)
     uuid: string;
 
     @Column(DataType.STRING)

@@ -1,13 +1,12 @@
 import {
+    BelongsToMany,
     Column,
     DataType,
-    HasMany,
     Model,
-    PrimaryKey,
     Table,
-    Unique,
 } from "sequelize-typescript";
 import Exam from "./exam.model";
+import ExamQuestion from "./examquestion.model";
 
 @Table
 export default class Question extends Model {
@@ -40,6 +39,6 @@ export default class Question extends Model {
     @Column(DataType.BLOB)
     image: Uint8Array;
 
-    @HasMany(() => Exam)
+    @BelongsToMany(() => Exam, () => ExamQuestion)
     exams: Exam[];
 }

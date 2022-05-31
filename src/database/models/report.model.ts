@@ -3,9 +3,7 @@ import {
     DataType,
     ForeignKey,
     Model,
-    PrimaryKey,
     Table,
-    Unique,
 } from "sequelize-typescript";
 import Question from "./question.model";
 
