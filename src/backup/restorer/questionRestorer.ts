@@ -32,7 +32,7 @@ export default class QuestionRestorer extends Restorer {
         [p: string]: string;
     }) {
         let questionUuid = jsonData.uuid;
-        if (Array.isArray(jsonData)) {
+        if (Array.isArray(jsonData.exam)) {
             for (let examUuid of jsonData["exam"]) {
                 if (
                     (await ExamQuestion.count({

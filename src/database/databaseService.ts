@@ -1,5 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
 import DatabaseConfig from "./config/config";
+import Exam from "./models/exam.model";
+import ExamQuestion from "./models/examquestion.model";
+import Question from "./models/question.model";
+import Report from "./models/report.model";
 
 export default class DatabaseService {
     private sequelize: Sequelize;
@@ -9,7 +13,7 @@ export default class DatabaseService {
         this.databaseConfig = new DatabaseConfig({});
         this.sequelize = new Sequelize(
             this.databaseConfig.generateConnectionPath(),
-            { models: [__dirname + "/**/*.model.ts"], logging: false }
+            { models: [Exam, ExamQuestion, Question, Report], logging: false }
         );
     }
 

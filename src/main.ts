@@ -5,7 +5,6 @@ import { Command } from "commander";
 import Exam from "./database/models/exam.model";
 import QuestionRestorer from "./backup/restorer/questionRestorer";
 import ExamRestorer from "./backup/restorer/examRestorer";
-import path from "path";
 import Question from "./database/models/question.model";
 import chalk from "chalk";
 
@@ -21,6 +20,7 @@ program
     .description("Restore all data by json files.")
     .argument("<string>", "directory with all json files")
     .action(async (str) => {
+        await databaseService.sync();
         console.log(chalk.gray("Restoring data..."));
         const questionRestorer = new QuestionRestorer(str);
         const examRestorer = new ExamRestorer(str);
@@ -41,8 +41,8 @@ program
     .command("server")
     .description("Run Express server")
     .action(async (str, options) => {
-        const app = express();
         await databaseService.sync();
+        const app = express();
         app.listen(PORT, () => {
             console.log(`App started http://localhost:${PORT}`);
         });
