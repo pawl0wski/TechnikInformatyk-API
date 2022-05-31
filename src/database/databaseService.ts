@@ -9,7 +9,7 @@ export default class DatabaseService {
         this.databaseConfig = new DatabaseConfig({});
         this.sequelize = new Sequelize(
             this.databaseConfig.generateConnectionPath(),
-            { models: [__dirname + "/**/*.model.ts"] }
+            { models: [__dirname + "/**/*.model.ts"], logging: false }
         );
     }
 

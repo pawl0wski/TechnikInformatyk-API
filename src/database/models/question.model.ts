@@ -18,7 +18,7 @@ export default class Question extends Model {
     })
     uuid: string;
 
-    @Column(DataType.STRING)
+    @Column(DataType.STRING(512))
     content: string;
 
     @Column(DataType.STRING)
@@ -34,7 +34,7 @@ export default class Question extends Model {
     answerD: string;
 
     @Column(DataType.SMALLINT)
-    correct: number;
+    correctAnswer: number;
 
     @Column(DataType.BLOB)
     image: Uint8Array;
