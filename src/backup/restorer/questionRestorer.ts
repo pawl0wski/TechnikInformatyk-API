@@ -6,7 +6,7 @@ import path from "path";
 import tar from "tar";
 import * as fs from "fs";
 import * as os from "os";
-import { existsSync, readFileSync, rmdirSync, rmSync } from "fs";
+import { existsSync, readFileSync, rmSync } from "fs";
 import chalk from "chalk";
 
 export default class QuestionRestorer extends Restorer {
