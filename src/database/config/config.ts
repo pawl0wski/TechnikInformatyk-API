@@ -12,20 +12,17 @@ export default class DatabaseConfig {
         database?: string;
         driver?: string;
     }) {
-        this.user =
-            settings.user == null ? process.env.DB_USER! : settings.user;
-        this.password =
-            settings.password == null
-                ? process.env.DB_PASS!
-                : settings.password;
-        this.host =
-            settings.host == null ? process.env.DB_HOST! : settings.host;
-        this.database =
-            settings.database == null
-                ? process.env.DB_DATABASE!
-                : settings.database;
-        this.driver =
-            settings.driver == null ? process.env.DB_DRIVER! : settings.driver;
+        try {
+            this.user = process.env.DB_USER || settings.user!;
+            this.password = process.env.DB_PASS || settings.password!;
+            this.host = process.env.DB_HOST || settings.host!;
+            this.database = process.env.DB_DATABASE || settings.database!;
+            this.driver = process.env.DB_DRIVER || settings.driver!;
+        } catch (e) {
+            throw Error(
+                "Can't initialize DatabaseConfig check your .env file."
+            );
+        }
     }
 
     public generateConnectionPath(): string {

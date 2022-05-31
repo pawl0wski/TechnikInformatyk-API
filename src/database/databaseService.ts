@@ -11,4 +11,8 @@ export default class DatabaseService {
             this.databaseConfig.generateConnectionPath()
         );
     }
+
+    async sync() {
+        await this.sequelize.sync();
+    }
 }
