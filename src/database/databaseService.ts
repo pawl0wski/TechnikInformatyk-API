@@ -16,7 +16,6 @@ export default class DatabaseService {
             this.databaseConfig.generateConnectionPath(),
             {
                 models: [Exam, ExamQuestion, Question, Report],
-                logging: false,
                 define: { timestamps: false },
             }
         );
@@ -35,5 +34,8 @@ export default class DatabaseService {
 
     async getAllExams(): Promise<Exam[]> {
         return await Exam.findAll();
+    }
+    async getAllQuestions(): Promise<Question[]> {
+        return await Question.findAll({ include: Exam });
     }
 }
