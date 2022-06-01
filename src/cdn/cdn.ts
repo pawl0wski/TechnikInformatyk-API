@@ -5,14 +5,14 @@ import tar from "tar";
 import glob from "glob-promise";
 import chalk from "chalk";
 
-interface CDNConfig {
+interface CDNConfiguration {
     cdnPath?: string;
 }
 
 export default class CDN {
     private readonly cdnPath?: string;
 
-    constructor(config: CDNConfig) {
+    constructor(config: CDNConfiguration) {
         const { cdnPath } = config;
         this.cdnPath = cdnPath;
     }
