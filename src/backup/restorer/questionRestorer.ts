@@ -32,8 +32,8 @@ export default class QuestionRestorer extends Restorer {
         [p: string]: string;
     }) {
         let questionUuid = jsonData.uuid;
-        if (Array.isArray(jsonData.exam)) {
-            for (let examUuid of jsonData["exam"]) {
+        if (Array.isArray(jsonData.examUuids)) {
+            for (let examUuid of jsonData.examUuids) {
                 if (
                     (await ExamQuestion.count({
                         where: { questionUuid, examUuid },
@@ -52,7 +52,7 @@ export default class QuestionRestorer extends Restorer {
             const uuid = jsonData.uuid;
             const imagePath = path.join(
                 this.imagesSnapshotFilesDirectory,
-                uuid + ".jpeg"
+                uuid + ".jpg"
             );
             if (existsSync(imagePath)) {
                 let question: Question | null = await Question.findOne({

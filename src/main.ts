@@ -10,6 +10,9 @@ import chalk from "chalk";
 import apiRouter from "./routes/api/api";
 import CDN from "./cdn/cdn";
 import morgan from "morgan";
+import QuestionBackup from "./backup/backup/questionBackup";
+import ExamBackup from "./backup/backup/examBackup";
+import { existsSync, mkdirSync } from "fs";
 
 dotenv.config();
 let databaseService = DatabaseService.getInstance();
@@ -47,7 +50,21 @@ program
     .description("Backup all data to json files.")
     .argument("<string>", "output directory")
     .action(async (str) => {
-        console.log(chalk.red("Not implemented yet"));
+        DatabaseService.getInstance();
+        const questionBackup = new QuestionBackup(str);
+        const examBackup = new ExamBackup(str);
+
+        if (!existsSync(str)) {
+            mkdirSync(str);
+        }
+
+        process.stdout.write("Creating backup for Exams ");
+        await examBackup.backup();
+        process.stdout.write(chalk.green("OK\n"));
+
+        process.stdout.write("Creating backup for Questions ");
+        await questionBackup.backup();
+        process.stdout.write(chalk.green("OK\n"));
     });
 
 program
