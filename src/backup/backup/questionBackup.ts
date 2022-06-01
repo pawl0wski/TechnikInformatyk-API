@@ -6,6 +6,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
 import * as os from "os";
 import path from "path";
 import DatabaseService from "../../database/databaseService";
+import Exam from "../../database/models/exam.model";
 
 export default class QuestionBackup extends Backup {
     protected adaptToApiResponse(models: Question[]): { [p: string]: any }[] {
@@ -13,8 +14,7 @@ export default class QuestionBackup extends Backup {
     }
 
     protected async getAllModels(): Promise<Question[]> {
-        const databaseService = DatabaseService.getInstance();
-        return await databaseService.getAllQuestions();
+        return await Question.findAll({ include: Exam });
     }
 
     protected getModelName(): string {

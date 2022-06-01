@@ -5,8 +5,18 @@ import ExamQuestion from "./models/examquestion.model";
 import Question from "./models/question.model";
 import Report from "./models/report.model";
 import mariadb from "mariadb";
+import QuestionsAdapter from "../adapters/questionsAdapter";
+import ExamsAdapter from "../adapters/examsAdapter";
 
-export default class DatabaseService {
+export interface DatabaseServiceI {
+    sync(): Promise<void>;
+    updateDatabaseChecksum(): Promise<number>;
+    get getChecksum(): number;
+    getAllExamsWithAdapter(): Promise<ExamsAdapter>;
+    getAllQuestionsWithAdapter(): Promise<QuestionsAdapter>;
+}
+
+export default class DatabaseService implements DatabaseServiceI {
     private static instance: DatabaseService;
     private sequelize: Sequelize;
     private databaseConfig: DatabaseConfig;
@@ -36,7 +46,7 @@ export default class DatabaseService {
         await this.sequelize.sync();
     }
 
-    async updateDatabaseChecksum() {
+    async updateDatabaseChecksum(): Promise<number> {
         const queryResult = await this.sequelize.query(
             "CHECKSUM TABLE Exams, ExamQuestions, Questions;"
         );
@@ -50,17 +60,20 @@ export default class DatabaseService {
             tmpChecksum += row.Checksum;
         }
         this.databaseChecksum = tmpChecksum;
-    }
-
-    getChecksum(): number {
         return this.databaseChecksum;
     }
 
-    async getAllExams(): Promise<Exam[]> {
-        return await Exam.findAll();
+    get getChecksum(): number {
+        return this.databaseChecksum;
     }
 
-    async getAllQuestions(): Promise<Question[]> {
-        return await Question.findAll({ include: Exam });
+    async getAllExamsWithAdapter(): Promise<ExamsAdapter> {
+        const exams = await Exam.findAll();
+        return new ExamsAdapter(exams);
+    }
+
+    async getAllQuestionsWithAdapter(): Promise<QuestionsAdapter> {
+        const questions = await Question.findAll({ include: Exam });
+        return new QuestionsAdapter(questions);
     }
 }

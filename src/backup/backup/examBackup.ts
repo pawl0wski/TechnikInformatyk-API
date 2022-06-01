@@ -9,8 +9,7 @@ export default class ExamBackup extends Backup {
     }
 
     protected async getAllModels(): Promise<Exam[]> {
-        const databaseService = DatabaseService.getInstance();
-        return await databaseService.getAllExams();
+        return await Exam.findAll();
     }
 
     protected getModelName(): string {
