@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
     entry: "./src/main.ts",
-    mode: "development",
+    mode: "production",
     target: "node",
     devtool: false,
     externals: ["pg-hstore"],
