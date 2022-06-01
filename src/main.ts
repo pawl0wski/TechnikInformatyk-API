@@ -24,13 +24,21 @@ program
     .argument("<string>", "directory with all json files")
     .action(async (str) => {
         await databaseService.sync();
+
         console.log(chalk.gray("Restoring data..."));
         const questionRestorer = new QuestionRestorer(str);
         const examRestorer = new ExamRestorer(str);
+
         let exam: Exam[] = await examRestorer.restore();
         console.log(chalk.green(`Restored ${exam.length} exams.`));
+
         let question: Question[] = await questionRestorer.restore();
         console.log(chalk.green(`Restored ${question.length} questions.`));
+
+        process.stdout.write("Calculating database checksum: ");
+        await databaseService.updateDatabaseChecksum();
+        process.stdout.write(chalk.green(databaseService.getChecksum()) + "\n");
+
         console.log(chalk.gray("Wait a second..."));
     });
 
@@ -56,6 +64,7 @@ program
         await databaseService.sync();
         await new CDN().rebuildIfCDNEnabled({ verbose: true });
         const app = express();
+        await databaseService.updateDatabaseChecksum();
 
         app.use(express.json());
         app.use(morgan("short"));

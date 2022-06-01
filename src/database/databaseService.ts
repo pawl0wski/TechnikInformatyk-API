@@ -9,6 +9,7 @@ export default class DatabaseService {
     private static instance: DatabaseService;
     private sequelize: Sequelize;
     private databaseConfig: DatabaseConfig;
+    private databaseChecksum: number = 0;
 
     private constructor() {
         this.databaseConfig = new DatabaseConfig({});
@@ -33,9 +34,30 @@ export default class DatabaseService {
         await this.sequelize.sync();
     }
 
+    async updateDatabaseChecksum() {
+        const queryResult = await this.sequelize.query(
+            "CHECKSUM TABLE Exams, ExamQuestions, Questions;"
+        );
+        const checksums = queryResult[0] as {
+            Table: string;
+            Checksum: number;
+        }[];
+
+        let tmpChecksum = 0;
+        for (let row of checksums) {
+            tmpChecksum += row.Checksum;
+        }
+        this.databaseChecksum = tmpChecksum;
+    }
+
+    getChecksum(): number {
+        return this.databaseChecksum;
+    }
+
     async getAllExams(): Promise<Exam[]> {
         return await Exam.findAll();
     }
+
     async getAllQuestions(): Promise<Question[]> {
         return await Question.findAll({ include: Exam });
     }
