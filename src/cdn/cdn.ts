@@ -31,6 +31,16 @@ export default class CDN {
         }
     }
 
+    getUrlToImage(questionUuid: string): string {
+        const cdnPath = this.getCDNPath();
+        return `/${cdnPath}${questionUuid}.jpg`;
+    }
+
+    getUrlToImagesSnapshot(): string {
+        const cdnPath = this.getCDNPath();
+        return `/${cdnPath}imagesSnapshot.tar`;
+    }
+
     async rebuild(settings: { verbose: boolean } = { verbose: false }) {
         settings.verbose ? console.log(chalk.gray("Rebuilding CDN...")) : null;
         this.createCDNFolder();
