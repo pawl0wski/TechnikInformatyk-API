@@ -4,6 +4,7 @@ import Exam from "./models/exam.model";
 import ExamQuestion from "./models/examquestion.model";
 import Question from "./models/question.model";
 import Report from "./models/report.model";
+import mariadb from "mariadb";
 
 export default class DatabaseService {
     private static instance: DatabaseService;
@@ -16,6 +17,7 @@ export default class DatabaseService {
         this.sequelize = new Sequelize(
             this.databaseConfig.generateConnectionPath(),
             {
+                dialectModule: mariadb,
                 models: [Exam, ExamQuestion, Question, Report],
                 define: { timestamps: false },
                 logging: false,
