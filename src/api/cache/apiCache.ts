@@ -16,6 +16,7 @@ export default class ApiCache {
 
     constructor(config: ApiCacheConfiguration) {
         const { redisClient, prefix, database } = config;
+        // TODO: Load redis configuration from ENV
         this.redisClient = redisClient ?? createClient();
         this.database = database ?? Database.getInstance();
         this.redisPrefix = prefix;
