@@ -1,15 +1,22 @@
-import Adapter from "./adapter";
 import Exam from "../../database/models/exam.model";
+import { AdapterI } from "./interfaces/adapter";
 
-export default class ExamsAdapter extends Adapter {
+export interface AdaptedExam {
+    uuid: string;
+    name: string;
+    description: string;
+    icon: string;
+    type: string;
+}
+
+export default class ExamsAdapter implements AdapterI {
     protected exams: Exam[];
 
     constructor(exams: Exam[]) {
-        super();
         this.exams = exams;
     }
 
-    protected adaptExam(exam: Exam) {
+    protected adaptExam(exam: Exam): AdaptedExam {
         const { uuid, name, description, icon, type } = exam;
         return {
             uuid,
@@ -20,9 +27,7 @@ export default class ExamsAdapter extends Adapter {
         };
     }
 
-    adapt(): {
-        [key: string]: string | boolean | string[] | number;
-    }[] {
+    adapt(): AdaptedExam[] {
         return this.exams.map((e: Exam) => this.adaptExam(e));
     }
 }

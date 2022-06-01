@@ -1,12 +1,11 @@
 import Question from "../../database/models/question.model";
 import Exam from "../../database/models/exam.model";
-import Adapter from "./adapter";
+import { AdapterI } from "./interfaces/adapter";
 
-export default class QuestionsAdapter extends Adapter {
+export default class QuestionsAdapter implements AdapterI {
     protected questions: Question[];
 
     constructor(question: Question[]) {
-        super();
         this.questions = question;
     }
 
