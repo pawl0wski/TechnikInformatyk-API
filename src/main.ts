@@ -83,7 +83,7 @@ program
         const app = express();
         await database.updateDatabaseChecksum();
         const apiInstance = Api.getInstance();
-        apiInstance.setupRouter();
+        await apiInstance.initializeApi();
 
         app.use(express.json());
         app.use(morgan("short"));

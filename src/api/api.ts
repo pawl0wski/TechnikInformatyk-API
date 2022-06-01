@@ -5,26 +5,32 @@ import getPing from "../routes/api/getPing";
 import getImage from "../routes/api/getImage";
 import getDatabaseVersion from "../routes/api/getDatabaseVersion";
 import getImagesSnapshot from "../routes/api/getImagesSnapshot";
-import ExamsAdapter from "./adapters/examsAdapter";
+import ExamsAdapter, { AdaptedExam } from "./adapters/examsAdapter";
 import Exam from "../database/models/exam.model";
-import QuestionsAdapter from "./adapters/questionsAdapter";
+import QuestionsAdapter, { AdaptedQuestion } from "./adapters/questionsAdapter";
 import Question from "../database/models/question.model";
+import ApiCache from "./cache/apiCache";
 
 export default class Api {
     private static instance: Api;
     private readonly router: express.Router;
+    private readonly apiCache?: ApiCache;
 
     private constructor() {
         this.router = express.Router();
+        if (ApiCache.apiEnabled)
+            this.apiCache = new ApiCache({ prefix: "TechnikInformatyk" });
     }
 
-    public setupRouter() {
+    public async initializeApi() {
         this.router.get("/exams", getExams);
         this.router.get("/image/:uuid", getImage);
         this.router.get("/questions", getQuestions);
         this.router.get("/ping", getPing);
         this.router.get("/databaseVersion", getDatabaseVersion);
         this.router.get("/imagesSnapshot", getImagesSnapshot);
+
+        if (this.apiCache !== undefined) await this.apiCache.connectToRedis();
     }
 
     public get expressRouter() {
@@ -38,13 +44,30 @@ export default class Api {
         return Api.instance;
     }
 
-    async getAllExamsWithAdapter(): Promise<ExamsAdapter> {
+    async getAllExamsWithAdapter(): Promise<AdaptedExam[]> {
+        let adaptedExams: AdaptedExam[] | null | undefined;
+        if (ApiCache.apiEnabled) {
+            adaptedExams = await this.apiCache?.getAdaptedExamsFromCache();
+            if (adaptedExams !== null) return adaptedExams!;
+        }
         const exams = await Exam.findAll();
-        return new ExamsAdapter(exams);
+        adaptedExams = new ExamsAdapter(exams).adapt();
+        if (ApiCache.apiEnabled)
+            this.apiCache?.saveAdaptedExamsToCache(adaptedExams);
+        return adaptedExams;
     }
 
-    async getAllQuestionsWithAdapter(): Promise<QuestionsAdapter> {
+    async getAllQuestionsWithAdapter(): Promise<AdaptedQuestion[]> {
+        let adaptedQuestions: AdaptedQuestion[] | null | undefined;
+        if (ApiCache.apiEnabled) {
+            adaptedQuestions =
+                await this.apiCache?.getAdaptedQuestionsFromCache();
+            if (adaptedQuestions !== null) return adaptedQuestions!;
+        }
         const questions = await Question.findAll({ include: Exam });
-        return new QuestionsAdapter(questions);
+        adaptedQuestions = new QuestionsAdapter(questions).adapt();
+        if (ApiCache.apiEnabled)
+            this.apiCache?.saveAdaptedQuestionsToCache(adaptedQuestions);
+        return adaptedQuestions;
     }
 }

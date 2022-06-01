@@ -5,7 +5,7 @@ async function getExams(req: Request, res: Response) {
     const api = Api.getInstance();
     const exams = await api.getAllExamsWithAdapter();
 
-    res.json(exams.adapt());
+    res.json(exams);
 }
 
 export default getExams;

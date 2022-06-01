@@ -5,7 +5,7 @@ async function getQuestions(req: Request, res: Response) {
     const api = Api.getInstance();
     const questions = await api.getAllQuestionsWithAdapter();
 
-    res.json(questions.adapt());
+    res.json(questions);
 }
 
 export default getQuestions;
