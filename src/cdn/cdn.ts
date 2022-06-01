@@ -48,19 +48,21 @@ export default class CDN {
         settings.verbose
             ? process.stdout.write("Coping all images to cdn folder... ")
             : null;
-        await this.createImages();
+        await this.createImages({});
         settings.verbose ? process.stdout.write(chalk.green("OK\n")) : null;
 
         settings.verbose ? process.stdout.write("Rebuilding CDN... ") : null;
-        await this.createImagesSnapshot();
+        await this.createImagesSnapshot({});
         settings.verbose ? process.stdout.write(chalk.green("OK\n")) : null;
     }
 
-    async createImages() {
+    async createImages(config: { imagesPath?: string }) {
         const questionsWithImages = (await Question.findAll()).filter(
             (q: Question) => q.image != null
         );
-        const cdnPath = this.getCDNPath();
+        const { imagesPath } = config;
+        const cdnPath =
+            imagesPath == undefined ? this.getCDNPath() : imagesPath;
         let imageWritePromises: Promise<any>[] = [];
         for (let question of questionsWithImages) {
             let imagePath = path.join(cdnPath, `${question.uuid}.jpg`);
@@ -69,8 +71,10 @@ export default class CDN {
         await Promise.all(imageWritePromises);
     }
 
-    async createImagesSnapshot() {
-        const cdnPath = this.getCDNPath();
+    async createImagesSnapshot(config: { imagesPath?: string }) {
+        const { imagesPath } = config;
+        const cdnPath =
+            imagesPath == undefined ? this.getCDNPath() : imagesPath;
         const jpgFiles = await glob(path.join(cdnPath, "*.jpg"));
         await tar.c(
             {
