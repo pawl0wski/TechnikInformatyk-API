@@ -2,10 +2,9 @@ import Backup from "./backup";
 import QuestionsAdapter from "../../adapters/questionsAdapter";
 import Question from "../../database/models/question.model";
 import CDN from "../../cdn/cdn";
-import { copyFileSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
+import { copyFileSync, mkdtempSync, rmSync } from "fs";
 import * as os from "os";
 import path from "path";
-import DatabaseService from "../../database/databaseService";
 import Exam from "../../database/models/exam.model";
 
 export default class QuestionBackup extends Backup {

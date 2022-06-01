@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import DatabaseService from "../../database/databaseService";
-import QuestionsAdapter from "../../adapters/questionsAdapter";
+import Database from "../../database/database";
 
 async function getQuestions(req: Request, res: Response) {
-    const databaseServiceInstance = DatabaseService.getInstance();
-    const questions = await databaseServiceInstance.getAllExamsWithAdapter();
+    const databaseInstance = Database.getInstance();
+    const questions = await databaseInstance.getAllQuestionsWithAdapter();
 
     res.json(questions.adapt());
 }

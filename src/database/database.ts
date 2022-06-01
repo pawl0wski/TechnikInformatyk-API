@@ -8,7 +8,7 @@ import mariadb from "mariadb";
 import QuestionsAdapter from "../adapters/questionsAdapter";
 import ExamsAdapter from "../adapters/examsAdapter";
 
-export interface DatabaseServiceI {
+export interface DatabaseI {
     sync(): Promise<void>;
     updateDatabaseChecksum(): Promise<number>;
     get getChecksum(): number;
@@ -16,8 +16,8 @@ export interface DatabaseServiceI {
     getAllQuestionsWithAdapter(): Promise<QuestionsAdapter>;
 }
 
-export default class DatabaseService implements DatabaseServiceI {
-    private static instance: DatabaseService;
+export default class Database implements DatabaseI {
+    private static instance: Database;
     private sequelize: Sequelize;
     private databaseConfig: DatabaseConfig;
     private databaseChecksum: number = 0;
@@ -35,11 +35,11 @@ export default class DatabaseService implements DatabaseServiceI {
         );
     }
 
-    public static getInstance(): DatabaseService {
-        if (!DatabaseService.instance) {
-            DatabaseService.instance = new DatabaseService();
+    public static getInstance(): Database {
+        if (!Database.instance) {
+            Database.instance = new Database();
         }
-        return DatabaseService.instance;
+        return Database.instance;
     }
 
     async sync() {

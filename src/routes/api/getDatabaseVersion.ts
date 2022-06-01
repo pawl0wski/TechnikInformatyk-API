@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import DatabaseService from "../../database/databaseService";
+import Database from "../../database/database";
 
 function getDatabaseVersion(req: Request, res: Response) {
-    const databaseService = DatabaseService.getInstance();
+    const database = Database.getInstance();
     res.json({
-        version: databaseService.getChecksum,
+        version: database.getChecksum,
     });
 }
 

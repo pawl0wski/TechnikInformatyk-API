@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import express from "express";
-import DatabaseService from "./database/databaseService";
+import Database from "./database/database";
 import { Command } from "commander";
 import Exam from "./database/models/exam.model";
 import QuestionRestorer from "./backup/restorer/questionRestorer";
@@ -15,7 +15,7 @@ import { existsSync, mkdirSync } from "fs";
 import Api from "./api/api";
 
 dotenv.config();
-let databaseService = DatabaseService.getInstance();
+let database = Database.getInstance();
 const PORT = process.env.SERVER_PORT || 3000;
 const program = new Command();
 
@@ -26,7 +26,7 @@ program
     .description("Restore all data by json files.")
     .argument("<string>", "directory with all json files")
     .action(async (str) => {
-        await databaseService.sync();
+        await database.sync();
 
         console.log(chalk.gray("Restoring data..."));
         const questionRestorer = new QuestionRestorer(str);
@@ -39,8 +39,8 @@ program
         console.log(chalk.green(`Restored ${question.length} questions.`));
 
         process.stdout.write("Calculating database checksum: ");
-        await databaseService.updateDatabaseChecksum();
-        process.stdout.write(chalk.green(databaseService.getChecksum) + "\n");
+        await database.updateDatabaseChecksum();
+        process.stdout.write(chalk.green(database.getChecksum) + "\n");
 
         console.log(chalk.gray("Wait a second..."));
     });
@@ -50,7 +50,7 @@ program
     .description("Backup all data to json files.")
     .argument("<string>", "output directory")
     .action(async (str) => {
-        DatabaseService.getInstance();
+        Database.getInstance();
         const questionBackup = new QuestionBackup(str);
         const examBackup = new ExamBackup(str);
 
@@ -78,10 +78,10 @@ program
     .command("server")
     .description("Run Express server")
     .action(async (str, options) => {
-        await databaseService.sync();
+        await database.sync();
         await new CDN().rebuildIfCDNEnabled({ verbose: true });
         const app = express();
-        await databaseService.updateDatabaseChecksum();
+        await database.updateDatabaseChecksum();
         const apiInstance = Api.getInstance();
         apiInstance.setupRouter();
 
