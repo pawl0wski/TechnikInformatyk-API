@@ -1,8 +1,8 @@
-import Question from "../../../database/models/question.model";
-import Exam from "../../../database/models/exam.model";
-import ApiAdapter from "./apiAdapter";
+import Question from "../database/models/question.model";
+import Exam from "../database/models/exam.model";
+import Adapter from "./adapter";
 
-export default class QuestionsApiAdapter extends ApiAdapter {
+export default class QuestionsAdapter extends Adapter {
     protected questions: Question[];
 
     constructor(question: Question[]) {
@@ -10,7 +10,7 @@ export default class QuestionsApiAdapter extends ApiAdapter {
         this.questions = question;
     }
 
-    private mapQuestionToApiObject(question: Question) {
+    protected adaptQuestion(question: Question) {
         const {
             uuid,
             content,
@@ -36,11 +36,9 @@ export default class QuestionsApiAdapter extends ApiAdapter {
         };
     }
 
-    getAsApiObject(): {
+    adapt(): {
         [key: string]: string | boolean | string[] | number;
     }[] {
-        return this.questions.map((q: Question) =>
-            this.mapQuestionToApiObject(q)
-        );
+        return this.questions.map((q: Question) => this.adaptQuestion(q));
     }
 }

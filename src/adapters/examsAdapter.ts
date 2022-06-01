@@ -1,7 +1,7 @@
-import ApiAdapter from "./apiAdapter";
-import Exam from "../../../database/models/exam.model";
+import Adapter from "./adapter";
+import Exam from "../database/models/exam.model";
 
-export default class ExamsApiAdapter extends ApiAdapter {
+export default class ExamsAdapter extends Adapter {
     protected exams: Exam[];
 
     constructor(exams: Exam[]) {
@@ -9,7 +9,7 @@ export default class ExamsApiAdapter extends ApiAdapter {
         this.exams = exams;
     }
 
-    private mapExamToApiObject(exam: Exam) {
+    protected adaptExam(exam: Exam) {
         const { uuid, name, description, icon, type } = exam;
         return {
             uuid,
@@ -20,9 +20,9 @@ export default class ExamsApiAdapter extends ApiAdapter {
         };
     }
 
-    getAsApiObject(): {
+    adapt(): {
         [key: string]: string | boolean | string[] | number;
     }[] {
-        return this.exams.map((e: Exam) => this.mapExamToApiObject(e));
+        return this.exams.map((e: Exam) => this.adaptExam(e));
     }
 }

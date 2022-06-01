@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import DatabaseService from "../../database/databaseService";
-import QuestionsApiAdapter from "./adapters/questionsApiAdapter";
+import QuestionsAdapter from "../../adapters/questionsAdapter";
 
 async function getQuestions(req: Request, res: Response) {
     const databaseServiceInstance = DatabaseService.getInstance();
     const questions = await databaseServiceInstance.getAllQuestions();
-    const questionsApiAdapter = new QuestionsApiAdapter(questions);
+    const questionsApiAdapter = new QuestionsAdapter(questions);
 
-    res.json(questionsApiAdapter.getAsApiObject());
+    res.json(questionsApiAdapter.adapt());
 }
 
 export default getQuestions;
