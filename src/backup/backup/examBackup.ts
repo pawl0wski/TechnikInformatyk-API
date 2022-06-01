@@ -1,6 +1,6 @@
 import Backup from "./backup";
 import Exam from "../../database/models/exam.model";
-import ExamsAdapter from "../../adapters/examsAdapter";
+import ExamsAdapter from "../../api/adapters/examsAdapter";
 
 export default class ExamBackup extends Backup {
     protected adaptToApiResponse(models: Exam[]): { [p: string]: any }[] {

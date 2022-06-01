@@ -1,5 +1,5 @@
 import Backup from "./backup";
-import QuestionsAdapter from "../../adapters/questionsAdapter";
+import QuestionsAdapter from "../../api/adapters/questionsAdapter";
 import Question from "../../database/models/question.model";
 import CDN from "../../cdn/cdn";
 import { copyFileSync, mkdtempSync, rmSync } from "fs";

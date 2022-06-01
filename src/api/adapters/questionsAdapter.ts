@@ -1,5 +1,5 @@
-import Question from "../database/models/question.model";
-import Exam from "../database/models/exam.model";
+import Question from "../../database/models/question.model";
+import Exam from "../../database/models/exam.model";
 import Adapter from "./adapter";
 
 export default class QuestionsAdapter extends Adapter {

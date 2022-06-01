@@ -5,15 +5,11 @@ import ExamQuestion from "./models/examquestion.model";
 import Question from "./models/question.model";
 import Report from "./models/report.model";
 import mariadb from "mariadb";
-import QuestionsAdapter from "../adapters/questionsAdapter";
-import ExamsAdapter from "../adapters/examsAdapter";
 
 export interface DatabaseI {
     sync(): Promise<void>;
     updateDatabaseChecksum(): Promise<number>;
     get getChecksum(): number;
-    getAllExamsWithAdapter(): Promise<ExamsAdapter>;
-    getAllQuestionsWithAdapter(): Promise<QuestionsAdapter>;
 }
 
 export default class Database implements DatabaseI {
@@ -65,15 +61,5 @@ export default class Database implements DatabaseI {
 
     get getChecksum(): number {
         return this.databaseChecksum;
-    }
-
-    async getAllExamsWithAdapter(): Promise<ExamsAdapter> {
-        const exams = await Exam.findAll();
-        return new ExamsAdapter(exams);
-    }
-
-    async getAllQuestionsWithAdapter(): Promise<QuestionsAdapter> {
-        const questions = await Question.findAll({ include: Exam });
-        return new QuestionsAdapter(questions);
     }
 }

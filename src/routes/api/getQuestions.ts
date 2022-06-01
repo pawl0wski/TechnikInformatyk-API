@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import Database from "../../database/database";
+import Api from "../../api/api";
 
 async function getQuestions(req: Request, res: Response) {
-    const databaseInstance = Database.getInstance();
-    const questions = await databaseInstance.getAllQuestionsWithAdapter();
+    const api = Api.getInstance();
+    const questions = await api.getAllQuestionsWithAdapter();
 
     res.json(questions.adapt());
 }

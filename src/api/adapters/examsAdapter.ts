@@ -1,5 +1,5 @@
 import Adapter from "./adapter";
-import Exam from "../database/models/exam.model";
+import Exam from "../../database/models/exam.model";
 
 export default class ExamsAdapter extends Adapter {
     protected exams: Exam[];
