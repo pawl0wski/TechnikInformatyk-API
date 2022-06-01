@@ -4,10 +4,9 @@ import QuestionsAdapter from "../../adapters/questionsAdapter";
 
 async function getQuestions(req: Request, res: Response) {
     const databaseServiceInstance = DatabaseService.getInstance();
-    const questions = await databaseServiceInstance.getAllQuestions();
-    const questionsApiAdapter = new QuestionsAdapter(questions);
+    const questions = await databaseServiceInstance.getAllExamsWithAdapter();
 
-    res.json(questionsApiAdapter.adapt());
+    res.json(questions.adapt());
 }
 
 export default getQuestions;

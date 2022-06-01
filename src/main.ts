@@ -7,12 +7,12 @@ import QuestionRestorer from "./backup/restorer/questionRestorer";
 import ExamRestorer from "./backup/restorer/examRestorer";
 import Question from "./database/models/question.model";
 import chalk from "chalk";
-import apiRouter from "./routes/api/api";
 import CDN from "./cdn/cdn";
 import morgan from "morgan";
 import QuestionBackup from "./backup/backup/questionBackup";
 import ExamBackup from "./backup/backup/examBackup";
 import { existsSync, mkdirSync } from "fs";
+import Api from "./api/api";
 
 dotenv.config();
 let databaseService = DatabaseService.getInstance();
@@ -40,7 +40,7 @@ program
 
         process.stdout.write("Calculating database checksum: ");
         await databaseService.updateDatabaseChecksum();
-        process.stdout.write(chalk.green(databaseService.getChecksum()) + "\n");
+        process.stdout.write(chalk.green(databaseService.getChecksum) + "\n");
 
         console.log(chalk.gray("Wait a second..."));
     });
@@ -82,10 +82,12 @@ program
         await new CDN().rebuildIfCDNEnabled({ verbose: true });
         const app = express();
         await databaseService.updateDatabaseChecksum();
+        const apiInstance = Api.getInstance();
+        apiInstance.setupRouter();
 
         app.use(express.json());
         app.use(morgan("short"));
-        app.use("/api", apiRouter);
+        app.use("/api", apiInstance.expressRouter);
 
         app.listen(PORT, () => {
             console.log(

@@ -4,10 +4,9 @@ import ExamsAdapter from "../../adapters/examsAdapter";
 
 async function getExams(req: Request, res: Response) {
     const databaseServiceInstance = DatabaseService.getInstance();
-    const exams = await databaseServiceInstance.getAllExams();
-    const examsApiAdapter = new ExamsAdapter(exams);
+    const exams = await databaseServiceInstance.getAllExamsWithAdapter();
 
-    res.json(examsApiAdapter.adapt());
+    res.json(exams.adapt());
 }
 
 export default getExams;
