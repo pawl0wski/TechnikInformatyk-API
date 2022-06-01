@@ -5,42 +5,43 @@ import tar from "tar";
 import glob from "glob-promise";
 import chalk from "chalk";
 
+interface CDNConfig {
+    cdnPath?: string;
+}
+
 export default class CDN {
-    getCDNPath(cdnPath?: string): string {
-        if (cdnPath !== undefined) {
-            return cdnPath;
-        }
+    private readonly cdnPath?: string;
+
+    constructor(config: CDNConfig) {
+        const { cdnPath } = config;
+        this.cdnPath = cdnPath;
+    }
+
+    public get getCDNPath(): string {
+        if (this.cdnPath !== undefined) return this.cdnPath;
         return process.env.CDN_PATH || "cdn/";
     }
 
-    isCDNEnabled(): boolean {
+    public static get isCDNEnabled(): boolean {
         return (
             process.env.ENABLE_CDN === "true" || process.env.ENABLE_CDN === "1"
         );
     }
 
     createCDNFolder() {
-        const cdnPath = this.getCDNPath();
+        const cdnPath = this.getCDNPath;
         if (!existsSync(cdnPath)) {
-            mkdirSync(this.getCDNPath());
-        }
-    }
-
-    async rebuildIfCDNEnabled(
-        settings: { verbose: boolean } = { verbose: false }
-    ) {
-        if (this.isCDNEnabled()) {
-            await this.rebuild(settings);
+            mkdirSync(cdnPath);
         }
     }
 
     getUrlToImage(questionUuid: string): string {
-        const cdnPath = this.getCDNPath();
+        const cdnPath = this.getCDNPath;
         return `/${cdnPath}${questionUuid}.jpg`;
     }
 
     getUrlToImagesSnapshot(): string {
-        const cdnPath = this.getCDNPath();
+        const cdnPath = this.getCDNPath;
         return `/${cdnPath}imagesSnapshot.tar`;
     }
 
@@ -51,19 +52,19 @@ export default class CDN {
         settings.verbose
             ? process.stdout.write("Coping all images to cdn folder... ")
             : null;
-        await this.createImages({});
+        await this.createImages();
         settings.verbose ? process.stdout.write(chalk.green("OK\n")) : null;
 
         settings.verbose ? process.stdout.write("Rebuilding CDN... ") : null;
-        await this.createImagesSnapshot({});
+        await this.createImagesSnapshot();
         settings.verbose ? process.stdout.write(chalk.green("OK\n")) : null;
     }
 
-    async createImages(config: { cdnPath?: string }) {
+    async createImages() {
         const questionsWithImages = (await Question.findAll()).filter(
             (q: Question) => q.image != null
         );
-        const cdnPath = this.getCDNPath(config.cdnPath);
+        const cdnPath = this.getCDNPath;
         let imageWritePromises: Promise<any>[] = [];
         for (let question of questionsWithImages) {
             let imagePath = path.join(cdnPath, `${question.uuid}.jpg`);
@@ -72,8 +73,8 @@ export default class CDN {
         await Promise.all(imageWritePromises);
     }
 
-    async createImagesSnapshot(config: { cdnPath?: string }) {
-        const cdnPath = this.getCDNPath(config.cdnPath);
+    async createImagesSnapshot() {
+        const cdnPath = this.getCDNPath;
         const jpgFiles = (await glob(path.join(cdnPath, "*.jpg"))).map((e) =>
             path.basename(e)
         );

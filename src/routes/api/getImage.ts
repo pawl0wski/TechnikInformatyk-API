@@ -4,8 +4,7 @@ import CDN from "../../cdn/cdn";
 
 async function getImage(req: Request, res: Response) {
     const questionUuid: string = req.params.uuid;
-    const cdn = new CDN();
-    if (!cdn.isCDNEnabled()) {
+    if (!CDN.isCDNEnabled) {
         const question = await Question.findOne({
             where: { uuid: questionUuid },
         });
@@ -15,6 +14,7 @@ async function getImage(req: Request, res: Response) {
             res.type("jpg").send(question.image);
         }
     } else {
+        const cdn = new CDN({});
         res.redirect(cdn.getUrlToImage(questionUuid));
     }
 }

@@ -69,9 +69,9 @@ program
 
 program
     .command("rebuildCDN")
-    .description("Rebuild cdn folder.")
+    .description("Rebuild CDN folder.")
     .action(async (str) => {
-        await new CDN().rebuild({ verbose: true });
+        await new CDN({}).rebuild({ verbose: true });
     });
 
 program
@@ -79,7 +79,7 @@ program
     .description("Run Express server")
     .action(async (str, options) => {
         await database.sync();
-        await new CDN().rebuildIfCDNEnabled({ verbose: true });
+        if (CDN.isCDNEnabled) await new CDN({}).rebuild({ verbose: true });
         const app = express();
         await database.updateDatabaseChecksum();
         const apiInstance = Api.getInstance();

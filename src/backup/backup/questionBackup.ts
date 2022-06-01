@@ -21,11 +21,10 @@ export default class QuestionBackup extends Backup {
     }
 
     protected async afterBackup(): Promise<void> {
-        const cdn = new CDN();
-
         const tmpDir = mkdtempSync(path.join(os.tmpdir(), "ImagesSnapshot"));
-        await cdn.createImages({ cdnPath: tmpDir });
-        await cdn.createImagesSnapshot({ cdnPath: tmpDir });
+        const cdn = new CDN({ cdnPath: tmpDir });
+        await cdn.createImages();
+        await cdn.createImagesSnapshot();
 
         await copyFileSync(
             path.join(tmpDir, "imagesSnapshot.tar"),

@@ -5,17 +5,18 @@ import * as os from "os";
 import path from "path";
 
 async function getImagesSnapshot(req: Request, res: Response) {
-    const cdn = new CDN();
-    if (!cdn.isCDNEnabled()) {
+    if (!CDN.isCDNEnabled) {
         const tmpDir = mkdtempSync(path.join(os.tmpdir(), "ImageSnapshot"));
-        await cdn.createImages({ cdnPath: tmpDir });
-        await cdn.createImagesSnapshot({ cdnPath: tmpDir });
+        const cdn = new CDN({ cdnPath: tmpDir });
+        await cdn.createImages();
+        await cdn.createImagesSnapshot();
         res.sendFile(path.join(tmpDir, "imagesSnapshot.tar"), {}, (err) => {
             rmSync(tmpDir, {
                 recursive: true,
             });
         });
     } else {
+        const cdn = new CDN({});
         res.redirect(cdn.getUrlToImagesSnapshot());
     }
 }
