@@ -1,0 +1,38 @@
+name: Deploy on VPS
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - name: "Check formatting 🔍"
+        run: npm run checkFormatting
+      - name: "Test project 🧪"
+        run: npm test
+      - name: "Build project 🔨"
+        run: npm run build
+      - name: "Deploy builded project on VPS 🌐"
+        uses: wangyucode/sftp-upload-action@main
+        with:
+          host: "${{ secrets.SFTP_ADDRESS }}"
+          username: "${{ secrets.SFTP_USERNAME }}"
+          password: "${{ secrets.SFTP_PASSWORD }}"
+          localDir: "dist"
+          remoteDir: "/home/${{ secrets.SFTP_USERNAME }}/githubactions/"
+      - name: "Restart project's service on VPS 🔄"
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: "mv ~/githubactions/* ~/bin  && sudo systemctl restart ${{ secrets.SFTP_USERNAME }}"
+          host: "${{ secrets.SFTP_ADDRESS }}"
+          username: "${{ secrets.SFTP_USERNAME }}"
+          password: "${{ secrets.SFTP_PASSWORD }}"
