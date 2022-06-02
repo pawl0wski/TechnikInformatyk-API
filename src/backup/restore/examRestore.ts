@@ -1,8 +1,8 @@
-import Restorer from "./restorer";
+import Restore from "./restore";
 import Exam from "../../database/models/exam.model";
 import { Model } from "sequelize-typescript";
 
-export default class ExamRestorer extends Restorer {
+export default class ExamRestore extends Restore {
     protected buildModel(jsonData: { [p: string]: string }): Model {
         return Exam.build(jsonData);
     }

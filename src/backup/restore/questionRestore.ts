@@ -1,4 +1,4 @@
-import Restorer from "./restorer";
+import Restore from "./restore";
 import Question from "../../database/models/question.model";
 import { Model } from "sequelize-typescript";
 import ExamQuestion from "../../database/models/examquestion.model";
@@ -9,7 +9,7 @@ import * as os from "os";
 import { existsSync, readFileSync, rmSync } from "fs";
 import chalk from "chalk";
 
-export default class QuestionRestorer extends Restorer {
+export default class QuestionRestore extends Restore {
     protected imagesSnapshotFilesDirectory: string | undefined;
 
     protected buildModel(jsonData: { [p: string]: string }): Model {

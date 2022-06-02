@@ -3,8 +3,8 @@ import express from "express";
 import Database from "./database/database";
 import { Command } from "commander";
 import Exam from "./database/models/exam.model";
-import QuestionRestorer from "./backup/restorer/questionRestorer";
-import ExamRestorer from "./backup/restorer/examRestorer";
+import QuestionRestore from "./backup/restore/questionRestore";
+import ExamRestore from "./backup/restore/examRestore";
 import Question from "./database/models/question.model";
 import chalk from "chalk";
 import CDN from "./cdn/cdn";
@@ -29,8 +29,8 @@ program
         await database.sync();
 
         console.log(chalk.gray("Restoring data..."));
-        const questionRestorer = new QuestionRestorer(str);
-        const examRestorer = new ExamRestorer(str);
+        const questionRestorer = new QuestionRestore(str);
+        const examRestorer = new ExamRestore(str);
 
         let exam: Exam[] = await examRestorer.restore();
         console.log(chalk.green(`Restored ${exam.length} exams.`));

@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { Model } from "sequelize-typescript";
 import path from "path";
 
-export default abstract class Restorer {
+export default abstract class Restore {
     protected backupPath: string;
 
     constructor(backupPath: string) {
