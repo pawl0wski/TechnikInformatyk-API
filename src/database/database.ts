@@ -5,6 +5,13 @@ import ExamQuestion from "./models/examquestion.model";
 import Question from "./models/question.model";
 import Report from "./models/report.model";
 import mariadb from "mariadb";
+import ApiKey from "./models/apiKey.model";
+import randomstring from "randomstring";
+
+export enum Privilege {
+    client = "client",
+    admin = "admin",
+}
 
 export interface DatabaseI {
     sync(): Promise<void>;
@@ -24,7 +31,7 @@ export default class Database implements DatabaseI {
             this.databaseConfig.generateConnectionPath(),
             {
                 dialectModule: mariadb,
-                models: [Exam, ExamQuestion, Question, Report],
+                models: [Exam, ExamQuestion, Question, Report, ApiKey],
                 define: { timestamps: false },
                 logging: false,
             }
@@ -61,5 +68,16 @@ export default class Database implements DatabaseI {
 
     get getChecksum(): number {
         return this.databaseChecksum;
+    }
+
+    public async generateApiKey(privilege: Privilege): Promise<ApiKey> {
+        const key = randomstring.generate(32);
+        return await ApiKey.create({ key, privilege });
+    }
+
+    public async getApiKeyPrivilege(key: string): Promise<Privilege | null> {
+        const apiKey = await ApiKey.findOne({ where: { key } });
+        if (apiKey === null) return null;
+        return (<any>Privilege)[apiKey.privilege];
     }
 }
