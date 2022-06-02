@@ -1,3 +1,5 @@
+![Technik Informatyk API](https://user-images.githubusercontent.com/59766830/171714336-e0e5a66b-bd34-4060-8443-75e92d2ff172.jpg)
+
 # Technik informatyk API
 Rest api for my [Technik Informatyk](https://play.google.com/store/apps/details?id=jebok.itexam) application. 
 The task of this project is to provide questions and exams to the app. 
