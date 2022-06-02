@@ -4,6 +4,7 @@ import Api from "../api/api";
 import morgan from "morgan";
 import chalk from "chalk";
 import Database from "../database/database";
+import apiKeyMiddleware from "../middlewares/apiKeyMiddleware";
 
 async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
@@ -16,6 +17,7 @@ async function serverCommand() {
     await apiInstance.initializeApi();
 
     app.use(express.json());
+    app.use(apiKeyMiddleware);
     app.use(morgan("short"));
     app.use("/api", apiInstance.expressRouter);
 
