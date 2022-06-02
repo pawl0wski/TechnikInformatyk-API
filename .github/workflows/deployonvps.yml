@@ -21,18 +21,20 @@ jobs:
         run: npm test
       - name: "Build project 🔨"
         run: npm run build
-      - name: "Deploy builded project on VPS 🌐"
+      - name: "Copy package.json and package-lock.json 📄"
+        run: cp package*.json dist/
+      - name: "Deploy built project on VPS 🌐"
         uses: wangyucode/sftp-upload-action@main
         with:
           host: "${{ secrets.SFTP_ADDRESS }}"
           username: "${{ secrets.SFTP_USERNAME }}"
           password: "${{ secrets.SFTP_PASSWORD }}"
           localDir: "dist"
-          remoteDir: "/home/${{ secrets.SFTP_USERNAME }}/githubactions/"
+          remoteDir: "/home/${{ secrets.SFTP_USERNAME }}/bin/"
       - name: "Restart project's service on VPS 🔄"
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: "mv ~/githubactions/* ~/bin  && sudo systemctl restart ${{ secrets.SFTP_USERNAME }}"
+          command: "cd ~/bin/ && npm install --production && sudo systemctl restart ${{ secrets.SFTP_USERNAME }}"
           host: "${{ secrets.SFTP_ADDRESS }}"
           username: "${{ secrets.SFTP_USERNAME }}"
           password: "${{ secrets.SFTP_PASSWORD }}"
