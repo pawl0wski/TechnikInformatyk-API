@@ -20,6 +20,7 @@ async function serverCommand() {
     app.use(apiKeyMiddleware);
     app.use(morgan("short"));
     app.use("/api", apiInstance.expressRouter);
+    app.set("trust proxy", true);
 
     app.listen(PORT, () => {
         console.log(
