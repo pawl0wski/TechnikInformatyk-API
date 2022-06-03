@@ -17,8 +17,8 @@ async function serverCommand() {
     await apiInstance.initializeApi();
 
     app.use(express.json());
-    app.use(apiKeyMiddleware);
     app.use(morgan("short"));
+    app.use(apiKeyMiddleware);
     app.use("/api", apiInstance.expressRouter);
     app.set("trust proxy", true);
 
