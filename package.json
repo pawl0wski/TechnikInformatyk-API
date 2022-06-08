@@ -37,7 +37,7 @@
         "@types/randomstring": "^1.1.8",
         "@types/sequelize": "^4.28.13",
         "@types/tar": "^6.1.1",
-        "jest": "^28.1.0",
+        "jest": "^28.1.1",
         "prettier": "^2.6.2",
         "ts-jest": "^28.0.4",
         "ts-loader": "^9.3.0",
