@@ -23,7 +23,7 @@ export default class Database implements DatabaseI {
     private static instance: Database;
     private sequelize: Sequelize;
     private databaseConfig: DatabaseConfig;
-    private databaseChecksum: number = 0;
+    private databaseChecksum = 0;
 
     private constructor() {
         this.databaseConfig = new DatabaseConfig({});
@@ -59,7 +59,7 @@ export default class Database implements DatabaseI {
         }[];
 
         let tmpChecksum = 0;
-        for (let row of checksums) {
+        for (const row of checksums) {
             tmpChecksum += row.Checksum;
         }
         this.databaseChecksum = tmpChecksum;

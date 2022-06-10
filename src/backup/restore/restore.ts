@@ -16,6 +16,7 @@ export default abstract class Restore {
     protected abstract getModelName(): string;
 
     protected async beforeRestoring(): Promise<void> {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected async afterSave(jsonData: {
         [key: string]: string;
     }): Promise<void> {}
@@ -38,7 +39,7 @@ export default abstract class Restore {
         );
         const data = readFileSync(backupJsonPath).toString();
         const dataJson: { [key: string]: string }[] = JSON.parse(data);
-        const savePromises: Promise<any>[] = [];
+        const savePromises: Promise<void>[] = [];
         for (const e of dataJson) {
             const object = this.buildModel(e);
             if (

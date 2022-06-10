@@ -10,7 +10,7 @@ async function getImagesSnapshot(req: Request, res: Response) {
         const cdn = new CDN({ cdnPath: tmpDir });
         await cdn.createImages();
         await cdn.createImagesSnapshot();
-        res.sendFile(path.join(tmpDir, "imagesSnapshot.tar"), {}, (err) => {
+        res.sendFile(path.join(tmpDir, "imagesSnapshot.tar"), {}, () => {
             rmSync(tmpDir, {
                 recursive: true,
             });

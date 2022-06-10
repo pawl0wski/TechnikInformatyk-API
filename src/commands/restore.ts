@@ -13,10 +13,10 @@ async function restoreCommand(str: string) {
     const questionRestorer = new QuestionRestore(str);
     const examRestorer = new ExamRestore(str);
 
-    let exam: Exam[] = await examRestorer.restore();
+    const exam: Exam[] = await examRestorer.restore();
     console.log(chalk.green(`Restored ${exam.length} exams.`));
 
-    let question: Question[] = await questionRestorer.restore();
+    const question: Question[] = await questionRestorer.restore();
     console.log(chalk.green(`Restored ${question.length} questions.`));
 
     process.stdout.write("Calculating database checksum: ");

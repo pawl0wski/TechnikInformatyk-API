@@ -6,18 +6,20 @@ export default class DatabaseConfig {
     public driver: string;
 
     constructor(settings: {
-        user?: string;
-        password?: string;
-        host?: string;
-        database?: string;
-        driver?: string;
+        user: string;
+        password: string;
+        host: string;
+        database: string;
+        driver: string;
     }) {
+        const { user, password, host, database, driver } = settings;
+
         try {
-            this.user = process.env.DB_USER || settings.user!;
-            this.password = process.env.DB_PASS || settings.password!;
-            this.host = process.env.DB_HOST || settings.host!;
-            this.database = process.env.DB_DATABASE || settings.database!;
-            this.driver = process.env.DB_DRIVER || settings.driver!;
+            this.user = process.env.DB_USER || user;
+            this.password = process.env.DB_PASS || password;
+            this.host = process.env.DB_HOST || host;
+            this.database = process.env.DB_DATABASE || database;
+            this.driver = process.env.DB_DRIVER || driver;
         } catch (e) {
             throw Error(
                 "Can't initialize DatabaseConfig check your .env file."

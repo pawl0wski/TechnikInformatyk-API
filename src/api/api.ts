@@ -48,6 +48,7 @@ export default class Api {
         let adaptedExams: AdaptedExam[] | null | undefined;
         if (ApiCache.apiEnabled) {
             adaptedExams = await this.apiCache?.getAdaptedExamsFromCache();
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             if (adaptedExams !== null) return adaptedExams!;
         }
         const exams = await Exam.findAll();
@@ -62,6 +63,7 @@ export default class Api {
         if (ApiCache.apiEnabled) {
             adaptedQuestions =
                 await this.apiCache?.getAdaptedQuestionsFromCache();
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             if (adaptedQuestions !== null) return adaptedQuestions!;
         }
         const questions = await Question.findAll({ include: Exam });

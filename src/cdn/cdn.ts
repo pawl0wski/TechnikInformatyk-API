@@ -65,9 +65,9 @@ export default class CDN {
             (q: Question) => q.image != null
         );
         const cdnPath = this.getCDNPath;
-        let imageWritePromises: Promise<any>[] = [];
-        for (let question of questionsWithImages) {
-            let imagePath = path.join(cdnPath, `${question.uuid}.jpg`);
+        const imageWritePromises: Promise<void>[] = [];
+        for (const question of questionsWithImages) {
+            const imagePath = path.join(cdnPath, `${question.uuid}.jpg`);
             imageWritePromises.push(fs.writeFile(imagePath, question.image));
         }
         await Promise.all(imageWritePromises);

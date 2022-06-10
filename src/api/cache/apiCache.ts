@@ -42,7 +42,9 @@ export default class ApiCache {
         type: string;
         checksum?: number;
     }): string {
-        let { prefix, type, checksum } = args;
+        let { prefix, checksum } = args;
+        const { type } = args;
+
         prefix ??= this.redisPrefix;
         checksum ??= this.databaseChecksum;
         return `${prefix}::${type}::${checksum}`;

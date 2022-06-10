@@ -31,9 +31,9 @@ export default class QuestionRestore extends Restore {
     protected async restoreQuestionExamRelationship(jsonData: {
         [p: string]: string;
     }) {
-        let questionUuid = jsonData.uuid;
+        const questionUuid = jsonData.uuid;
         if (Array.isArray(jsonData.examUuids)) {
-            for (let examUuid of jsonData.examUuids) {
+            for (const examUuid of jsonData.examUuids) {
                 if (
                     (await ExamQuestion.count({
                         where: { questionUuid, examUuid },
@@ -55,7 +55,7 @@ export default class QuestionRestore extends Restore {
                 uuid + ".jpg"
             );
             if (existsSync(imagePath)) {
-                let question: Question | null = await Question.findOne({
+                const question: Question | null = await Question.findOne({
                     where: { uuid },
                 });
                 if (question == null) {
