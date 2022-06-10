@@ -39,7 +39,7 @@ export default abstract class Restore {
         );
         const data = readFileSync(backupJsonPath).toString();
         const dataJson: { [key: string]: string }[] = JSON.parse(data);
-        const savePromises: Promise<void>[] = [];
+        const savePromises: Promise<any>[] = [];
         for (const e of dataJson) {
             const object = this.buildModel(e);
             if (
