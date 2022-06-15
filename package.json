@@ -7,7 +7,8 @@
         "start": "ts-node src/main.ts",
         "dev": "tsnd --respawn src/main.ts server",
         "build": "tsc",
-        "checkFormatting": "prettier --check '*'",
+        "check:formatting": "prettier --check '*'",
+        "check:linting": "eslint 'src/**'",
         "test": "jest"
     },
     "keywords": [],
