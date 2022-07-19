@@ -9,7 +9,7 @@ import ExamsAdapter, { AdaptedExam } from "./adapters/examsAdapter";
 import Exam from "../database/models/exam.model";
 import QuestionsAdapter, { AdaptedQuestion } from "./adapters/questionsAdapter";
 import Question from "../database/models/question.model";
-import ApiCache from "./cache/apiCache";
+import ApiCache from "../services/cache/apiCache";
 
 export default class Api {
     private static instance: Api;

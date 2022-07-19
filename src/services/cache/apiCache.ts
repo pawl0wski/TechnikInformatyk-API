@@ -1,7 +1,7 @@
 import { createClient, RedisClientType } from "redis";
 import Database, { DatabaseI } from "../../database/database";
-import { AdaptedExam } from "../adapters/examsAdapter";
-import { AdaptedQuestion } from "../adapters/questionsAdapter";
+import { AdaptedExam } from "../../api/adapters/examsAdapter";
+import { AdaptedQuestion } from "../../api/adapters/questionsAdapter";
 
 interface ApiCacheConfiguration {
     redisClient?: RedisClientType;

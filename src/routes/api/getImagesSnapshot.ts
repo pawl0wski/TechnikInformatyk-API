@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Snapshot from "../../snapshot/snapshot";
+import Snapshot from "../../services/snapshot/snapshot";
 import { mkdtempSync, rmSync } from "fs";
 import * as os from "os";
 import path from "path";

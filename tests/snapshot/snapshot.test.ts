@@ -1,4 +1,4 @@
-import Snapshot from "../../src/snapshot/snapshot";
+import Snapshot from "../../src/services/snapshot/snapshot";
 
 describe("Snapshot", () => {
     describe("isSnapshotEnabled", () => {

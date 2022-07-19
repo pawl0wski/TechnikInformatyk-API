@@ -1,4 +1,4 @@
-import Snapshot from "../snapshot/snapshot";
+import Snapshot from "../services/snapshot/snapshot";
 import express from "express";
 import Api from "../api/api";
 import morgan from "morgan";
