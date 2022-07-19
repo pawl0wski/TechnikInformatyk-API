@@ -1,7 +1,7 @@
-import CDN from "../cdn/cdn";
+import Snapshot from "../snapshot/snapshot";
 
-async function rebuildCDNCommand() {
-    await new CDN({}).rebuild({ verbose: true });
+async function rebuildSnapshotCommand() {
+    await new Snapshot({}).rebuild({ verbose: true });
 }
 
-export default rebuildCDNCommand;
+export default rebuildSnapshotCommand;

@@ -1,7 +1,7 @@
 import Backup from "./backup";
 import QuestionsAdapter from "../../api/adapters/questionsAdapter";
 import Question from "../../database/models/question.model";
-import CDN from "../../cdn/cdn";
+import Snapshot from "../../snapshot/snapshot";
 import { copyFileSync, mkdtempSync, rmSync } from "fs";
 import * as os from "os";
 import path from "path";
@@ -22,7 +22,7 @@ export default class QuestionBackup extends Backup {
 
     protected async afterBackup(): Promise<void> {
         const tmpDir = mkdtempSync(path.join(os.tmpdir(), "ImagesSnapshot"));
-        const cdn = new CDN({ cdnPath: tmpDir });
+        const cdn = new Snapshot({ snapshotPath: tmpDir });
         await cdn.createImages();
         await cdn.createImagesSnapshot();
 

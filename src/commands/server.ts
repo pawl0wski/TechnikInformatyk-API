@@ -1,4 +1,4 @@
-import CDN from "../cdn/cdn";
+import Snapshot from "../snapshot/snapshot";
 import express from "express";
 import Api from "../api/api";
 import morgan from "morgan";
@@ -10,7 +10,8 @@ async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
     const database = Database.getInstance();
     await database.sync();
-    if (CDN.isCDNEnabled) await new CDN({}).rebuild({ verbose: true });
+    if (Snapshot.isSnapshotEnabled)
+        await new Snapshot({}).rebuild({ verbose: true });
     const app = express();
     await database.updateDatabaseChecksum();
     const apiInstance = Api.getInstance();

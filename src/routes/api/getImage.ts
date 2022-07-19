@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import Question from "../../database/models/question.model";
-import CDN from "../../cdn/cdn";
+import Snapshot from "../../snapshot/snapshot";
 
 async function getImage(req: Request, res: Response) {
     const questionUuid: string = req.params.uuid;
-    if (!CDN.isCDNEnabled) {
+    if (!Snapshot.isSnapshotEnabled) {
         const question = await Question.findOne({
             where: { uuid: questionUuid },
         });
@@ -14,7 +14,7 @@ async function getImage(req: Request, res: Response) {
             res.type("jpg").send(question.image);
         }
     } else {
-        const cdn = new CDN({});
+        const cdn = new Snapshot({});
         res.redirect(cdn.getUrlToImage(questionUuid));
     }
 }
