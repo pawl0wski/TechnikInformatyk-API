@@ -13,6 +13,8 @@ import {
 } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ExamController } from "./controllers/examController/examController";
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { QuestionController } from "./controllers/questionController/questionController";
 import type { RequestHandler } from "express";
 import * as express from "express";
 
@@ -27,6 +29,25 @@ const models: TsoaRoute.Models = {
             description: { dataType: "string", required: true },
             icon: { dataType: "string", required: true },
             type: { dataType: "string", required: true },
+        },
+        additionalProperties: false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    QuestionResponseI: {
+        dataType: "refObject",
+        properties: {
+            uuid: { dataType: "string", required: true },
+            content: { dataType: "string", required: true },
+            answerA: { dataType: "string", required: true },
+            answerB: { dataType: "string", required: true },
+            answerC: { dataType: "string", required: true },
+            answerD: { dataType: "string", required: true },
+            correctAnswer: { dataType: "double", required: true },
+            examUuids: {
+                dataType: "array",
+                array: { dataType: "string" },
+                required: true,
+            },
         },
         additionalProperties: false,
     },
@@ -60,6 +81,39 @@ export function RegisterRoutes(app: express.Router) {
                 validatedArgs = getValidatedArgs(args, request, response);
 
                 const controller = new ExamController();
+
+                const promise = controller.getExams.apply(
+                    controller,
+                    validatedArgs as any
+                );
+                promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        }
+    );
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get(
+        "/question",
+        ...fetchMiddlewares<RequestHandler>(QuestionController),
+        ...fetchMiddlewares<RequestHandler>(
+            QuestionController.prototype.getExams
+        ),
+
+        function QuestionController_getExams(
+            request: any,
+            response: any,
+            next: any
+        ) {
+            const args = {};
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new QuestionController();
 
                 const promise = controller.getExams.apply(
                     controller,

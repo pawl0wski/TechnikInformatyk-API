@@ -27,6 +27,50 @@
                 "required": ["uuid", "name", "description", "icon", "type"],
                 "type": "object",
                 "additionalProperties": false
+            },
+            "QuestionResponseI": {
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "answerA": {
+                        "type": "string"
+                    },
+                    "answerB": {
+                        "type": "string"
+                    },
+                    "answerC": {
+                        "type": "string"
+                    },
+                    "answerD": {
+                        "type": "string"
+                    },
+                    "correctAnswer": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "examUuids": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "uuid",
+                    "content",
+                    "answerA",
+                    "answerB",
+                    "answerC",
+                    "answerD",
+                    "correctAnswer",
+                    "examUuids"
+                ],
+                "type": "object",
+                "additionalProperties": false
             }
         },
         "securitySchemes": {}
@@ -53,6 +97,28 @@
                                 "schema": {
                                     "items": {
                                         "$ref": "#/components/schemas/ExamResponseI"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/question": {
+            "get": {
+                "operationId": "GetExams",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/QuestionResponseI"
                                     },
                                     "type": "array"
                                 }
