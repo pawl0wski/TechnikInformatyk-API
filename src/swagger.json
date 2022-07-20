@@ -1,0 +1,27 @@
+{
+    "components": {
+        "examples": {},
+        "headers": {},
+        "parameters": {},
+        "requestBodies": {},
+        "responses": {},
+        "schemas": {},
+        "securitySchemes": {}
+    },
+    "info": {
+        "title": "technikinformatykbackend",
+        "version": "v1",
+        "description": "Technik Informatyk API",
+        "license": {
+            "name": "ISC"
+        },
+        "contact": {}
+    },
+    "openapi": "3.0.0",
+    "paths": {},
+    "servers": [
+        {
+            "url": "/"
+        }
+    ]
+}

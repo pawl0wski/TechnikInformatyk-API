@@ -1,0 +1,14 @@
+{
+    "entryFile": "src/main.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": ["src/**/*Controller.ts"],
+    "spec": {
+        "outputDirectory": "src",
+        "specVersion": 3,
+        "version": "v1",
+        "description": "Technik Informatyk API"
+    },
+    "routes": {
+        "routesDir": "src"
+    }
+}

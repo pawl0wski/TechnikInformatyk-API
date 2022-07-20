@@ -7,6 +7,7 @@
         "start": "ts-node src/main.ts",
         "dev": "tsnd --respawn src/main.ts server",
         "build": "tsc",
+        "build:swagger": "tsoa spec-and-routes && prettier --write 'src/routes.ts' && prettier --write 'src/swagger.json'",
         "check:formatting": "prettier --check '*'",
         "check:linting": "eslint 'src/**'",
         "test": "jest"
@@ -27,8 +28,8 @@
         "redis": "^4.1.0",
         "sequelize": "^6.21.3",
         "sequelize-typescript": "^2.1.3",
-        "tar": "^6.1.11",
-        "tsoa": "^4.1.1"
+        "swagger-ui-express": "^4.5.0",
+        "tar": "^6.1.11"
     },
     "devDependencies": {
         "@types/express": "^4.17.13",
@@ -48,6 +49,7 @@
         "ts-loader": "^9.3.0",
         "ts-node": "^10.8.1",
         "ts-node-dev": "^2.0.0",
+        "tsoa": "^4.1.1",
         "typescript": "^4.7.3"
     }
 }

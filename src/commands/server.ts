@@ -6,6 +6,7 @@ import chalk from "chalk";
 import Database from "../database/database";
 import apiKeyMiddleware from "../middlewares/apiKeyMiddleware";
 import EnvironmentConfiguration from "../config/environmentConfig";
+import { RegisterRoutes } from "../routes";
 
 async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
@@ -23,6 +24,7 @@ async function serverCommand() {
     app.use(apiKeyMiddleware);
     app.use("/api", apiInstance.expressRouter);
     app.set("trust proxy", true);
+    RegisterRoutes(app);
 
     app.listen(PORT, () => {
         console.log(
