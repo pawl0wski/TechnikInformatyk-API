@@ -104,6 +104,27 @@
                         }
                     }
                 },
+                "tags": ["Exam"],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/ping": {
+            "get": {
+                "operationId": "GetPing",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Other"],
                 "security": [],
                 "parameters": []
             }
@@ -126,6 +147,7 @@
                         }
                     }
                 },
+                "tags": ["Question"],
                 "security": [],
                 "parameters": []
             }

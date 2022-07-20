@@ -1,9 +1,10 @@
-import { Get, Route } from "tsoa";
+import { Get, Route, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
 import ExamResponseI from "../../interfaces/examResponse";
 
 @Route("exam")
+@Tags("Exam")
 export class ExamController extends Controller {
     private readonly _repository: ExamRepository;
 

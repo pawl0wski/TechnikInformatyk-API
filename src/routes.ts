@@ -14,6 +14,8 @@ import {
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ExamController } from "./controllers/examController/examController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PingController } from "./controllers/pingController/pingController";
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { QuestionController } from "./controllers/questionController/questionController";
 import type { RequestHandler } from "express";
 import * as express from "express";
@@ -83,6 +85,37 @@ export function RegisterRoutes(app: express.Router) {
                 const controller = new ExamController();
 
                 const promise = controller.getExams.apply(
+                    controller,
+                    validatedArgs as any
+                );
+                promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        }
+    );
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get(
+        "/ping",
+        ...fetchMiddlewares<RequestHandler>(PingController),
+        ...fetchMiddlewares<RequestHandler>(PingController.prototype.getPing),
+
+        function PingController_getPing(
+            request: any,
+            response: any,
+            next: any
+        ) {
+            const args = {};
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PingController();
+
+                const promise = controller.getPing.apply(
                     controller,
                     validatedArgs as any
                 );
