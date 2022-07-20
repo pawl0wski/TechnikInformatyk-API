@@ -10,6 +10,7 @@ import Exam from "../database/models/exam.model";
 import QuestionsAdapter, { AdaptedQuestion } from "./adapters/questionsAdapter";
 import Question from "../database/models/question.model";
 import ApiCache from "../services/cache/apiCache";
+import EnvironmentConfiguration from "../environmentConfiguration";
 
 export default class Api {
     private static instance: Api;
@@ -18,7 +19,7 @@ export default class Api {
 
     private constructor() {
         this.router = express.Router();
-        if (ApiCache.apiEnabled)
+        if (EnvironmentConfiguration.cacheEnabled)
             this.apiCache = new ApiCache({ prefix: "TechnikInformatyk" });
     }
 
@@ -46,21 +47,21 @@ export default class Api {
 
     async getAllExamsWithAdapter(): Promise<AdaptedExam[]> {
         let adaptedExams: AdaptedExam[] | null | undefined;
-        if (ApiCache.apiEnabled) {
+        if (EnvironmentConfiguration.cacheEnabled) {
             adaptedExams = await this.apiCache?.getAdaptedExamsFromCache();
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             if (adaptedExams !== null) return adaptedExams!;
         }
         const exams = await Exam.findAll();
         adaptedExams = new ExamsAdapter(exams).adapt();
-        if (ApiCache.apiEnabled)
+        if (EnvironmentConfiguration.cacheEnabled)
             this.apiCache?.saveAdaptedExamsToCache(adaptedExams);
         return adaptedExams;
     }
 
     async getAllQuestionsWithAdapter(): Promise<AdaptedQuestion[]> {
         let adaptedQuestions: AdaptedQuestion[] | null | undefined;
-        if (ApiCache.apiEnabled) {
+        if (EnvironmentConfiguration.cacheEnabled) {
             adaptedQuestions =
                 await this.apiCache?.getAdaptedQuestionsFromCache();
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -68,7 +69,7 @@ export default class Api {
         }
         const questions = await Question.findAll({ include: Exam });
         adaptedQuestions = new QuestionsAdapter(questions).adapt();
-        if (ApiCache.apiEnabled)
+        if (EnvironmentConfiguration.cacheEnabled)
             this.apiCache?.saveAdaptedQuestionsToCache(adaptedQuestions);
         return adaptedQuestions;
     }

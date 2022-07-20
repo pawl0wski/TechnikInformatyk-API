@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import Question from "../../database/models/question.model";
 import Snapshot from "../../services/snapshot/snapshot";
+import EnvironmentConfiguration from "../../environmentConfiguration";
 
 async function getImage(req: Request, res: Response) {
     const questionUuid: string = req.params.uuid;
-    if (!Snapshot.isSnapshotEnabled) {
+    if (!EnvironmentConfiguration.snapshotEnabled) {
         const question = await Question.findOne({
             where: { uuid: questionUuid },
         });

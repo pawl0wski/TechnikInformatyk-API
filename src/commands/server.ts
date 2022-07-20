@@ -5,12 +5,13 @@ import morgan from "morgan";
 import chalk from "chalk";
 import Database from "../database/database";
 import apiKeyMiddleware from "../middlewares/apiKeyMiddleware";
+import EnvironmentConfiguration from "../environmentConfiguration";
 
 async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
     const database = Database.getInstance();
     await database.sync();
-    if (Snapshot.isSnapshotEnabled)
+    if (EnvironmentConfiguration.snapshotEnabled)
         await new Snapshot({}).rebuild({ verbose: true });
     const app = express();
     await database.updateDatabaseChecksum();

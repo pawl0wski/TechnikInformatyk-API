@@ -22,13 +22,6 @@ export default class ApiCache {
         this.redisPrefix = prefix;
     }
 
-    static get apiEnabled() {
-        return (
-            process.env.ENABLE_CACHE == "1" ||
-            process.env.ENABLE_CACHE == "true"
-        );
-    }
-
     public connectToRedis(): Promise<void> {
         return this.redisClient.connect();
     }

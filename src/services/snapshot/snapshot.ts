@@ -22,13 +22,6 @@ export default class Snapshot {
         return process.env.SNAPSHOT_PATH || "snapshot/";
     }
 
-    public static get isSnapshotEnabled(): boolean {
-        return (
-            process.env.ENABLE_SNAPSHOT === "true" ||
-            process.env.ENABLE_SNAPSHOT === "1"
-        );
-    }
-
     createSnapshotFolder() {
         const snapshotPath = this.getSnapshotPath;
         if (!existsSync(snapshotPath)) {
