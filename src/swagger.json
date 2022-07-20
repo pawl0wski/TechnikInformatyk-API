@@ -63,6 +63,9 @@
                         "type": "number",
                         "format": "double"
                     },
+                    "haveImage": {
+                        "type": "boolean"
+                    },
                     "examUuids": {
                         "items": {
                             "type": "string"
@@ -78,6 +81,7 @@
                     "answerC",
                     "answerD",
                     "correctAnswer",
+                    "haveImage",
                     "examUuids"
                 ],
                 "type": "object",
@@ -181,6 +185,35 @@
                 "tags": ["Question"],
                 "security": [],
                 "parameters": []
+            }
+        },
+        "/question/{uuid}/image": {
+            "get": {
+                "operationId": "GetQuestionImage",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Question"],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
             }
         }
     },

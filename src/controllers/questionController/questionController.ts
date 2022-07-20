@@ -1,7 +1,8 @@
-import { Get, Route, Tags } from "tsoa";
+import { Get, Path, Route, Tags, Request } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import QuestionRepository from "../../repositories/questionRepository/questionRepository";
 import QuestionResponseI from "../../interfaces/questionResponse";
+import express from "express";
 
 @Route("question")
 @Tags("Question")
@@ -28,6 +29,7 @@ export class QuestionController extends Controller {
                 answerD,
                 correctAnswer,
                 exams,
+                image,
             } = question;
             return {
                 uuid,
@@ -37,8 +39,21 @@ export class QuestionController extends Controller {
                 answerC,
                 answerD,
                 correctAnswer,
+                haveImage: image !== null,
                 examUuids: exams.map((exam) => exam.uuid),
             };
         }) as QuestionResponseI[];
+    }
+
+    @Get("{uuid}/image")
+    public async getQuestionImage(
+        @Path("uuid") uuid: string,
+        @Request() req: express.Request
+    ) {
+        const image = await this._repository.getImageForQuestion(uuid);
+        if (image === null) return "Not Found";
+        const res = req.res;
+        res?.type("jpg");
+        res?.send(image);
     }
 }

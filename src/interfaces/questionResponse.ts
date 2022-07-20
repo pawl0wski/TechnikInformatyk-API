@@ -6,5 +6,6 @@ export default interface QuestionResponseI {
     answerC: string;
     answerD: string;
     correctAnswer: number;
+    haveImage: boolean;
     examUuids: string[];
 }

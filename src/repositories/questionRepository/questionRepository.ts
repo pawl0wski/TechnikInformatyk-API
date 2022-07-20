@@ -7,4 +7,10 @@ export default class QuestionRepository {
             include: [Exam],
         });
     }
+
+    async getImageForQuestion(uuid: string): Promise<Uint8Array | null> {
+        const question = await Question.findByPk(uuid);
+        if (question !== null) return question.image;
+        return null;
+    }
 }
