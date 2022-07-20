@@ -6,6 +6,17 @@
         "requestBodies": {},
         "responses": {},
         "schemas": {
+            "DatabaseVersionResponseI": {
+                "properties": {
+                    "version": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "required": ["version"],
+                "type": "object",
+                "additionalProperties": false
+            },
             "ExamResponseI": {
                 "properties": {
                     "uuid": {
@@ -86,6 +97,26 @@
     },
     "openapi": "3.0.0",
     "paths": {
+        "/database-version": {
+            "get": {
+                "operationId": "GetDatabaseVersion",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DatabaseVersionResponseI"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Other"],
+                "security": [],
+                "parameters": []
+            }
+        },
         "/exam": {
             "get": {
                 "operationId": "GetExams",

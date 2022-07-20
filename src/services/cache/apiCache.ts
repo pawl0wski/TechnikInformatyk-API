@@ -27,7 +27,7 @@ export default class ApiCache {
     }
 
     private get databaseChecksum(): number {
-        return this.database.getChecksum;
+        return this.database.checksum;
     }
 
     private generateCacheKey(args: {

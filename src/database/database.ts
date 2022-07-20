@@ -16,7 +16,7 @@ export enum Privilege {
 export interface DatabaseI {
     sync(): Promise<void>;
     updateDatabaseChecksum(): Promise<number>;
-    get getChecksum(): number;
+    get checksum(): number;
 }
 
 export default class Database implements DatabaseI {
@@ -66,7 +66,7 @@ export default class Database implements DatabaseI {
         return this.databaseChecksum;
     }
 
-    get getChecksum(): number {
+    get checksum(): number {
         return this.databaseChecksum;
     }
 
