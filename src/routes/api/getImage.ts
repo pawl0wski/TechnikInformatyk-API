@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Question from "../../database/models/question.model";
 import Snapshot from "../../services/snapshot/snapshot";
-import EnvironmentConfiguration from "../../environmentConfiguration";
+import EnvironmentConfiguration from "../../config/environmentConfig";
 
 async function getImage(req: Request, res: Response) {
     const questionUuid: string = req.params.uuid;

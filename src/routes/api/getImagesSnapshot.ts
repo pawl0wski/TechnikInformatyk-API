@@ -3,7 +3,7 @@ import Snapshot from "../../services/snapshot/snapshot";
 import { mkdtempSync, rmSync } from "fs";
 import * as os from "os";
 import path from "path";
-import EnvironmentConfiguration from "../../environmentConfiguration";
+import EnvironmentConfiguration from "../../config/environmentConfig";
 
 async function getImagesSnapshot(req: Request, res: Response) {
     if (!EnvironmentConfiguration.snapshotEnabled) {

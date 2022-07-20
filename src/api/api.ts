@@ -10,7 +10,7 @@ import Exam from "../database/models/exam.model";
 import QuestionsAdapter, { AdaptedQuestion } from "./adapters/questionsAdapter";
 import Question from "../database/models/question.model";
 import ApiCache from "../services/cache/apiCache";
-import EnvironmentConfiguration from "../environmentConfiguration";
+import EnvironmentConfiguration from "../config/environmentConfig";
 
 export default class Api {
     private static instance: Api;

@@ -5,7 +5,7 @@ import morgan from "morgan";
 import chalk from "chalk";
 import Database from "../database/database";
 import apiKeyMiddleware from "../middlewares/apiKeyMiddleware";
-import EnvironmentConfiguration from "../environmentConfiguration";
+import EnvironmentConfiguration from "../config/environmentConfig";
 
 async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
