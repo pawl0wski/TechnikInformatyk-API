@@ -6,7 +6,8 @@
         "outputDirectory": "src",
         "specVersion": 3,
         "version": "v1",
-        "description": "Technik Informatyk API"
+        "name": "Technik Informatyk API",
+        "description": "REST API for Technik Informatyk App"
     },
     "routes": {
         "routesDir": "src"

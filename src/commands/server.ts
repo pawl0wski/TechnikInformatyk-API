@@ -1,12 +1,12 @@
 import Snapshot from "../services/snapshot/snapshot";
 import express from "express";
-import Api from "../api/api";
 import morgan from "morgan";
 import chalk from "chalk";
 import Database from "../database/database";
-import apiKeyMiddleware from "../middlewares/apiKeyMiddleware";
 import EnvironmentConfiguration from "../config/environmentConfig";
+import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "../routes";
+import SwaggerDoc from "../swagger.json";
 
 async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
@@ -16,13 +16,10 @@ async function serverCommand() {
         await new Snapshot({}).rebuild({ verbose: true });
     const app = express();
     await database.updateDatabaseChecksum();
-    const apiInstance = Api.getInstance();
-    await apiInstance.initializeApi();
 
     app.use(express.json());
     app.use(morgan("short"));
-    app.use(apiKeyMiddleware);
-    app.use("/api", apiInstance.expressRouter);
+    app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
     RegisterRoutes(app);
 

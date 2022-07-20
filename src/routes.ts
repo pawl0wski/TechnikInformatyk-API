@@ -11,12 +11,27 @@ import {
     TsoaResponse,
     fetchMiddlewares,
 } from "@tsoa/runtime";
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ExamController } from "./controllers/examController/examController";
 import type { RequestHandler } from "express";
 import * as express from "express";
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
-const models: TsoaRoute.Models = {};
+const models: TsoaRoute.Models = {
+    ExamResponseI: {
+        dataType: "refObject",
+        properties: {
+            uuid: { dataType: "string", required: true },
+            name: { dataType: "string", required: true },
+            description: { dataType: "string", required: true },
+            icon: { dataType: "string", required: true },
+            type: { dataType: "string", required: true },
+        },
+        additionalProperties: false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+};
 const validationService = new ValidationService(models);
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -26,6 +41,37 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+    app.get(
+        "/exam",
+        ...fetchMiddlewares<RequestHandler>(ExamController),
+        ...fetchMiddlewares<RequestHandler>(ExamController.prototype.getExams),
+
+        function ExamController_getExams(
+            request: any,
+            response: any,
+            next: any
+        ) {
+            const args = {};
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ExamController();
+
+                const promise = controller.getExams.apply(
+                    controller,
+                    validatedArgs as any
+                );
+                promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        }
+    );
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 

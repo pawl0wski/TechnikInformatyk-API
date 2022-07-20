@@ -5,20 +5,66 @@
         "parameters": {},
         "requestBodies": {},
         "responses": {},
-        "schemas": {},
+        "schemas": {
+            "ExamResponseI": {
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "icon": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "required": ["uuid", "name", "description", "icon", "type"],
+                "type": "object",
+                "additionalProperties": false
+            }
+        },
         "securitySchemes": {}
     },
     "info": {
-        "title": "technikinformatykbackend",
+        "title": "Technik Informatyk API",
         "version": "v1",
-        "description": "Technik Informatyk API",
+        "description": "REST API for Technik Informatyk App",
         "license": {
             "name": "ISC"
         },
         "contact": {}
     },
     "openapi": "3.0.0",
-    "paths": {},
+    "paths": {
+        "/exam": {
+            "get": {
+                "operationId": "GetExams",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExamResponseI"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [],
+                "parameters": []
+            }
+        }
+    },
     "servers": [
         {
             "url": "/"
