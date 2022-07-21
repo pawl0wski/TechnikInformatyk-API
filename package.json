@@ -10,7 +10,7 @@
         "build:swagger": "tsoa spec-and-routes && prettier --write 'src/routes.ts' && prettier --write 'src/swagger.json'",
         "check:formatting": "prettier --check '*'",
         "check:linting": "eslint 'src/**'",
-        "test": "jest"
+        "test": "jest --passWithNoTests"
     },
     "keywords": [],
     "author": "",

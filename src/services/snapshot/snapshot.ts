@@ -4,6 +4,7 @@ import tar from "tar";
 import glob from "glob-promise";
 import chalk from "chalk";
 import Question from "../../database/models/question.model";
+import EnvironmentConfig from "../../config/environmentConfig";
 
 interface SnapshotConfiguration {
     snapshotPath?: string;
@@ -17,26 +18,21 @@ export default class Snapshot {
         this.cdnPath = snapshotPath;
     }
 
-    public get getSnapshotPath(): string {
-        if (this.cdnPath !== undefined) return this.cdnPath;
-        return process.env.SNAPSHOT_PATH || "snapshot/";
-    }
-
     createSnapshotFolder() {
-        const snapshotPath = this.getSnapshotPath;
+        const snapshotPath = EnvironmentConfig.snapshotPath;
         if (!existsSync(snapshotPath)) {
             mkdirSync(snapshotPath);
         }
     }
 
     getUrlToImage(questionUuid: string): string {
-        const snapshotPath = this.getSnapshotPath;
+        const snapshotPath = EnvironmentConfig.snapshotPath;
         return `/${snapshotPath}${questionUuid}.jpg`;
     }
 
     getUrlToImagesSnapshot(): string {
-        const cdnPath = this.getSnapshotPath;
-        return `/${cdnPath}imagesSnapshot.tar`;
+        const snapshotPath = EnvironmentConfig.snapshotPath;
+        return `/${snapshotPath}imagesSnapshot.tar`;
     }
 
     async rebuild(settings: { verbose: boolean } = { verbose: false }) {
@@ -62,7 +58,7 @@ export default class Snapshot {
         const questionsWithImages = (await Question.findAll()).filter(
             (q: Question) => q.image != null
         );
-        const snapshotPath = this.getSnapshotPath;
+        const snapshotPath = EnvironmentConfig.snapshotPath;
         const imageWritePromises: Promise<void>[] = [];
         for (const question of questionsWithImages) {
             const imagePath = path.join(snapshotPath, `${question.uuid}.jpg`);
@@ -72,14 +68,14 @@ export default class Snapshot {
     }
 
     async createImagesSnapshot() {
-        const cdnPath = this.getSnapshotPath;
-        const jpgFiles = (await glob(path.join(cdnPath, "*.jpg"))).map((e) =>
-            path.basename(e)
+        const snapshotPath = EnvironmentConfig.snapshotPath;
+        const jpgFiles = (await glob(path.join(snapshotPath, "*.jpg"))).map(
+            (e) => path.basename(e)
         );
         await tar.c(
             {
-                cwd: cdnPath,
-                file: path.join(cdnPath, "imagesSnapshot.tar"),
+                cwd: snapshotPath,
+                file: path.join(snapshotPath, "imagesSnapshot.tar"),
             },
             jpgFiles
         );
