@@ -3,7 +3,7 @@ import { Controller } from "@tsoa/runtime";
 import QuestionRepository from "../../repositories/questionRepository/questionRepository";
 import QuestionResponseI from "../../interfaces/questionResponse";
 import express from "express";
-import CacheEndpoint from "../../services/cacheService/decorators/cacheEndpoint";
+import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
 
 @Route("question")
 @Tags("Question")
@@ -17,7 +17,7 @@ export class QuestionController extends Controller {
     }
 
     @Get("")
-    @CacheEndpoint("question")
+    @CachedEndpoint("question")
     public async getExams(): Promise<QuestionResponseI[]> {
         const questions = await this._repository.getQuestions();
 

@@ -1,6 +1,6 @@
 import CacheService from "../cacheService";
 
-export default function CacheEndpoint(name: string) {
+export default function CachedEndpoint(name: string) {
     return function (
         target: any,
         key: string | symbol,

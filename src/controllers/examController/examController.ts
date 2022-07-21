@@ -2,7 +2,7 @@ import { Get, Request, Route, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
 import ExamResponseI from "../../interfaces/examResponse";
-import CacheEndpoint from "../../services/cacheService/decorators/cacheEndpoint";
+import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
 import express from "express";
 
 @Route("exam")
@@ -17,7 +17,7 @@ export class ExamController extends Controller {
     }
 
     @Get("")
-    @CacheEndpoint("exam")
+    @CachedEndpoint("exam")
     public async getExams(): Promise<ExamResponseI[]> {
         return (await this._repository.getExams()) as ExamResponseI[];
     }
