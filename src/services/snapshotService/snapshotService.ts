@@ -2,7 +2,6 @@ import { existsSync, mkdirSync, promises as fs } from "fs";
 import path from "path";
 import tar from "tar";
 import glob from "glob-promise";
-import chalk from "chalk";
 import Question from "../../database/models/question.model";
 import EnvironmentConfig from "../../config/environmentConfig";
 
