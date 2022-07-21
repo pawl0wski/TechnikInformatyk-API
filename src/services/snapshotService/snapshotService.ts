@@ -32,23 +32,10 @@ export default class SnapshotService {
         return `/${this._snapshotPath}imagesSnapshot.tar`;
     }
 
-    async rebuild(settings: { verbose: boolean } = { verbose: false }) {
-        settings.verbose
-            ? console.log(chalk.gray("Creating snapshot folder..."))
-            : null;
+    async rebuild() {
         this.createSnapshotFolder();
-
-        settings.verbose
-            ? process.stdout.write("Coping all images to snapshot folder... ")
-            : null;
         await this.createImages();
-        settings.verbose ? process.stdout.write(chalk.green("OK\n")) : null;
-
-        settings.verbose
-            ? process.stdout.write("Rebuilding Snapshot... ")
-            : null;
         await this.createImagesSnapshot();
-        settings.verbose ? process.stdout.write(chalk.green("OK\n")) : null;
     }
 
     async createImages(outputPath?: string) {
