@@ -12,7 +12,8 @@ import CacheConfig from "../services/cacheService/config/cacheConfig";
 
 async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
-    CacheService.getInstance(CacheConfig.fromEnv());
+    const cache = CacheService.getInstance(CacheConfig.fromEnv());
+    await cache.connectToRedis();
     const database = Database.getInstance();
     await database.sync();
     if (EnvironmentConfiguration.snapshotEnabled)
