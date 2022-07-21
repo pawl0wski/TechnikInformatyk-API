@@ -1,4 +1,3 @@
-import SnapshotService from "../services/snapshot/snapshotService";
 import express from "express";
 import morgan from "morgan";
 import chalk from "chalk";
@@ -9,6 +8,7 @@ import { RegisterRoutes } from "../routes";
 import SwaggerDoc from "../swagger.json";
 import CacheService from "../services/cacheService/cacheService";
 import CacheConfig from "../services/cacheService/config/cacheConfig";
+import SnapshotService from "../services/snapshotService/snapshotService";
 
 async function initializeSingletons() {
     const cache = CacheService.getInstance(CacheConfig.fromEnv());

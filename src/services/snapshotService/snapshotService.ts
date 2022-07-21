@@ -51,29 +51,29 @@ export default class SnapshotService {
         settings.verbose ? process.stdout.write(chalk.green("OK\n")) : null;
     }
 
-    async createImages() {
+    async createImages(outputPath?: string) {
+        outputPath ??= this._snapshotPath;
         const questionsWithImages = (await Question.findAll()).filter(
             (q: Question) => q.image != null
         );
         const imageWritePromises: Promise<void>[] = [];
         for (const question of questionsWithImages) {
-            const imagePath = path.join(
-                this._snapshotPath,
-                `${question.uuid}.jpg`
-            );
+            const imagePath = path.join(outputPath, `${question.uuid}.jpg`);
             imageWritePromises.push(fs.writeFile(imagePath, question.image));
         }
         await Promise.all(imageWritePromises);
     }
 
-    async createImagesSnapshot() {
-        const jpgFiles = (
-            await glob(path.join(this._snapshotPath, "*.jpg"))
-        ).map((e) => path.basename(e));
+    async createImagesSnapshot(outputPath?: string) {
+        outputPath ??= this._snapshotPath;
+
+        const jpgFiles = (await glob(path.join(outputPath, "*.jpg"))).map((e) =>
+            path.basename(e)
+        );
         await tar.c(
             {
-                cwd: this._snapshotPath,
-                file: path.join(this._snapshotPath, "imagesSnapshot.tar"),
+                cwd: outputPath,
+                file: path.join(outputPath, "imagesSnapshot.tar"),
             },
             jpgFiles
         );

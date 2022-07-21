@@ -1,4 +1,4 @@
-import SnapshotService from "../services/snapshot/snapshotService";
+import SnapshotService from "../services/snapshotService/snapshotService";
 
 async function rebuildSnapshotCommand() {
     await new SnapshotService({}).rebuild({ verbose: true });

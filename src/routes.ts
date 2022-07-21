@@ -16,6 +16,8 @@ import { DatabaseVersionController } from "./controllers/databaseVersionControll
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ExamController } from "./controllers/examController/examController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ImagesSnapshotController } from "./controllers/imagesSnapshotController/imagesSnapshotController";
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PingController } from "./controllers/pingController/pingController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { QuestionController } from "./controllers/questionController/questionController";
@@ -129,6 +131,46 @@ export function RegisterRoutes(app: express.Router) {
                 const controller = new ExamController();
 
                 const promise = controller.getExams.apply(
+                    controller,
+                    validatedArgs as any
+                );
+                promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        }
+    );
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get(
+        "/images-snapshot",
+        ...fetchMiddlewares<RequestHandler>(ImagesSnapshotController),
+        ...fetchMiddlewares<RequestHandler>(
+            ImagesSnapshotController.prototype.getDatabaseVersion
+        ),
+
+        function ImagesSnapshotController_getDatabaseVersion(
+            request: any,
+            response: any,
+            next: any
+        ) {
+            const args = {
+                req: {
+                    in: "request",
+                    name: "req",
+                    required: true,
+                    dataType: "object",
+                },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ImagesSnapshotController();
+
+                const promise = controller.getDatabaseVersion.apply(
                     controller,
                     validatedArgs as any
                 );

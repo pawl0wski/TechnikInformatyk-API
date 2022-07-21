@@ -144,6 +144,26 @@
                 "parameters": []
             }
         },
+        "/images-snapshot": {
+            "get": {
+                "operationId": "GetDatabaseVersion",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Images Snapshot"],
+                "security": [],
+                "parameters": []
+            }
+        },
         "/ping": {
             "get": {
                 "operationId": "GetPing",
@@ -196,7 +216,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "enum": ["Not found", "Not Found"]
                                 }
                             }
                         }
