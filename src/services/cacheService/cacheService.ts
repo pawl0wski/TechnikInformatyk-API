@@ -14,16 +14,15 @@ export default class CacheService {
 
     constructor(
         config: CacheConfig,
-        additionalOptions: CacheServiceAdditionalOptions
+        additionalOptions?: CacheServiceAdditionalOptions
     ) {
         const { redisUrl, prefix } = config;
-        const { redisClient, database } = additionalOptions;
         this._redisClient =
-            redisClient ??
+            additionalOptions?.redisClient ??
             createClient({
                 url: redisUrl,
             });
-        this._database = database ?? Database.getInstance();
+        this._database = additionalOptions?.database ?? Database.getInstance();
         this._redisPrefix = prefix;
     }
 
