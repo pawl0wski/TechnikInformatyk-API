@@ -1,10 +1,10 @@
 import { createClient, RedisClientType } from "redis";
 import Database, { DatabaseI } from "../../database/database";
+import CacheConfig from "./config/cacheConfig";
 
-interface ApiCacheConfiguration {
+interface CacheServiceAdditionalOptions {
     redisClient?: RedisClientType;
     database?: DatabaseI;
-    prefix: string;
 }
 
 export default class CacheService {
@@ -12,10 +12,17 @@ export default class CacheService {
     private readonly _database: DatabaseI;
     private readonly _redisPrefix: string;
 
-    constructor(config: ApiCacheConfiguration) {
-        const { redisClient, prefix, database } = config;
-        // TODO: Load redis configuration from ENV
-        this._redisClient = redisClient ?? createClient();
+    constructor(
+        config: CacheConfig,
+        additionalOptions: CacheServiceAdditionalOptions
+    ) {
+        const { redisUrl, prefix } = config;
+        const { redisClient, database } = additionalOptions;
+        this._redisClient =
+            redisClient ??
+            createClient({
+                url: redisUrl,
+            });
         this._database = database ?? Database.getInstance();
         this._redisPrefix = prefix;
     }

@@ -53,4 +53,24 @@ export default class EnvironmentConfig {
     public static get databaseDriver() {
         return EnvironmentConfig._getStringEnv("DB_DRIVER");
     }
+
+    public static get redisIP() {
+        return EnvironmentConfig._getStringEnv("REDIS_IP");
+    }
+
+    public static get redisUsername() {
+        return EnvironmentConfig._getStringEnv("REDIS_USER");
+    }
+
+    public static get redisPort() {
+        return EnvironmentConfig._getNumberEnv("REDIS_PORT");
+    }
+
+    public static get redisPassword() {
+        return EnvironmentConfig._getStringEnv("REDIS_PASS");
+    }
+
+    public static get redisPrefix() {
+        return EnvironmentConfig._getStringEnv("REDIS_PREFIX");
+    }
 }
