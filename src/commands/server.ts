@@ -1,4 +1,4 @@
-import Snapshot from "../services/snapshot/snapshot";
+import SnapshotService from "../services/snapshot/snapshotService";
 import express from "express";
 import morgan from "morgan";
 import chalk from "chalk";
@@ -19,7 +19,7 @@ async function initializeSingletons() {
     await database.updateDatabaseChecksum();
 
     if (EnvironmentConfiguration.snapshotEnabled)
-        await new Snapshot({}).rebuild({ verbose: true });
+        await new SnapshotService({}).rebuild({ verbose: true });
 }
 
 function initializeExpress(): express.Express {
