@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import { Command } from "commander";
-import rebuildCDN from "./commands/rebuildCDN";
+import rebuildCDN from "./commands/rebuildSnapshot";
 import serverCommand from "./commands/server";
 import generateKeyCommand from "./commands/generateKey";
 
@@ -10,8 +10,8 @@ const program = new Command();
 program.name("Technik Informatyk API");
 
 program
-    .command("rebuildCDN")
-    .description("Rebuild CDN folder.")
+    .command("rebuildSnapshot")
+    .description("Rebuild snapshot folder.")
     .action(rebuildCDN);
 
 program
