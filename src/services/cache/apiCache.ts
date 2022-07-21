@@ -1,7 +1,7 @@
 import { createClient, RedisClientType } from "redis";
 import Database, { DatabaseI } from "../../database/database";
-import { AdaptedExam } from "../../api/adapters/examsAdapter";
-import { AdaptedQuestion } from "../../api/adapters/questionsAdapter";
+import QuestionResponseI from "../../interfaces/questionResponse";
+import ExamResponseI from "../../interfaces/examResponse";
 
 interface ApiCacheConfiguration {
     redisClient?: RedisClientType;
@@ -59,19 +59,19 @@ export default class ApiCache {
         await this.redisClient.set(key, JSON.stringify(data));
     }
 
-    getAdaptedExamsFromCache(): Promise<AdaptedExam[] | null> {
+    getAdaptedExamsFromCache(): Promise<ExamResponseI[] | null> {
         return this.getObjectFromCache("exams");
     }
 
-    getAdaptedQuestionsFromCache(): Promise<AdaptedQuestion[] | null> {
+    getAdaptedQuestionsFromCache(): Promise<QuestionResponseI[] | null> {
         return this.getObjectFromCache("questions");
     }
 
-    saveAdaptedExamsToCache(adaptedExams: AdaptedExam[]) {
+    saveAdaptedExamsToCache(adaptedExams: ExamResponseI[]) {
         return this.saveObjectToCache("exams", adaptedExams);
     }
 
-    saveAdaptedQuestionsToCache(adaptedQuestions: AdaptedQuestion[]) {
+    saveAdaptedQuestionsToCache(adaptedQuestions: QuestionResponseI[]) {
         return this.saveObjectToCache("questions", adaptedQuestions);
     }
 }
