@@ -1,4 +1,4 @@
-import EnvironmentConfiguration from "./environmentConfig";
+import EnvironmentConfiguration from "../../config/environmentConfig";
 
 export default class DatabaseConfig {
     public user: string;

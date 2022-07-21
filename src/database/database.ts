@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
-import DatabaseConfig from "../config/databaseConfig";
+import DatabaseConfig from "./config/databaseConfig";
 import Exam from "./models/exam.model";
 import ExamQuestion from "./models/examquestion.model";
 import Question from "./models/question.model";
