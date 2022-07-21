@@ -10,22 +10,34 @@ import SwaggerDoc from "../swagger.json";
 import CacheService from "../services/cacheService/cacheService";
 import CacheConfig from "../services/cacheService/config/cacheConfig";
 
-async function serverCommand() {
-    const PORT = process.env.SERVER_PORT || 3000;
+async function initializeSingletons() {
     const cache = CacheService.getInstance(CacheConfig.fromEnv());
     await cache.connectToRedis();
+
     const database = Database.getInstance();
     await database.sync();
+    await database.updateDatabaseChecksum();
+
     if (EnvironmentConfiguration.snapshotEnabled)
         await new Snapshot({}).rebuild({ verbose: true });
+}
+
+function initializeExpress(): express.Express {
     const app = express();
-    await database.updateDatabaseChecksum();
 
     app.use(express.json());
     app.use(morgan("short"));
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
     RegisterRoutes(app);
+
+    return app;
+}
+
+async function serverCommand() {
+    await initializeSingletons();
+    const app = initializeExpress();
+    const PORT = EnvironmentConfiguration.serverPort;
 
     app.listen(PORT, () => {
         console.log(
