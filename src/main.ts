@@ -3,6 +3,7 @@ import { Command } from "commander";
 import rebuildCDN from "./commands/rebuildSnapshot";
 import serverCommand from "./commands/server";
 import generateKeyCommand from "./commands/generateKey";
+import showKeys from "./commands/showKeys";
 
 dotenv.config();
 const program = new Command();
@@ -19,6 +20,8 @@ program
     .description("Generate api key")
     .argument("<string>", "admin|client")
     .action(generateKeyCommand);
+
+program.command("showKeys").description("Show all api keys").action(showKeys);
 
 program
     .command("server")
