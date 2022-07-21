@@ -7,9 +7,12 @@ import EnvironmentConfiguration from "../config/environmentConfig";
 import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "../routes";
 import SwaggerDoc from "../swagger.json";
+import CacheService from "../services/cacheService/cacheService";
+import CacheConfig from "../services/cacheService/config/cacheConfig";
 
 async function serverCommand() {
     const PORT = process.env.SERVER_PORT || 3000;
+    CacheService.getInstance(CacheConfig.fromEnv());
     const database = Database.getInstance();
     await database.sync();
     if (EnvironmentConfiguration.snapshotEnabled)

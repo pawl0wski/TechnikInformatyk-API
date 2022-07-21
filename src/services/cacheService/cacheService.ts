@@ -8,11 +8,12 @@ interface CacheServiceAdditionalOptions {
 }
 
 export default class CacheService {
+    private static instance?: CacheService;
     private readonly _redisClient: RedisClientType;
     private readonly _database: DatabaseI;
     private readonly _redisPrefix: string;
 
-    constructor(
+    private constructor(
         config: CacheConfig,
         additionalOptions?: CacheServiceAdditionalOptions
     ) {
@@ -24,6 +25,20 @@ export default class CacheService {
             });
         this._database = additionalOptions?.database ?? Database.getInstance();
         this._redisPrefix = prefix;
+    }
+
+    public static getInstance(
+        config?: CacheConfig,
+        additionalOptions?: CacheServiceAdditionalOptions
+    ): CacheService {
+        if (!CacheService.instance) {
+            if (!config)
+                throw new Error(
+                    "Config must be defined if you get instance for first time"
+                );
+            CacheService.instance = new CacheService(config, additionalOptions);
+        }
+        return CacheService.instance;
     }
 
     public connectToRedis(): Promise<void> {
