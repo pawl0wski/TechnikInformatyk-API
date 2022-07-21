@@ -19,7 +19,7 @@ async function initializeSingletons() {
     await database.updateDatabaseChecksum();
 
     if (EnvironmentConfiguration.snapshotEnabled)
-        await new SnapshotService({}).rebuild({ verbose: true });
+        await new SnapshotService({}).rebuild();
 }
 
 function initializeExpress(): express.Express {
