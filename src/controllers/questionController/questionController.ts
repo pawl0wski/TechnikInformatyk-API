@@ -1,4 +1,4 @@
-import { Get, Path, Route, Tags, Request } from "tsoa";
+import { Get, Path, Route, Tags, Request, Security } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import QuestionRepository from "../../repositories/questionRepository/questionRepository";
 import QuestionResponseI from "../../interfaces/questionResponse";
@@ -20,6 +20,7 @@ export class QuestionController extends Controller {
     }
 
     @Get("")
+    @Security("api_key", ["client"])
     @CachedEndpoint("question")
     public async getExams(): Promise<QuestionResponseI[]> {
         const questions = await this._repository.getQuestions();
@@ -51,6 +52,7 @@ export class QuestionController extends Controller {
     }
 
     @Get("{uuid}/image")
+    @Security("api_key", ["client"])
     public async getQuestionImage(
         @Path("uuid") uuid: string,
         @Request() req: express.Request

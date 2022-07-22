@@ -1,4 +1,4 @@
-import { Get, Request, Route, Tags } from "tsoa";
+import { Get, Request, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
 import ExamResponseI from "../../interfaces/examResponse";
@@ -17,6 +17,7 @@ export class ExamController extends Controller {
     }
 
     @Get("")
+    @Security("api_key", ["client"])
     @CachedEndpoint("exam")
     public async getExams(): Promise<ExamResponseI[]> {
         return (await this._repository.getExams()) as ExamResponseI[];

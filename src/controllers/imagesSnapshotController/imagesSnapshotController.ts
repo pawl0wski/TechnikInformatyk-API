@@ -1,4 +1,4 @@
-import { Get, Route, Tags, Request } from "tsoa";
+import { Get, Route, Tags, Request, Security } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import express from "express";
 import EnvironmentConfig from "../../config/environmentConfig";
@@ -13,6 +13,7 @@ import NotFoundError from "../../errors/notFoundError";
 @Tags("Images Snapshot")
 export class ImagesSnapshotController extends Controller {
     @Get("")
+    @Security("api_key", ["client"])
     public async getDatabaseVersion(@Request() req: express.Request) {
         const res = req.res;
         if (res === undefined) throw new NotFoundError();

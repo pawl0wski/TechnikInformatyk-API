@@ -1,4 +1,4 @@
-import { Get, Route, Tags } from "tsoa";
+import { Get, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
 import ExamResponseI from "../../interfaces/examResponse";
@@ -17,6 +17,7 @@ export class DatabaseVersionController extends Controller {
     }
 
     @Get("")
+    @Security("api_key", ["client"])
     public async getDatabaseVersion(): Promise<DatabaseVersionResponseI> {
         return {
             version: this._database.checksum,
