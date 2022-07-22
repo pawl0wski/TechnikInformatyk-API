@@ -21,7 +21,7 @@
         }
     },
     "routes": {
-        "authenticationModule": "src/services/authorizationService/authenticationModule/authenticationModule.ts",
+        "authenticationModule": "src/services/authenticationService/modules/authenticationModule.ts",
         "routesDir": "src"
     }
 }
