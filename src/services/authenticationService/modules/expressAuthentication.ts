@@ -10,7 +10,7 @@ export async function expressAuthentication(
     if (securityName === "api_key") {
         const service = new AuthenticationService();
         const key = request.headers["authorization"];
-        if (key && key.length == 64) {
+        if (key && key.length == 32) {
             for (const permission of scopes ?? []) {
                 if (
                     !(await service.checkIfKeyHavePermission(key, permission))
