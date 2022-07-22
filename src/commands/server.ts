@@ -10,10 +10,13 @@ import CacheService from "../services/cacheService/cacheService";
 import CacheConfig from "../services/cacheService/config/cacheConfig";
 import SnapshotService from "../services/snapshotService/snapshotService";
 import errorHandler from "../middlewares/errorHandler";
+import EnvironmentConfig from "../config/environmentConfig";
 
 async function initializeSingletons() {
-    const cache = CacheService.getInstance(CacheConfig.fromEnv());
-    await cache.connectToRedis();
+    if (EnvironmentConfig.cacheEnabled) {
+        const cache = CacheService.getInstance(CacheConfig.fromEnv());
+        await cache.connectToRedis();
+    }
 
     const database = Database.getInstance();
     await database.sync();
