@@ -2,7 +2,7 @@ import express from "express";
 import AuthenticationError from "../../../errors/authenticationError";
 import AuthenticationService from "../authenticationService";
 
-export async function authenticationModule(
+export async function expressAuthentication(
     request: express.Request,
     securityName: string,
     scopes?: string[]

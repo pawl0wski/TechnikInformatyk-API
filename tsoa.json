@@ -21,7 +21,7 @@
         }
     },
     "routes": {
-        "authenticationModule": "src/services/authenticationService/modules/authenticationModule.ts",
+        "authenticationModule": "src/services/authenticationService/modules/expressAuthentication.ts",
         "routesDir": "src"
     }
 }
