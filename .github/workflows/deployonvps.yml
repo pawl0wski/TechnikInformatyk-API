@@ -32,7 +32,7 @@ jobs:
       - name: "Restart project's service on VPS 🔄"
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: "cd ~/bin/ && npm install --production && sudo systemctl restart ${{ secrets.SFTP_USERNAME }}"
+          command: "cd ~/bin/ && npm install --omit=dev && sudo systemctl restart ${{ secrets.SFTP_USERNAME }}"
           host: "${{ secrets.SFTP_ADDRESS }}"
           username: "${{ secrets.SFTP_USERNAME }}"
           password: "${{ secrets.SFTP_PASSWORD }}"
