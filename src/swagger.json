@@ -88,7 +88,17 @@
                 "additionalProperties": false
             }
         },
-        "securitySchemes": {}
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "scopes": {
+                    "client": "It allows you to access application data.",
+                    "admin": "It allows you to modify application data."
+                }
+            }
+        }
     },
     "info": {
         "title": "Technik Informatyk API",
@@ -117,7 +127,11 @@
                     }
                 },
                 "tags": ["Other"],
-                "security": [],
+                "security": [
+                    {
+                        "api_key": ["client"]
+                    }
+                ],
                 "parameters": []
             }
         },
@@ -140,7 +154,11 @@
                     }
                 },
                 "tags": ["Exam"],
-                "security": [],
+                "security": [
+                    {
+                        "api_key": ["client"]
+                    }
+                ],
                 "parameters": []
             }
         },
@@ -148,19 +166,16 @@
             "get": {
                 "operationId": "GetDatabaseVersion",
                 "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "string"
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "No content"
                     }
                 },
                 "tags": ["Images Snapshot"],
-                "security": [],
+                "security": [
+                    {
+                        "api_key": ["client"]
+                    }
+                ],
                 "parameters": []
             }
         },
@@ -180,7 +195,11 @@
                     }
                 },
                 "tags": ["Other"],
-                "security": [],
+                "security": [
+                    {
+                        "api_key": ["client"]
+                    }
+                ],
                 "parameters": []
             }
         },
@@ -203,7 +222,11 @@
                     }
                 },
                 "tags": ["Question"],
-                "security": [],
+                "security": [
+                    {
+                        "api_key": ["client"]
+                    }
+                ],
                 "parameters": []
             }
         },
@@ -211,20 +234,16 @@
             "get": {
                 "operationId": "GetQuestionImage",
                 "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "string",
-                                    "enum": ["Not found", "Not Found"]
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "No content"
                     }
                 },
                 "tags": ["Question"],
-                "security": [],
+                "security": [
+                    {
+                        "api_key": ["client"]
+                    }
+                ],
                 "parameters": [
                     {
                         "in": "path",

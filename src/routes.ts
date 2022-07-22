@@ -21,6 +21,9 @@ import { ImagesSnapshotController } from "./controllers/imagesSnapshotController
 import { PingController } from "./controllers/pingController/pingController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { QuestionController } from "./controllers/questionController/questionController";
+import { expressAuthentication } from "./services/authenticationService/modules/authenticationModule";
+// @ts-ignore - no great way to install types from subpackage
+const promiseAny = require("promise.any");
 import type { RequestHandler } from "express";
 import * as express from "express";
 
@@ -79,6 +82,7 @@ export function RegisterRoutes(app: express.Router) {
     // ###########################################################################################################
     app.get(
         "/database-version",
+        authenticateMiddleware([{ api_key: ["client"] }]),
         ...fetchMiddlewares<RequestHandler>(DatabaseVersionController),
         ...fetchMiddlewares<RequestHandler>(
             DatabaseVersionController.prototype.getDatabaseVersion
@@ -112,6 +116,7 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
         "/exam",
+        authenticateMiddleware([{ api_key: ["client"] }]),
         ...fetchMiddlewares<RequestHandler>(ExamController),
         ...fetchMiddlewares<RequestHandler>(ExamController.prototype.getExams),
 
@@ -143,6 +148,7 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
         "/images-snapshot",
+        authenticateMiddleware([{ api_key: ["client"] }]),
         ...fetchMiddlewares<RequestHandler>(ImagesSnapshotController),
         ...fetchMiddlewares<RequestHandler>(
             ImagesSnapshotController.prototype.getDatabaseVersion
@@ -183,6 +189,7 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
         "/ping",
+        authenticateMiddleware([{ api_key: ["client"] }]),
         ...fetchMiddlewares<RequestHandler>(PingController),
         ...fetchMiddlewares<RequestHandler>(PingController.prototype.getPing),
 
@@ -214,6 +221,7 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
         "/question",
+        authenticateMiddleware([{ api_key: ["client"] }]),
         ...fetchMiddlewares<RequestHandler>(QuestionController),
         ...fetchMiddlewares<RequestHandler>(
             QuestionController.prototype.getExams
@@ -247,6 +255,7 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
         "/question/:uuid/image",
+        authenticateMiddleware([{ api_key: ["client"] }]),
         ...fetchMiddlewares<RequestHandler>(QuestionController),
         ...fetchMiddlewares<RequestHandler>(
             QuestionController.prototype.getQuestionImage
@@ -293,6 +302,76 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+    function authenticateMiddleware(security: TsoaRoute.Security[] = []) {
+        return async function runAuthenticationMiddleware(
+            request: any,
+            _response: any,
+            next: any
+        ) {
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            // keep track of failed auth attempts so we can hand back the most
+            // recent one.  This behavior was previously existing so preserving it
+            // here
+            const failedAttempts: any[] = [];
+            const pushAndRethrow = (error: any) => {
+                failedAttempts.push(error);
+                throw error;
+            };
+
+            const secMethodOrPromises: Promise<any>[] = [];
+            for (const secMethod of security) {
+                if (Object.keys(secMethod).length > 1) {
+                    const secMethodAndPromises: Promise<any>[] = [];
+
+                    for (const name in secMethod) {
+                        secMethodAndPromises.push(
+                            expressAuthentication(
+                                request,
+                                name,
+                                secMethod[name]
+                            ).catch(pushAndRethrow)
+                        );
+                    }
+
+                    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+                    secMethodOrPromises.push(
+                        Promise.all(secMethodAndPromises).then((users) => {
+                            return users[0];
+                        })
+                    );
+                } else {
+                    for (const name in secMethod) {
+                        secMethodOrPromises.push(
+                            expressAuthentication(
+                                request,
+                                name,
+                                secMethod[name]
+                            ).catch(pushAndRethrow)
+                        );
+                    }
+                }
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            try {
+                request["user"] = await promiseAny(secMethodOrPromises);
+                next();
+            } catch (err) {
+                // Show most recent error as response
+                const error = failedAttempts.pop();
+                error.status = error.status || 401;
+                next(error);
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        };
+    }
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
