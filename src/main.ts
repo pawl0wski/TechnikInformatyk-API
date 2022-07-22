@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import { Command } from "commander";
-import rebuildCDN from "./commands/rebuildSnapshot";
+import rebuildSnapshot from "./commands/rebuildSnapshot";
 import serverCommand from "./commands/server";
 import generateKeyCommand from "./commands/generateKey";
 import showKeys from "./commands/showKeys";
@@ -13,7 +13,7 @@ program.name("Technik Informatyk API");
 program
     .command("rebuildSnapshot")
     .description("Rebuild snapshot folder.")
-    .action(rebuildCDN);
+    .action(rebuildSnapshot);
 
 program
     .command("generateKey")
