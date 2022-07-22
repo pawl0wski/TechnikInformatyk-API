@@ -7,9 +7,21 @@
         "specVersion": 3,
         "version": "v1",
         "name": "Technik Informatyk API",
-        "description": "REST API for Technik Informatyk App"
+        "description": "REST API for Technik Informatyk App",
+        "securityDefinitions": {
+            "api_key": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "scopes": {
+                    "client": "It allows you to access application data.",
+                    "admin": "It allows you to modify application data."
+                }
+            }
+        }
     },
     "routes": {
+        "authenticationModule": "src/services/authorizationService/authenticationModule/authenticationModule.ts",
         "routesDir": "src"
     }
 }
