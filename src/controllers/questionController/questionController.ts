@@ -6,6 +6,7 @@ import express from "express";
 import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
 import EnvironmentConfig from "../../config/environmentConfig";
 import SnapshotService from "../../services/snapshotService/snapshotService";
+import NotFoundError from "../../errors/notFoundError";
 
 @Route("question")
 @Tags("Question")
@@ -55,14 +56,14 @@ export class QuestionController extends Controller {
         @Request() req: express.Request
     ) {
         const res = req.res;
-        if (res === undefined) return "Not found";
+        if (res === undefined) throw new NotFoundError();
 
         if (EnvironmentConfig.snapshotEnabled) {
             const snapshotService = new SnapshotService({});
             res.redirect(snapshotService.getUrlToImage(uuid));
         } else {
             const image = await this._repository.getImageForQuestion(uuid);
-            if (image === null) return "Not Found";
+            if (image === null) throw new NotFoundError();
             res.type("jpg");
             res.send(image);
         }

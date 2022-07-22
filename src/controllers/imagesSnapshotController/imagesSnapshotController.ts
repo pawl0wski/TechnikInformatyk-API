@@ -7,6 +7,7 @@ import * as os from "os";
 import { mkdtempSync, rmSync } from "fs";
 import path from "path";
 import * as fs from "fs";
+import NotFoundError from "../../errors/notFoundError";
 
 @Route("images-snapshot")
 @Tags("Images Snapshot")
@@ -14,7 +15,7 @@ export class ImagesSnapshotController extends Controller {
     @Get("")
     public async getDatabaseVersion(@Request() req: express.Request) {
         const res = req.res;
-        if (res === undefined) return "Not found";
+        if (res === undefined) throw new NotFoundError();
         const snapshotService = new SnapshotService({});
         if (EnvironmentConfig.snapshotEnabled) {
             res.redirect(snapshotService.getUrlToImagesSnapshot());
