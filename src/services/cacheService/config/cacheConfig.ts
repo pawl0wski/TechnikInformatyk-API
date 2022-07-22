@@ -6,6 +6,7 @@ export default class CacheConfig {
     public prefix: string;
     public username?: string;
     public password?: string;
+    public authenticate: boolean;
 
     static fromEnv(): CacheConfig {
         const cacheConfig = new CacheConfig();
@@ -15,11 +16,16 @@ export default class CacheConfig {
         cacheConfig.prefix = EnvironmentConfig.redisPrefix;
         cacheConfig.username = EnvironmentConfig.redisUsername;
         cacheConfig.password = EnvironmentConfig.redisPassword;
+        cacheConfig.authenticate = EnvironmentConfig.redisAuthenticate;
 
         return cacheConfig;
     }
 
     public get redisUrl(): string {
-        return `redis://${this.username}:${this.password}@${this.ip}:${this.port}`;
+        if (this.authenticate) {
+            return `redis://${this.username}:${this.password}@${this.ip}:${this.port}`;
+        } else {
+            return `redis://${this.ip}:${this.port}`;
+        }
     }
 }

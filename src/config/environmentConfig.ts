@@ -70,6 +70,10 @@ export default class EnvironmentConfig {
         return EnvironmentConfig._getStringEnv("REDIS_PASS");
     }
 
+    public static get redisAuthenticate() {
+        return EnvironmentConfig._getBoolEnv("REDIS_AUTHENTICATE");
+    }
+
     public static get redisPrefix() {
         return EnvironmentConfig._getStringEnv("REDIS_PREFIX");
     }
