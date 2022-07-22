@@ -1,4 +1,5 @@
 import CacheService from "../cacheService";
+import EnvironmentConfig from "../../../config/environmentConfig";
 
 export default function CachedEndpoint(name: string) {
     return function (
@@ -6,16 +7,18 @@ export default function CachedEndpoint(name: string) {
         key: string | symbol,
         descriptor: PropertyDescriptor
     ) {
-        const original = descriptor.value;
+        if (EnvironmentConfig.cacheEnabled) {
+            const original = descriptor.value;
 
-        descriptor.value = async function (...args: any[]) {
-            const cacheService = CacheService.getInstance();
-            const cachedData = await cacheService.getObjectFromCache(name);
-            if (cachedData !== null) return cachedData;
+            descriptor.value = async function (...args: any[]) {
+                const cacheService = CacheService.getInstance();
+                const cachedData = await cacheService.getObjectFromCache(name);
+                if (cachedData !== null) return cachedData;
 
-            const value = await original.apply(this, args);
-            await cacheService.saveObjectToCache(name, value);
-            return value;
-        };
+                const value = await original.apply(this, args);
+                await cacheService.saveObjectToCache(name, value);
+                return value;
+            };
+        }
     };
 }
