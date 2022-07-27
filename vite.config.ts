@@ -8,4 +8,5 @@ export default defineConfig({
     build: {
         outDir: "../../dist/panel",
     },
+    base: "/panel/",
 } as UserConfigExport);
