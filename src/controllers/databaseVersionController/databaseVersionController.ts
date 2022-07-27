@@ -1,7 +1,5 @@
 import { Get, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
-import ExamRepository from "../../repositories/examRepository/examRepository";
-import ExamResponseI from "../../interfaces/examResponse";
 import Database from "../../database/database";
 import DatabaseVersionResponseI from "../../interfaces/databaseVersionResponseI";
 

@@ -36,6 +36,8 @@ function initializeExpress(): express.Express {
     RegisterRoutes(app);
     app.use("/panel", express.static("panel"));
 
+    app.use(errorHandler);
+
     return app;
 }
 

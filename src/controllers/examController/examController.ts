@@ -1,9 +1,8 @@
-import { Get, Request, Route, Security, Tags } from "tsoa";
+import { Get, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
 import ExamResponseI from "../../interfaces/examResponse";
 import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
-import express from "express";
 
 @Route("exam")
 @Tags("Exam")
