@@ -11,6 +11,7 @@ import CacheConfig from "../services/cacheService/config/cacheConfig";
 import SnapshotService from "../services/snapshotService/snapshotService";
 import errorHandler from "../middlewares/errorHandler";
 import EnvironmentConfig from "../config/environmentConfig";
+import path from "path";
 
 async function initializeSingletons() {
     if (EnvironmentConfig.cacheEnabled) {
@@ -34,7 +35,7 @@ function initializeExpress(): express.Express {
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
     RegisterRoutes(app);
-    app.use("/panel", express.static("panel"));
+    app.use("/panel", express.static(path.join(__dirname, "../panel")));
 
     app.use(errorHandler);
 
