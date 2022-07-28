@@ -9,7 +9,7 @@
         "dev:panel": "vite",
         "generate:swagger": "tsoa spec-and-routes && prettier --write 'src/routes.ts' && prettier --write 'src/swagger.json'",
         "build": "tsc && vite build --emptyOutDir",
-        "build:app": "tsc",
+        "build:api": "tsc",
         "build:panel": "vite build --emptyOutDir",
         "check:formatting": "prettier --check '*'",
         "check:linting": "eslint 'src/**'",
