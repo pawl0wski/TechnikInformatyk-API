@@ -24,7 +24,8 @@ export const useAuthStore = defineStore({
                 headers: this.httpHeaders,
             });
 
-            if (apiResponse.status === 404) this.correct = false;
+            if (apiResponse.status === 404 || apiResponse.status === 500)
+                this.correct = false;
             this.correct = true;
 
             return this.correct;
@@ -34,7 +35,7 @@ export const useAuthStore = defineStore({
                 headers: this.httpHeaders,
             });
 
-            if (apiResponse.status === 404) {
+            if (apiResponse.status === 200) {
                 this.permission = (
                     apiResponse.data as ApiKeyResponseI
                 ).permission;
