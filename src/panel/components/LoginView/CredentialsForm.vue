@@ -10,7 +10,13 @@
             />
         </div>
         <div class="d-flex align-items-end">
-            <button type="submit" class="btn btn-primary ms-auto">Login</button>
+            <button
+                type="submit"
+                class="btn btn-primary ms-auto"
+                @click.prevent="emitFormSubmit"
+            >
+                Login
+            </button>
         </div>
     </form>
 </template>
@@ -19,10 +25,16 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+    emits: ["submit"],
     data(): { authKey: string } {
         return {
             authKey: "",
         };
+    },
+    methods: {
+        emitFormSubmit() {
+            this.$emit("submit", this.authKey);
+        },
     },
 });
 </script>
