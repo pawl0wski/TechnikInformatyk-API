@@ -13,7 +13,7 @@ module.exports = {
         parser: "@typescript-eslint/parser",
         sourceType: "module",
     },
-    plugins: ["@typescript-eslint", "eslint-plugin-vue", "eslint-plugin-html"],
+    plugins: ["@typescript-eslint", "eslint-plugin-vue"],
     rules: {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-empty-function": "off",
