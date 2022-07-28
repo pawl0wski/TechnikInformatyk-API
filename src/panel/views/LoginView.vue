@@ -19,6 +19,7 @@ import CredentialsForm from "../components/LoginView/CredentialsForm.vue";
 import CheckingStatusMessage from "../components/LoginView/CheckingStatusMessage.vue";
 import { useAuthStore } from "../stores/authStore";
 import { defineComponent } from "vue";
+import router from "../router/router";
 
 export enum CheckingApiKeyStatus {
     pending,
@@ -62,6 +63,9 @@ export default defineComponent({
                 this.updateApiKeyCheckingStatusByProvidingKeyCorrectness(
                     isKeyCorrect
                 );
+                if (isKeyCorrect) {
+                    await router.replace({ name: "home" });
+                }
             } catch (e) {
                 this.apiKeyCheckingStatus = CheckingApiKeyStatus.error;
             }
