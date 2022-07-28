@@ -9,7 +9,7 @@ import router from "../router/router";
 export default defineComponent({
     methods: {
         goToLoginView() {
-            router.push("/panel/login");
+            router.push({ name: "home" });
         },
     },
 });

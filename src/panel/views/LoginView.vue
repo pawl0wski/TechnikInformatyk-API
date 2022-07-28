@@ -4,9 +4,7 @@
             <div class="col-12 col-md-6 shadow-sm rounded-3">
                 <div class="login-dialog p-3">
                     <TopText />
-                    <CredentialsForm
-                        @submit="applyApiKeyInStorageAndCheckCorrectness"
-                    />
+                    <CredentialsForm @submit="afterCredentialsFormSubmit" />
                     <CheckingStatusMessage
                         :checking-status="apiKeyCheckingStatus"
                     />
@@ -20,6 +18,7 @@ import TopText from "../components/LoginView/TopText.vue";
 import CredentialsForm from "../components/LoginView/CredentialsForm.vue";
 import CheckingStatusMessage from "../components/LoginView/CheckingStatusMessage.vue";
 import { useAuthStore } from "../stores/authStore";
+import { defineComponent } from "vue";
 
 export enum CheckingApiKeyStatus {
     pending,
@@ -29,27 +28,44 @@ export enum CheckingApiKeyStatus {
     none,
 }
 
-export default {
+export default defineComponent({
     components: { CredentialsForm, TopText, CheckingStatusMessage },
-    data(): { apiKeyCheckingStatus: CheckingApiKeyStatus } {
-        return { apiKeyCheckingStatus: CheckingApiKeyStatus.none };
+    data(): {
+        apiKeyCheckingStatus: CheckingApiKeyStatus;
+        authStore: ReturnType<typeof useAuthStore>;
+    } {
+        return {
+            apiKeyCheckingStatus: CheckingApiKeyStatus.none,
+            authStore: useAuthStore(),
+        };
     },
 
     methods: {
-        async applyApiKeyInStorageAndCheckCorrectness(apiKey: string) {
-            const authStore = useAuthStore();
-            (this as any).apiKeyCheckingStatus = CheckingApiKeyStatus.pending;
-            authStore.setApiKey(apiKey);
+        async applyApiKeyInStore(apiKey: string) {
+            this.authStore.setApiKey(apiKey);
+            this.apiKeyCheckingStatus = CheckingApiKeyStatus.pending;
+        },
+        async checkApiKeyStoredInStore(): Promise<boolean> {
+            return await this.authStore.checkIfApiKeyIsCorrect();
+        },
+        updateApiKeyCheckingStatusByProvidingKeyCorrectness(
+            isApiKeyCorrect: boolean
+        ) {
+            this.apiKeyCheckingStatus = isApiKeyCorrect
+                ? CheckingApiKeyStatus.correct
+                : CheckingApiKeyStatus.incorrect;
+        },
+        async afterCredentialsFormSubmit(apiKey: string) {
             try {
-                const isApiKeyCorrect =
-                    await authStore.checkIfApiKeyIsCorrect();
-                if (!isApiKeyCorrect)
-                    (this as any).apiKeyCheckingStatus =
-                        CheckingApiKeyStatus.incorrect;
+                await this.applyApiKeyInStore(apiKey);
+                const isKeyCorrect = await this.checkApiKeyStoredInStore();
+                this.updateApiKeyCheckingStatusByProvidingKeyCorrectness(
+                    isKeyCorrect
+                );
             } catch (e) {
-                (this as any).apiKeyCheckingStatus = CheckingApiKeyStatus.error;
+                this.apiKeyCheckingStatus = CheckingApiKeyStatus.error;
             }
         },
     },
-};
+});
 </script>

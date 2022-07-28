@@ -15,7 +15,7 @@ export default defineComponent({
     },
     computed: {
         checkingApiKeyStatusMessage(): string {
-            switch ((this as any).checkingStatus) {
+            switch (this.checkingStatus) {
                 case CheckingApiKeyStatus.pending:
                     return "Key checking...";
                 case CheckingApiKeyStatus.incorrect:
