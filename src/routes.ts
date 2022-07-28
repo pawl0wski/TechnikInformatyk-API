@@ -106,7 +106,7 @@ export function RegisterRoutes(app: express.Router) {
         ) {
             const args = {
                 key: {
-                    in: "query",
+                    in: "path",
                     name: "key",
                     required: true,
                     dataType: "string",

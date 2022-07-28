@@ -147,7 +147,7 @@
                 ],
                 "parameters": [
                     {
-                        "in": "query",
+                        "in": "path",
                         "name": "key",
                         "required": true,
                         "schema": {
