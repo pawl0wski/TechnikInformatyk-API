@@ -9,7 +9,7 @@ import { CheckingApiKeyStatus } from "../../views/LoginView.vue";
 export default defineComponent({
     props: {
         checkingStatus: {
-            type: Object as PropType<CheckingApiKeyStatus>,
+            type: Number as PropType<CheckingApiKeyStatus>,
             required: true,
         },
     },

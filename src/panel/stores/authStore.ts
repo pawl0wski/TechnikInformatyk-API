@@ -19,13 +19,15 @@ export const useAuthStore = defineStore({
         setApiKey(apiKey: string) {
             this.apiKey = apiKey;
         },
-        async checkIfApiKeyIsCorrect() {
+        async checkIfApiKeyIsCorrect(): Promise<boolean> {
             const apiResponse = await axios.get(`/key/${this.apiKey}`);
 
             if (apiResponse.status === 404) this.correct = false;
             this.correct = true;
+
+            return this.correct;
         },
-        async getApiKeyPermission() {
+        async getApiKeyPermission(): Promise<string> {
             const apiResponse = await axios.get(`/key/${this.apiKey}`);
 
             if (apiResponse.status === 404) {
@@ -33,6 +35,8 @@ export const useAuthStore = defineStore({
                     apiResponse.data as ApiKeyResponseI
                 ).permission;
             }
+
+            return this.permission;
         },
     },
 });

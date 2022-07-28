@@ -19,6 +19,7 @@
 import TopText from "../components/LoginView/TopText.vue";
 import CredentialsForm from "../components/LoginView/CredentialsForm.vue";
 import CheckingStatusMessage from "../components/LoginView/CheckingStatusMessage.vue";
+import { useAuthStore } from "../stores/authStore";
 
 export enum CheckingApiKeyStatus {
     pending,
@@ -35,8 +36,19 @@ export default {
     },
 
     methods: {
-        applyApiKeyInStorageAndCheckCorrectness(apiKey: string) {
-            console.log(apiKey);
+        async applyApiKeyInStorageAndCheckCorrectness(apiKey: string) {
+            const authStore = useAuthStore();
+            (this as any).apiKeyCheckingStatus = CheckingApiKeyStatus.pending;
+            authStore.setApiKey(apiKey);
+            try {
+                const isApiKeyCorrect =
+                    await authStore.checkIfApiKeyIsCorrect();
+                if (!isApiKeyCorrect)
+                    (this as any).apiKeyCheckingStatus =
+                        CheckingApiKeyStatus.incorrect;
+            } catch (e) {
+                (this as any).apiKeyCheckingStatus = CheckingApiKeyStatus.error;
+            }
         },
     },
 };
