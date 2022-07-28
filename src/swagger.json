@@ -6,6 +6,19 @@
         "requestBodies": {},
         "responses": {},
         "schemas": {
+            "ApiKeyResponseI": {
+                "properties": {
+                    "key": {
+                        "type": "string"
+                    },
+                    "permission": {
+                        "type": "string"
+                    }
+                },
+                "required": ["key", "permission"],
+                "type": "object",
+                "additionalProperties": false
+            },
             "DatabaseVersionResponseI": {
                 "properties": {
                     "version": {
@@ -111,6 +124,39 @@
     },
     "openapi": "3.0.0",
     "paths": {
+        "/key/{key}": {
+            "get": {
+                "operationId": "GetApiKey",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiKeyResponseI"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Authorization"],
+                "security": [
+                    {
+                        "api_key": ["admin"]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
         "/database-version": {
             "get": {
                 "operationId": "GetDatabaseVersion",

@@ -12,6 +12,8 @@ import {
     fetchMiddlewares,
 } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { AuthorizationController } from "./controllers/authorizationController/authorizationController";
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DatabaseVersionController } from "./controllers/databaseVersionController/databaseVersionController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ExamController } from "./controllers/examController/examController";
@@ -30,6 +32,15 @@ import * as express from "express";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    ApiKeyResponseI: {
+        dataType: "refObject",
+        properties: {
+            key: { dataType: "string", required: true },
+            permission: { dataType: "string", required: true },
+        },
+        additionalProperties: false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     DatabaseVersionResponseI: {
         dataType: "refObject",
         properties: {
@@ -80,6 +91,47 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+    app.get(
+        "/key/:key",
+        authenticateMiddleware([{ api_key: ["admin"] }]),
+        ...fetchMiddlewares<RequestHandler>(AuthorizationController),
+        ...fetchMiddlewares<RequestHandler>(
+            AuthorizationController.prototype.getApiKey
+        ),
+
+        function AuthorizationController_getApiKey(
+            request: any,
+            response: any,
+            next: any
+        ) {
+            const args = {
+                key: {
+                    in: "query",
+                    name: "key",
+                    required: true,
+                    dataType: "string",
+                },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new AuthorizationController();
+
+                const promise = controller.getApiKey.apply(
+                    controller,
+                    validatedArgs as any
+                );
+                promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        }
+    );
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
         "/database-version",
         authenticateMiddleware([{ api_key: ["client"] }]),
