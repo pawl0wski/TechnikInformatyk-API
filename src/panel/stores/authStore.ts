@@ -20,7 +20,9 @@ export const useAuthStore = defineStore({
             this.apiKey = apiKey;
         },
         async checkIfApiKeyIsCorrect(): Promise<boolean> {
-            const apiResponse = await axios.get(`/key/${this.apiKey}`);
+            const apiResponse = await axios.get(`/key/${this.apiKey}`, {
+                headers: this.httpHeaders,
+            });
 
             if (apiResponse.status === 404) this.correct = false;
             this.correct = true;
@@ -28,7 +30,9 @@ export const useAuthStore = defineStore({
             return this.correct;
         },
         async getApiKeyPermission(): Promise<string> {
-            const apiResponse = await axios.get(`/key/${this.apiKey}`);
+            const apiResponse = await axios.get(`/key/${this.apiKey}`, {
+                headers: this.httpHeaders,
+            });
 
             if (apiResponse.status === 404) {
                 this.permission = (
@@ -37,6 +41,11 @@ export const useAuthStore = defineStore({
             }
 
             return this.permission;
+        },
+    },
+    getters: {
+        httpHeaders: (state): { Authorization: string } => {
+            return { Authorization: state.apiKey };
         },
     },
 });
