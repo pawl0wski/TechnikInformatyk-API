@@ -3,8 +3,8 @@
         <div class="mb-3">
             <label class="form-label">Authorization key</label>
             <input
-                id="authKey"
-                v-model="authKey"
+                id="apiKey"
+                v-model="apiKey"
                 type="password"
                 class="form-control"
             />
@@ -26,14 +26,15 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
     emits: ["submit"],
-    data(): { authKey: string } {
+    data(): { apiKey: string } {
         return {
-            authKey: "",
+            apiKey: "",
         };
     },
+
     methods: {
         emitFormSubmit() {
-            this.$emit("submit", this.authKey);
+            this.$emit("submit", this.apiKey);
         },
     },
 });
