@@ -5,7 +5,7 @@ import ApiKeyResponseI from "../../interfaces/apiKeyResponse";
 interface AuthState {
     apiKey: string;
     permission: string;
-    isKeyCorrect: boolean | null;
+    correct: boolean | null;
 }
 
 export const useAuthStore = defineStore({
@@ -17,7 +17,7 @@ export const useAuthStore = defineStore({
             ? {
                   apiKey: "",
                   permission: "",
-                  isKeyCorrect: null,
+                  correct: null,
               }
             : (JSON.parse(savedAuthStorage) as AuthState);
     },
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore({
                 },
             });
 
-            this.isKeyCorrect = !(
+            this.correct = !(
                 apiResponse.status === 404 || apiResponse.status === 401
             );
 
@@ -52,6 +52,9 @@ export const useAuthStore = defineStore({
 
             return this.permission;
         },
+        async logOut() {
+            this.correct = false;
+        },
         save() {
             sessionStorage.setItem("AuthState", JSON.stringify(this.$state));
         },
@@ -59,6 +62,9 @@ export const useAuthStore = defineStore({
     getters: {
         httpHeaders: (state): { Authorization: string } => {
             return { Authorization: state.apiKey };
+        },
+        isKeyCorrect: (state): boolean => {
+            return state.correct ?? false;
         },
     },
 });

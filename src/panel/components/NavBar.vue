@@ -38,7 +38,11 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <li
+                        v-if="authStore.isKeyCorrect"
+                        class="nav-item"
+                        @click="logOut"
+                    >
                         <a class="nav-link" href="#">Log out</a>
                     </li>
                 </ul>
@@ -61,6 +65,10 @@ export default defineComponent({
             let currentRouteName = router.currentRoute.value.name;
             if (typeof currentRouteName != "string") currentRouteName = "";
             return currentRouteName.includes(linkName) ? "active" : "";
+        },
+        logOut() {
+            this.authStore.logOut();
+            this.authStore.save();
         },
     },
 });
