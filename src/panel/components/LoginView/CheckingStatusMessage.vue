@@ -17,13 +17,13 @@ export default defineComponent({
         checkingApiKeyStatusMessage(): string {
             switch (this.checkingStatus) {
                 case CheckingApiKeyStatus.pending:
-                    return "Key checking...";
+                    return "I validate the key...";
                 case CheckingApiKeyStatus.incorrect:
-                    return "Incorrect key!";
+                    return "The key is invalid please enter the correct key.";
                 case CheckingApiKeyStatus.correct:
-                    return "Correct key";
+                    return "The key is corrected, you will be redirected in a moment";
                 case CheckingApiKeyStatus.error:
-                    return "Error occurred while checking key";
+                    return "An error occurred while checking the key";
                 default:
                     return "";
             }

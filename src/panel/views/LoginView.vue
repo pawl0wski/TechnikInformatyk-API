@@ -67,6 +67,7 @@ export default defineComponent({
                     isKeyCorrect
                 );
                 if (isKeyCorrect) {
+                    this.apiKeyCheckingStatus = CheckingApiKeyStatus.correct;
                     await router.replace({ name: "home" });
                 }
             } catch (e) {
