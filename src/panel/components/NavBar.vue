@@ -24,9 +24,9 @@
                     </li>
                     <li class="nav-item">
                         <a
-                            :class="['nav-link', isNavLinkActive('subject')]"
+                            :class="['nav-link', isNavLinkActive('exam')]"
                             href="#"
-                            >Subjects</a
+                            >Exams</a
                         >
                     </li>
                     <li class="nav-item">
