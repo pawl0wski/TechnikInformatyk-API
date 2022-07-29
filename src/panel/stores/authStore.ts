@@ -10,11 +10,17 @@ interface AuthState {
 
 export const useAuthStore = defineStore({
     id: "auth",
-    state: (): AuthState => ({
-        apiKey: "",
-        permission: "",
-        isKeyCorrect: null,
-    }),
+    state: (): AuthState => {
+        const savedAuthStorage = sessionStorage.getItem("AuthState");
+
+        return savedAuthStorage == null
+            ? {
+                  apiKey: "",
+                  permission: "",
+                  isKeyCorrect: null,
+              }
+            : (JSON.parse(savedAuthStorage) as AuthState);
+    },
     actions: {
         setApiKey(apiKey: string) {
             this.apiKey = apiKey;
@@ -45,6 +51,9 @@ export const useAuthStore = defineStore({
             }
 
             return this.permission;
+        },
+        save() {
+            sessionStorage.setItem("AuthState", JSON.stringify(this.$state));
         },
     },
     getters: {
