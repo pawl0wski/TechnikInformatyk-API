@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import HomeView from "../views/HomeView.vue";
+import ExamsView from "../views/exams/ExamsView.vue";
 import AuthorizationValidator from "./guard/validator/authorizationValidator";
 import RouterGuard from "./guard/routerGuard";
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory("/panel/"),
     routes: [
         {
-            path: "/panel/",
+            path: "",
             name: "home",
             component: HomeView,
             meta: {
@@ -18,9 +19,14 @@ const router = createRouter({
             },
         },
         {
-            path: "/panel/login",
+            path: "/login",
             name: "login",
             component: LoginView,
+        },
+        {
+            path: "/exam",
+            name: "exams",
+            component: ExamsView,
         },
     ],
 });

@@ -1,7 +1,9 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Admin Panel</a>
+            <router-link class="navbar-brand" :to="{ name: 'home' }">
+                Admin Panel
+            </router-link>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -16,25 +18,22 @@
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a
-                            :class="['nav-link', isNavLinkActive('home')]"
-                            href="#"
-                            >Home</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
+                        <router-link
                             :class="['nav-link', isNavLinkActive('exam')]"
                             href="#"
-                            >Exams</a
+                            :to="{ name: 'exams' }"
                         >
+                            Exams
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a
+                        <router-link
                             :class="['nav-link', isNavLinkActive('report')]"
                             href="#"
-                            >Reports</a
+                            :to="{ name: 'reports' }"
                         >
+                            Reports
+                        </router-link>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
