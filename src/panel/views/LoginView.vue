@@ -1,7 +1,10 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6 shadow-sm rounded-3">
+        <div class="row vh-100 justify-content-center align-items-center">
+            <div
+                class="col-12 col-md-6 shadow-sm rounded-3"
+                style="height: fit-content"
+            >
                 <div class="login-dialog p-3">
                     <TopText />
                     <CredentialsForm @submit="afterCredentialsFormSubmit" />
