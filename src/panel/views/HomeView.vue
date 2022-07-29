@@ -1,16 +1,9 @@
 <template>
-    <button class="btn btn-primary" @click="goToLoginView">Login</button>
+    <div class="container"></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import router from "../router/router";
 
-export default defineComponent({
-    methods: {
-        goToLoginView() {
-            router.push({ name: "login" });
-        },
-    },
-});
+export default defineComponent({});
 </script>
