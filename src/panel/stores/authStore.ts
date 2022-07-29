@@ -22,6 +22,9 @@ export const useAuthStore = defineStore({
         async checkIfApiKeyIsCorrect(): Promise<boolean> {
             const apiResponse = await axios.get(`/key/${this.apiKey}`, {
                 headers: this.httpHeaders,
+                validateStatus: () => {
+                    return true;
+                },
             });
 
             if (apiResponse.status === 404 || apiResponse.status === 401)
