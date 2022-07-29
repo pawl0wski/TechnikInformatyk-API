@@ -60,6 +60,7 @@ export default defineComponent({
                 await this.applyApiKeyInStore(apiKey);
                 const isKeyCorrect =
                     await this.authStore.checkIfApiKeyIsCorrect();
+                await this.authStore.getApiKeyPermission();
                 this.updateApiKeyCheckingStatusByProvidingKeyCorrectness(
                     isKeyCorrect
                 );
