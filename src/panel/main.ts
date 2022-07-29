@@ -4,7 +4,7 @@ import router from "./router/router";
 
 // Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap";
+import "bootstrap/dist/js/bootstrap";
 import { createPinia } from "pinia";
 
 const pinia = createPinia();

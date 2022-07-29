@@ -17,10 +17,11 @@ module.exports = {
     rules: {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-empty-function": "off",
-        "vue/html-indent": ["error", 4],
+        "vue/html-indent": "off",
         "vue/html-self-closing": "off",
         "vue/max-attributes-per-line": "off",
         "vue/singleline-html-element-content-newline": "off",
         "vue/comment-directive": "off",
+        "vue/html-closing-bracket-newline": "off",
     },
 };
