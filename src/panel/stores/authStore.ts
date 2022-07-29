@@ -5,7 +5,7 @@ import ApiKeyResponseI from "../../interfaces/apiKeyResponse";
 interface AuthState {
     apiKey: string;
     permission: string;
-    correct: boolean | null;
+    isKeyCorrect: boolean | null;
 }
 
 export const useAuthStore = defineStore({
@@ -13,7 +13,7 @@ export const useAuthStore = defineStore({
     state: (): AuthState => ({
         apiKey: "",
         permission: "",
-        correct: null,
+        isKeyCorrect: null,
     }),
     actions: {
         setApiKey(apiKey: string) {
@@ -25,10 +25,10 @@ export const useAuthStore = defineStore({
             });
 
             if (apiResponse.status === 404 || apiResponse.status === 500)
-                this.correct = false;
-            this.correct = true;
+                this.isKeyCorrect = false;
+            this.isKeyCorrect = true;
 
-            return this.correct;
+            return this.isKeyCorrect;
         },
         async getApiKeyPermission(): Promise<string> {
             const apiResponse = await axios.get(`/key/${this.apiKey}`, {
