@@ -9,6 +9,7 @@
                 class="form-control"
             />
         </div>
+        <CheckingStatusMessage :checking-status="checkingStatus" />
         <div class="d-flex align-items-end">
             <button
                 type="submit"
@@ -22,16 +23,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { CheckingApiKeyStatus } from "../../views/LoginView.vue";
+import CheckingStatusMessage from "./CheckingStatusMessage.vue";
 
 export default defineComponent({
+    components: {
+        CheckingStatusMessage,
+    },
+    props: {
+        checkingStatus: {
+            type: Number as PropType<CheckingApiKeyStatus>,
+            required: true,
+        },
+    },
     emits: ["submit"],
     data(): { apiKey: string } {
         return {
             apiKey: "",
         };
     },
-
     methods: {
         emitFormSubmit() {
             this.$emit("submit", this.apiKey);

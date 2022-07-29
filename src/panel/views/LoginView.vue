@@ -2,14 +2,14 @@
     <div class="container">
         <div class="row vh-100 justify-content-center align-items-center">
             <div
-                class="col-12 col-md-6 shadow-sm rounded-3"
+                class="col-12 col-md-6 shadow rounded-3"
                 style="height: fit-content"
             >
                 <div class="login-dialog p-3">
                     <TopText />
-                    <CredentialsForm @submit="afterCredentialsFormSubmit" />
-                    <CheckingStatusMessage
+                    <CredentialsForm
                         :checking-status="apiKeyCheckingStatus"
+                        @submit="afterCredentialsFormSubmit"
                     />
                 </div>
             </div>
@@ -33,7 +33,7 @@ export enum CheckingApiKeyStatus {
 }
 
 export default defineComponent({
-    components: { CredentialsForm, TopText, CheckingStatusMessage },
+    components: { CredentialsForm, TopText },
     data(): {
         apiKeyCheckingStatus: CheckingApiKeyStatus;
         authStore: ReturnType<typeof useAuthStore>;
