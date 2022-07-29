@@ -27,9 +27,9 @@ export const useAuthStore = defineStore({
                 },
             });
 
-            if (apiResponse.status === 404 || apiResponse.status === 401)
-                this.isKeyCorrect = false;
-            this.isKeyCorrect = true;
+            this.isKeyCorrect = !(
+                apiResponse.status === 404 || apiResponse.status === 401
+            );
 
             return this.isKeyCorrect;
         },

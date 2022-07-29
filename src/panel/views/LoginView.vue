@@ -19,7 +19,6 @@
 <script lang="ts">
 import TopText from "../components/LoginView/TopText.vue";
 import CredentialsForm from "../components/LoginView/CredentialsForm.vue";
-import CheckingStatusMessage from "../components/LoginView/CheckingStatusMessage.vue";
 import { useAuthStore } from "../stores/authStore";
 import { defineComponent } from "vue";
 import router from "../router/router";
@@ -49,9 +48,6 @@ export default defineComponent({
             this.authStore.setApiKey(apiKey);
             this.apiKeyCheckingStatus = CheckingApiKeyStatus.pending;
         },
-        async checkApiKeyStoredInStore(): Promise<boolean> {
-            return await this.authStore.checkIfApiKeyIsCorrect();
-        },
         updateApiKeyCheckingStatusByProvidingKeyCorrectness(
             isApiKeyCorrect: boolean
         ) {
@@ -62,14 +58,12 @@ export default defineComponent({
         async afterCredentialsFormSubmit(apiKey: string) {
             try {
                 await this.applyApiKeyInStore(apiKey);
-                const isKeyCorrect = await this.checkApiKeyStoredInStore();
+                const isKeyCorrect =
+                    await this.authStore.checkIfApiKeyIsCorrect();
                 this.updateApiKeyCheckingStatusByProvidingKeyCorrectness(
                     isKeyCorrect
                 );
-                if (isKeyCorrect) {
-                    this.apiKeyCheckingStatus = CheckingApiKeyStatus.correct;
-                    await router.replace({ name: "home" });
-                }
+                if (isKeyCorrect) await router.replace({ name: "home" });
             } catch (e) {
                 this.apiKeyCheckingStatus = CheckingApiKeyStatus.error;
                 throw e;
