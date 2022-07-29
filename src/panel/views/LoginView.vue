@@ -72,6 +72,7 @@ export default defineComponent({
                 }
             } catch (e) {
                 this.apiKeyCheckingStatus = CheckingApiKeyStatus.error;
+                throw e;
             }
         },
     },
