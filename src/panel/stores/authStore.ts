@@ -24,7 +24,7 @@ export const useAuthStore = defineStore({
                 headers: this.httpHeaders,
             });
 
-            if (apiResponse.status === 404 || apiResponse.status === 500)
+            if (apiResponse.status === 404 || apiResponse.status === 401)
                 this.isKeyCorrect = false;
             this.isKeyCorrect = true;
 

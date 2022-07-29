@@ -17,7 +17,7 @@ export default function errorHandler(
             message: err.message,
         } as ErrorResultI);
     } else if (err instanceof AuthenticationError) {
-        res.status(500).json({
+        res.status(401).json({
             message: err.message,
         } as ErrorResultI);
     } else {
