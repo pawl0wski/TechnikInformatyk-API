@@ -17,6 +17,8 @@ export default class AuthenticationService {
         permission: string
     ): Promise<boolean> {
         const keyPermission = await this.checkKeyPermission(key);
+
+        if (permission == "client" && keyPermission == "admin") return true;
         return permission === keyPermission;
     }
 }
