@@ -4,7 +4,7 @@
             <div class="col">
                 <h1>Exams</h1>
                 <h3>Main exams</h3>
-                <div class="row">
+                <div class="row gap-5">
                     <ExamCard
                         v-for="exam in examStore.mainExams"
                         :key="exam.uuid"
@@ -12,6 +12,13 @@
                     />
                 </div>
                 <h3>Subject exams</h3>
+                <div class="row gap-5">
+                    <ExamCard
+                        v-for="exam in examStore.subjectExams"
+                        :key="exam.uuid"
+                        :exam="exam"
+                    />
+                </div>
             </div>
         </div>
     </div>

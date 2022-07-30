@@ -9,7 +9,9 @@ interface ExamState {
 
 export const useExamStore = defineStore({
     id: "exam",
-    state: (): ExamState => ({ exams: [] }),
+    state: (): ExamState => {
+        return { exams: [] };
+    },
     actions: {
         async getContentFromApi() {
             const authStore = useAuthStore();
@@ -17,8 +19,7 @@ export const useExamStore = defineStore({
                 headers: authStore.httpHeaders,
             });
 
-            if (examsResponse.status == 200)
-                this.exams = examsResponse.data.exams;
+            if (examsResponse.status == 200) this.exams = examsResponse.data;
         },
     },
     getters: {
