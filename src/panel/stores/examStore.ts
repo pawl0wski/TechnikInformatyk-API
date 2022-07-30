@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
 import ExamResponseI from "../../interfaces/examResponse";
-import { useAuthStore } from "./authStore";
-import axios from "axios";
 import ApiGateway from "../lib/apiGateway/apiGateway";
 
 interface ExamState {

@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 import ApiKeyResponseI from "../../interfaces/apiKeyResponse";
 import ApiGateway from "../lib/apiGateway/apiGateway";
 
