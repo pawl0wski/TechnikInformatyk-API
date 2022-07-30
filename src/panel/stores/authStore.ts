@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import ApiKeyResponseI from "../../interfaces/apiKeyResponse";
+import ApiGateway from "../lib/apiGateway/apiGateway";
 
 interface AuthState {
     apiKey: string;
@@ -26,12 +27,10 @@ export const useAuthStore = defineStore({
             this.apiKey = apiKey;
         },
         async checkIfApiKeyIsCorrect(): Promise<boolean> {
-            const apiResponse = await axios.get(`/key/${this.apiKey}`, {
-                headers: this.httpHeaders,
-                validateStatus: (status) => {
-                    return [200, 404, 401].includes(status);
-                },
-            });
+            const apiResponse =
+                await ApiGateway.withDefaultApiStore().getApiKeyInfo(
+                    this.apiKey
+                );
 
             this.correct = !(
                 apiResponse.status === 404 || apiResponse.status === 401
@@ -40,9 +39,10 @@ export const useAuthStore = defineStore({
             return this.isKeyCorrect;
         },
         async getApiKeyPermission(): Promise<string> {
-            const apiResponse = await axios.get(`/key/${this.apiKey}`, {
-                headers: this.httpHeaders,
-            });
+            const apiResponse =
+                await ApiGateway.withDefaultApiStore().getApiKeyInfo(
+                    this.apiKey
+                );
 
             if (apiResponse.status === 200) {
                 this.permission = (

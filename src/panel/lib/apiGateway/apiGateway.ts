@@ -1,0 +1,38 @@
+import { useAuthStore } from "../../stores/authStore";
+import axios, { AxiosResponse } from "axios";
+
+export default class ApiGateway {
+    private readonly _authStore: ReturnType<typeof useAuthStore>;
+
+    static withDefaultApiStore(): ApiGateway {
+        return new ApiGateway(useAuthStore());
+    }
+
+    constructor(authStore: ReturnType<typeof useAuthStore>) {
+        this._authStore = authStore;
+    }
+
+    // A method that receives axios to know at which http status codes to throw an exception
+    private _validateAxiosStatus(status: number) {
+        return [200, 404, 401].includes(status);
+    }
+
+    private get _httpHeaders() {
+        return this._authStore.httpHeaders;
+    }
+
+    private get _defaultAxiosOptions() {
+        return {
+            headers: this._httpHeaders,
+            validateStatus: this._validateAxiosStatus,
+        };
+    }
+
+    async getApiKeyInfo(apiKey: string): Promise<AxiosResponse> {
+        return await axios.get(`/key/${apiKey}`, this._defaultAxiosOptions);
+    }
+
+    async getExams(): Promise<AxiosResponse> {
+        return await axios.get(`/exam/`, this._defaultAxiosOptions);
+    }
+}

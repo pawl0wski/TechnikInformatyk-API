@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import ExamResponseI from "../../interfaces/examResponse";
 import { useAuthStore } from "./authStore";
 import axios from "axios";
+import ApiGateway from "../lib/apiGateway/apiGateway";
 
 interface ExamState {
     exams: ExamResponseI[];
@@ -14,10 +15,8 @@ export const useExamStore = defineStore({
     },
     actions: {
         async getContentFromApi() {
-            const authStore = useAuthStore();
-            const examsResponse = await axios.get("/exam", {
-                headers: authStore.httpHeaders,
-            });
+            const examsResponse =
+                await ApiGateway.withDefaultApiStore().getExams();
 
             if (examsResponse.status == 200) this.exams = examsResponse.data;
         },
