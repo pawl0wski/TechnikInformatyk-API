@@ -29,16 +29,31 @@ const router = createRouter({
             path: "/exam",
             name: "exams",
             component: ExamsView,
+            meta: {
+                pageOptions: {
+                    guardValidators: [new AuthorizationValidator()],
+                },
+            },
         },
         {
             path: "/exam/:uuid",
             name: "examEdit",
             component: ExamEditView,
+            meta: {
+                pageOptions: {
+                    guardValidators: [new AuthorizationValidator()],
+                },
+            },
         },
         {
             path: "/reports",
             name: "reports",
             component: ReportView,
+            meta: {
+                pageOptions: {
+                    guardValidators: [new AuthorizationValidator()],
+                },
+            },
         },
     ],
 });
