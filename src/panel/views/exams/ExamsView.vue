@@ -2,17 +2,16 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Exams</h1>
-                <h3>Main exams</h3>
-                <div class="row gap-5">
+                <h3 class="mt-5">Main exams</h3>
+                <div class="row gap-5 my-3">
                     <ExamCard
                         v-for="exam in examStore.mainExams"
                         :key="exam.uuid"
                         :exam="exam"
                     />
                 </div>
-                <h3>Subject exams</h3>
-                <div class="row gap-5">
+                <h3 class="mt-5">Subject exams</h3>
+                <div class="row gap-5 my-3">
                     <ExamCard
                         v-for="exam in examStore.subjectExams"
                         :key="exam.uuid"
