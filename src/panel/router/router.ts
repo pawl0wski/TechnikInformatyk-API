@@ -5,6 +5,7 @@ import ExamsView from "../views/exams/ExamsView.vue";
 import ReportView from "../views/reports/ReportView.vue";
 import AuthorizationValidator from "./guard/validator/authorizationValidator";
 import RouterGuard from "./guard/routerGuard";
+import ExamEditView from "../views/exams/ExamEditView.vue";
 
 const router = createRouter({
     history: createWebHistory("/panel/"),
@@ -28,6 +29,11 @@ const router = createRouter({
             path: "/exam",
             name: "exams",
             component: ExamsView,
+        },
+        {
+            path: "/exam/:uuid",
+            name: "examEdit",
+            component: ExamEditView,
         },
         {
             path: "/reports",

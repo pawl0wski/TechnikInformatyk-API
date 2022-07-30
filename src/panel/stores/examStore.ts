@@ -18,6 +18,9 @@ export const useExamStore = defineStore({
 
             if (examsResponse.status == 200) this.exams = examsResponse.data;
         },
+        getCertainExam(uuid: string): ExamResponseI | null {
+            return this.exams.filter((e) => e.uuid == uuid)[0];
+        },
     },
     getters: {
         mainExams: (state) => state.exams.filter((e) => e.type === "main"),

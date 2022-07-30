@@ -6,7 +6,12 @@
             <p class="card-text">
                 {{ exam.description }}
             </p>
-            <a href="#" class="card-link">Edit</a>
+            <router-link
+                class="card-link"
+                :to="{ name: 'examEdit', params: { uuid: exam.uuid } }"
+            >
+                Edit
+            </router-link>
             <a href="#" class="card-link">Manage questions</a>
         </div>
     </div>
