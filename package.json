@@ -6,7 +6,7 @@
     "scripts": {
         "start": "ts-node src/main.ts",
         "dev": "tsnd --respawn src/main.ts server",
-        "dev:panel": "vite",
+        "dev:panel": "vite --host",
         "generate:swagger": "tsoa spec-and-routes && prettier --write 'src/routes.ts' && prettier --write 'src/swagger.json'",
         "build": "tsc && vite build --emptyOutDir",
         "build:api": "tsc",

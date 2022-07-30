@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import HomeView from "../views/HomeView.vue";
 import ExamsView from "../views/exams/ExamsView.vue";
+import ReportView from "../views/reports/ReportView.vue";
 import AuthorizationValidator from "./guard/validator/authorizationValidator";
 import RouterGuard from "./guard/routerGuard";
 
@@ -27,6 +28,11 @@ const router = createRouter({
             path: "/exam",
             name: "exams",
             component: ExamsView,
+        },
+        {
+            path: "/reports",
+            name: "reports",
+            component: ReportView,
         },
     ],
 });
