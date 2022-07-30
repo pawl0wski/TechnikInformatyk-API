@@ -9,18 +9,13 @@ interface ExamState {
 
 export const useExamStore = defineStore({
     id: "exam",
-    state: (): ExamState => ({
-        exams: [],
-    }),
+    state: (): ExamState => ({ exams: [] }),
     actions: {
         async getContentFromApi() {
             const authStore = useAuthStore();
-            const examsResponse = await axios.get(
-                "https://itexam.jpawlowski.me/exam",
-                {
-                    headers: authStore.httpHeaders,
-                }
-            );
+            const examsResponse = await axios.get("/exam", {
+                headers: authStore.httpHeaders,
+            });
 
             if (examsResponse.status == 200)
                 this.exams = examsResponse.data.exams;

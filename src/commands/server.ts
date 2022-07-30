@@ -12,6 +12,7 @@ import SnapshotService from "../services/snapshotService/snapshotService";
 import errorHandler from "../middlewares/errorHandler";
 import EnvironmentConfig from "../config/environmentConfig";
 import path from "path";
+import cors from "cors";
 
 async function initializeSingletons() {
     if (EnvironmentConfig.cacheEnabled) {
@@ -32,6 +33,7 @@ function initializeExpress(): express.Express {
 
     app.use(express.json());
     app.use(morgan("short"));
+    app.use(cors());
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
     RegisterRoutes(app);

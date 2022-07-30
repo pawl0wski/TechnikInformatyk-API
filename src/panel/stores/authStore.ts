@@ -26,15 +26,12 @@ export const useAuthStore = defineStore({
             this.apiKey = apiKey;
         },
         async checkIfApiKeyIsCorrect(): Promise<boolean> {
-            const apiResponse = await axios.get(
-                `https://itexam.jpawlowski.me/key/${this.apiKey}`,
-                {
-                    headers: this.httpHeaders,
-                    validateStatus: (status) => {
-                        return [200, 404, 401].includes(status);
-                    },
-                }
-            );
+            const apiResponse = await axios.get(`/key/${this.apiKey}`, {
+                headers: this.httpHeaders,
+                validateStatus: (status) => {
+                    return [200, 404, 401].includes(status);
+                },
+            });
 
             this.correct = !(
                 apiResponse.status === 404 || apiResponse.status === 401
