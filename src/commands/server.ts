@@ -12,6 +12,7 @@ import SnapshotService from "../services/snapshotService/snapshotService";
 import errorHandler from "../middlewares/errorHandler";
 import EnvironmentConfig from "../config/environmentConfig";
 import path from "path";
+import cors from "cors";
 
 async function initializeSingletons() {
     if (EnvironmentConfig.cacheEnabled) {
@@ -38,6 +39,7 @@ function initializeExpress(): express.Express {
     app.use("/panel", express.static(path.join(__dirname, "../panel")));
 
     app.use(errorHandler);
+    app.use(cors());
 
     return app;
 }
