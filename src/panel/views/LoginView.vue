@@ -17,8 +17,8 @@
     </div>
 </template>
 <script lang="ts">
-import TopText from "../components/LoginView/TopText.vue";
-import CredentialsForm from "../components/LoginView/CredentialsForm.vue";
+import TopText from "../components/login/TopText.vue";
+import CredentialsForm from "../components/login/CredentialsForm.vue";
 import { useAuthStore } from "../stores/authStore";
 import { defineComponent } from "vue";
 import router from "../router/router";

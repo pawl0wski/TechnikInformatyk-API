@@ -32,7 +32,7 @@
 <script lang="ts">
 import { useExamStore } from "../../stores/examStore";
 import { defineComponent } from "vue";
-import ExamCard from "../../components/ExamsView/ExamCard.vue";
+import ExamCard from "../../components/exam/ExamCard.vue";
 import { v4 as generateUuid } from "uuid";
 import ExamModel from "../../models/examModel";
 
