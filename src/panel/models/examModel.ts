@@ -1,8 +1,9 @@
 import ApiGateway from "../lib/apiGateway/apiGateway";
 import ExamRequest from "../../interfaces/examRequest";
 import ExamResponseI from "../../interfaces/examResponse";
+import Model from "./model";
 
-export default class ExamModel {
+export default class ExamModel extends Model {
     uuid = "";
     name = "";
     description = "";
