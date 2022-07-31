@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import ApiKeyResponseI from "../../interfaces/apiKeyResponse";
+import ApiKeyResponse from "../../interfaces/apiKeyResponse";
 import ApiGateway from "../lib/apiGateway/apiGateway";
 
 interface AuthState {
@@ -45,7 +45,7 @@ export const useAuthStore = defineStore({
 
             if (apiResponse.status === 200) {
                 this.permission = (
-                    apiResponse.data as ApiKeyResponseI
+                    apiResponse.data as ApiKeyResponse
                 ).permission;
             }
 

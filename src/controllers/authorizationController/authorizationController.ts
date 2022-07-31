@@ -2,7 +2,7 @@ import { Get, Path, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import AuthenticationService from "../../services/authenticationService/authenticationService";
 import NotFoundError from "../../errors/notFoundError";
-import ApiKeyResponseI from "../../interfaces/apiKeyResponse";
+import ApiKeyResponse from "../../interfaces/apiKeyResponse";
 
 @Route("key")
 @Tags("Authorization")
@@ -18,7 +18,7 @@ export class AuthorizationController extends Controller {
 
     @Get("{key}")
     @Security("api_key", ["admin"])
-    public async getApiKey(@Path("key") key: string): Promise<ApiKeyResponseI> {
+    public async getApiKey(@Path("key") key: string): Promise<ApiKeyResponse> {
         const permission = await this._authenticationService.checkKeyPermission(
             key
         );

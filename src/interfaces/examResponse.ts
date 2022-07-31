@@ -1,4 +1,4 @@
-export default interface ExamResponseI {
+export default interface ExamResponse {
     uuid: string;
     name: string;
     description: string;

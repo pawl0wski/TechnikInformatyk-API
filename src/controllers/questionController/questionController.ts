@@ -1,7 +1,7 @@
 import { Get, Path, Request, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import QuestionRepository from "../../repositories/questionRepository/questionRepository";
-import QuestionResponseI from "../../interfaces/questionResponse";
+import QuestionResponse from "../../interfaces/questionResponse";
 import express from "express";
 import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
 import EnvironmentConfig from "../../config/environmentConfig";
@@ -22,7 +22,7 @@ export class QuestionController extends Controller {
     @Get("")
     @Security("api_key", ["client"])
     @CachedEndpoint("question")
-    public async getExams(): Promise<QuestionResponseI[]> {
+    public async getExams(): Promise<QuestionResponse[]> {
         const questions = await this._repository.getQuestions();
 
         return questions.map((question) => {
@@ -48,7 +48,7 @@ export class QuestionController extends Controller {
                 haveImage: image !== null,
                 examUuids: exams.map((exam) => exam.uuid),
             };
-        }) as QuestionResponseI[];
+        }) as QuestionResponse[];
     }
 
     @Get("{uuid}/image")

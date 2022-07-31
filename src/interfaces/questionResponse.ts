@@ -1,4 +1,4 @@
-export default interface QuestionResponseI {
+export default interface QuestionResponse {
     uuid: string;
     content: string;
     answerA: string;

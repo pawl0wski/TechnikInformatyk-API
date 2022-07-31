@@ -1,5 +1,5 @@
 import Model from "./model";
-import QuestionResponseI from "../../interfaces/questionResponse";
+import QuestionResponse from "../../interfaces/questionResponse";
 import QuestionRequest from "../../interfaces/questionRequest";
 
 export default class QuestionModel extends Model {
@@ -13,7 +13,7 @@ export default class QuestionModel extends Model {
     haveImage = false;
     examUuids = [];
 
-    static fromResponse(questionResponse: QuestionResponseI): QuestionModel {
+    static fromResponse(questionResponse: QuestionResponse): QuestionModel {
         return Object.assign(new QuestionModel(), questionResponse);
     }
 

@@ -11,7 +11,7 @@ import {
 } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
-import ExamResponseI from "../../interfaces/examResponse";
+import ExamResponse from "../../interfaces/examResponse";
 import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
 import ExamRequest from "../../interfaces/examRequest";
 
@@ -29,8 +29,8 @@ export class ExamController extends Controller {
     @Get("")
     @Security("api_key", ["client"])
     @CachedEndpoint("exam")
-    public async getExams(): Promise<ExamResponseI[]> {
-        return (await this._repository.getExams()) as ExamResponseI[];
+    public async getExams(): Promise<ExamResponse[]> {
+        return (await this._repository.getExams()) as ExamResponse[];
     }
 
     @Put("{uuid}")
@@ -38,11 +38,11 @@ export class ExamController extends Controller {
     public async putExam(
         @Path("uuid") examUuid: string,
         @Body() examRequest: ExamRequest
-    ): Promise<ExamResponseI> {
+    ): Promise<ExamResponse> {
         return (await this._repository.updateExam(
             examUuid,
             examRequest
-        )) as ExamResponseI;
+        )) as ExamResponse;
     }
 
     @Post("{uuid}")
@@ -50,18 +50,18 @@ export class ExamController extends Controller {
     public async postExam(
         @Path("uuid") examUuid: string,
         @Body() examRequest: ExamRequest
-    ): Promise<ExamResponseI> {
+    ): Promise<ExamResponse> {
         return (await this._repository.createExam(
             examUuid,
             examRequest
-        )) as ExamResponseI;
+        )) as ExamResponse;
     }
 
     @Delete("{uuid}")
     @Security("api_key", ["admin"])
     public async deleteExam(
         @Path("uuid") examUuid: string
-    ): Promise<ExamResponseI> {
-        return (await this._repository.deleteExam(examUuid)) as ExamResponseI;
+    ): Promise<ExamResponse> {
+        return (await this._repository.deleteExam(examUuid)) as ExamResponse;
     }
 }

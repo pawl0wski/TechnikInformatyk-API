@@ -1,6 +1,6 @@
 import ApiGateway from "../lib/apiGateway/apiGateway";
 import ExamRequest from "../../interfaces/examRequest";
-import ExamResponseI from "../../interfaces/examResponse";
+import ExamResponse from "../../interfaces/examResponse";
 import Model from "./model";
 
 export default class ExamModel extends Model {
@@ -14,7 +14,7 @@ export default class ExamModel extends Model {
 
     private _apiGateway = ApiGateway.withDefaultApiStore();
 
-    public static fromResponse(examResponse: ExamResponseI) {
+    public static fromResponse(examResponse: ExamResponse) {
         return Object.assign(new ExamModel(), examResponse);
     }
 

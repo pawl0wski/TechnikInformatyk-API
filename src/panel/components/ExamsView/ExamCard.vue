@@ -19,12 +19,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import ExamResponseI from "../../../interfaces/examResponse";
+import ExamResponse from "../../../interfaces/examResponse";
 
 export default defineComponent({
     props: {
         exam: {
-            type: Object as PropType<ExamResponseI>,
+            type: Object as PropType<ExamResponse>,
             required: true,
         },
     },

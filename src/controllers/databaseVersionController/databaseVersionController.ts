@@ -1,7 +1,7 @@
 import { Get, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import Database from "../../database/database";
-import DatabaseVersionResponseI from "../../interfaces/databaseVersionResponseI";
+import DatabaseVersionResponse from "../../interfaces/databaseVersionResponse";
 
 @Route("database-version")
 @Tags("Other")
@@ -16,7 +16,7 @@ export class DatabaseVersionController extends Controller {
 
     @Get("")
     @Security("api_key", ["client"])
-    public async getDatabaseVersion(): Promise<DatabaseVersionResponseI> {
+    public async getDatabaseVersion(): Promise<DatabaseVersionResponse> {
         return {
             version: this._database.checksum,
         };
