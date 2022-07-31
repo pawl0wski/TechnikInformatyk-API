@@ -34,7 +34,6 @@ export const useExamStore = defineStore({
         },
         addExam(exam: ExamModel) {
             this.exams.push(exam);
-            console.log(this.exams);
         },
     },
     getters: {
