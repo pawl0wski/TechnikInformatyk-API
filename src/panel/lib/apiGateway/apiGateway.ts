@@ -37,6 +37,10 @@ export default class ApiGateway {
         return await axios.get(`/exam/`, this._defaultAxiosOptions);
     }
 
+    async getQuestions(): Promise<AxiosResponse> {
+        return await axios.get(`/question/`, this._defaultAxiosOptions);
+    }
+
     async deleteExam(examUuid: string): Promise<AxiosResponse> {
         return await axios.delete(
             `/exam/${examUuid}`,
