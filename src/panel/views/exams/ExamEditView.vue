@@ -91,7 +91,6 @@ export default defineComponent({
     methods: {
         async getExamOrRedirectToHomeIfNotExists(): Promise<ExamModel | null> {
             const examStore = useExamStore();
-            await examStore.getContentFromApi();
 
             let exam = examStore.getCertainExam(this.uuid);
             if (exam === null) {
@@ -108,7 +107,11 @@ export default defineComponent({
         },
         async saveExam() {
             if (this.exam != null) {
-                await this.exam.createOrUpdateIfAlreadyInDatabase();
+                try {
+                    await this.exam.createOrUpdateIfAlreadyInDatabase();
+                } catch (e) {
+                    alert(e);
+                }
             }
         },
         async onDeleteButtonPress() {

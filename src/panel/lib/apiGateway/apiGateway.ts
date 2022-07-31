@@ -59,7 +59,7 @@ export default class ApiGateway {
         examUuid: string,
         body: ExamRequest
     ): Promise<AxiosResponse> {
-        return await axios.put(
+        return await axios.post(
             `/exam/${examUuid}`,
             body,
             this._defaultAxiosOptions

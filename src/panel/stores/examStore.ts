@@ -32,6 +32,10 @@ export const useExamStore = defineStore({
             if (examsWithCertainUuid.length === 0) return null;
             return examsWithCertainUuid[0] as ExamModel;
         },
+        addExam(exam: ExamModel) {
+            this.exams.push(exam);
+            console.log(this.exams);
+        },
     },
     getters: {
         mainExams: (state) => state.exams.filter((e) => e.type === "main"),

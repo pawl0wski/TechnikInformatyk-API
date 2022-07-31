@@ -2,7 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h3 class="mt-5">Main exams</h3>
+                <button
+                    class="btn btn-success mt-3"
+                    @click.prevent="onCreateNewExamClick"
+                >
+                    Create new exam
+                </button>
+                <h3 class="mt-2">Main exams</h3>
                 <div class="row gap-5 my-3">
                     <ExamCard
                         v-for="exam in examStore.mainExams"
@@ -27,6 +33,8 @@
 import { useExamStore } from "../../stores/examStore";
 import { defineComponent } from "vue";
 import ExamCard from "../../components/ExamsView/ExamCard.vue";
+import { v4 as generateUuid } from "uuid";
+import ExamModel from "../../models/examModel";
 
 export default defineComponent({
     components: { ExamCard },
@@ -37,6 +45,21 @@ export default defineComponent({
     },
     async mounted() {
         await this.examStore.getContentFromApi();
+    },
+    methods: {
+        onCreateNewExamClick() {
+            const uuid = generateUuid();
+            const newExam = new ExamModel();
+            newExam.uuid = uuid;
+            this.examStore.addExam(newExam);
+
+            this.$router.push({
+                name: "examEdit",
+                params: {
+                    uuid: uuid,
+                },
+            });
+        },
     },
 });
 </script>

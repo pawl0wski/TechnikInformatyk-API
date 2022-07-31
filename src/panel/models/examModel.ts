@@ -34,15 +34,25 @@ export default class ExamModel {
     }
 
     public async delete() {
-        await this._apiGateway.deleteExam(this.uuid);
+        const res = await this._apiGateway.deleteExam(this.uuid);
+        if (res.status != 200) throw new Error("Error while deleting exam");
     }
 
     public async update() {
-        await this._apiGateway.updateExam(this.uuid, this._examRequest);
+        const res = await this._apiGateway.updateExam(
+            this.uuid,
+            this._examRequest
+        );
+        if (res.status != 200) throw new Error("Error while updating exam");
     }
 
     public async create() {
-        await this._apiGateway.createExam(this.uuid, this._examRequest);
+        const res = await this._apiGateway.createExam(
+            this.uuid,
+            this._examRequest
+        );
+        if (res.status != 200) throw new Error("Error while creating exam");
+        this.alreadyInDatabase = true;
     }
 
     public async createOrUpdateIfAlreadyInDatabase() {
