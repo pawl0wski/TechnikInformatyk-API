@@ -3,10 +3,10 @@ import { Controller } from "@tsoa/runtime";
 import QuestionRepository from "../../repositories/questionRepository/questionRepository";
 import QuestionResponse from "../../interfaces/questionResponse";
 import express from "express";
-import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
 import EnvironmentConfig from "../../config/environmentConfig";
 import SnapshotService from "../../services/snapshotService/snapshotService";
 import NotFoundError from "../../errors/notFoundError";
+import useCache from "../../services/cacheService/functions/useCache";
 
 @Route("question")
 @Tags("Question")
@@ -21,34 +21,35 @@ export class QuestionController extends Controller {
 
     @Get("")
     @Security("api_key", ["client"])
-    @CachedEndpoint("question")
     public async getExams(): Promise<QuestionResponse[]> {
-        const questions = await this._repository.getQuestions();
+        return (await useCache("question", async () => {
+            const questions = await this._repository.getQuestions();
 
-        return questions.map((question) => {
-            const {
-                uuid,
-                content,
-                answerA,
-                answerB,
-                answerC,
-                answerD,
-                correctAnswer,
-                exams,
-                image,
-            } = question;
-            return {
-                uuid,
-                content,
-                answerA,
-                answerB,
-                answerC,
-                answerD,
-                correctAnswer,
-                haveImage: image !== null,
-                examUuids: exams.map((exam) => exam.uuid),
-            };
-        }) as QuestionResponse[];
+            return questions.map((question) => {
+                const {
+                    uuid,
+                    content,
+                    answerA,
+                    answerB,
+                    answerC,
+                    answerD,
+                    correctAnswer,
+                    exams,
+                    image,
+                } = question;
+                return {
+                    uuid,
+                    content,
+                    answerA,
+                    answerB,
+                    answerC,
+                    answerD,
+                    correctAnswer,
+                    haveImage: image !== null,
+                    examUuids: exams.map((exam) => exam.uuid),
+                };
+            }) as QuestionResponse[];
+        })) as QuestionResponse[];
     }
 
     @Get("{uuid}/image")

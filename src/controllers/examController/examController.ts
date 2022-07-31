@@ -12,8 +12,8 @@ import {
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
 import ExamResponse from "../../interfaces/examResponse";
-import CachedEndpoint from "../../services/cacheService/decorators/cachedEndpoint";
 import ExamRequest from "../../interfaces/examRequest";
+import useCache from "../../services/cacheService/functions/useCache";
 
 @Route("exam")
 @Tags("Exam")
@@ -28,9 +28,10 @@ export class ExamController extends Controller {
 
     @Get("")
     @Security("api_key", ["client"])
-    @CachedEndpoint("exam")
     public async getExams(): Promise<ExamResponse[]> {
-        return (await this._repository.getExams()) as ExamResponse[];
+        return (await useCache("exam", async () => {
+            return (await this._repository.getExams()) as ExamResponse[];
+        })) as ExamResponse[];
     }
 
     @Put("{uuid}")
