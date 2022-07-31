@@ -3,13 +3,13 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {
     Controller,
-    fetchMiddlewares,
+    ValidationService,
     FieldErrors,
+    ValidateError,
+    TsoaRoute,
     HttpStatusCodeLiteral,
     TsoaResponse,
-    TsoaRoute,
-    ValidateError,
-    ValidationService,
+    fetchMiddlewares,
 } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthorizationController } from "./controllers/authorizationController/authorizationController";
@@ -24,15 +24,15 @@ import { PingController } from "./controllers/pingController/pingController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { QuestionController } from "./controllers/questionController/questionController";
 import { expressAuthentication } from "./services/authenticationService/modules/expressAuthentication";
-import type { RequestHandler } from "express";
-import * as express from "express";
 // @ts-ignore - no great way to install types from subpackage
 const promiseAny = require("promise.any");
+import type { RequestHandler } from "express";
+import * as express from "express";
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    ApiKeyResponseI: {
+    ApiKeyResponse: {
         dataType: "refObject",
         properties: {
             key: { dataType: "string", required: true },
@@ -41,7 +41,7 @@ const models: TsoaRoute.Models = {
         additionalProperties: false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    DatabaseVersionResponseI: {
+    DatabaseVersionResponse: {
         dataType: "refObject",
         properties: {
             version: { dataType: "double", required: true },
@@ -49,7 +49,7 @@ const models: TsoaRoute.Models = {
         additionalProperties: false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    ExamResponseI: {
+    ExamResponse: {
         dataType: "refObject",
         properties: {
             uuid: { dataType: "string", required: true },
@@ -72,7 +72,7 @@ const models: TsoaRoute.Models = {
         additionalProperties: false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    QuestionResponseI: {
+    QuestionResponse: {
         dataType: "refObject",
         properties: {
             uuid: { dataType: "string", required: true },

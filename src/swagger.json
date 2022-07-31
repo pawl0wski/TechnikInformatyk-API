@@ -6,7 +6,7 @@
         "requestBodies": {},
         "responses": {},
         "schemas": {
-            "ApiKeyResponseI": {
+            "ApiKeyResponse": {
                 "properties": {
                     "key": {
                         "type": "string"
@@ -19,7 +19,7 @@
                 "type": "object",
                 "additionalProperties": false
             },
-            "DatabaseVersionResponseI": {
+            "DatabaseVersionResponse": {
                 "properties": {
                     "version": {
                         "type": "number",
@@ -30,7 +30,7 @@
                 "type": "object",
                 "additionalProperties": false
             },
-            "ExamResponseI": {
+            "ExamResponse": {
                 "properties": {
                     "uuid": {
                         "type": "string"
@@ -71,7 +71,7 @@
                 "type": "object",
                 "additionalProperties": false
             },
-            "QuestionResponseI": {
+            "QuestionResponse": {
                 "properties": {
                     "uuid": {
                         "type": "string"
@@ -152,7 +152,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ApiKeyResponseI"
+                                    "$ref": "#/components/schemas/ApiKeyResponse"
                                 }
                             }
                         }
@@ -185,7 +185,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/DatabaseVersionResponseI"
+                                    "$ref": "#/components/schemas/DatabaseVersionResponse"
                                 }
                             }
                         }
@@ -210,7 +210,7 @@
                             "application/json": {
                                 "schema": {
                                     "items": {
-                                        "$ref": "#/components/schemas/ExamResponseI"
+                                        "$ref": "#/components/schemas/ExamResponse"
                                     },
                                     "type": "array"
                                 }
@@ -236,7 +236,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ExamResponseI"
+                                    "$ref": "#/components/schemas/ExamResponse"
                                 }
                             }
                         }
@@ -277,7 +277,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ExamResponseI"
+                                    "$ref": "#/components/schemas/ExamResponse"
                                 }
                             }
                         }
@@ -318,7 +318,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ExamResponseI"
+                                    "$ref": "#/components/schemas/ExamResponse"
                                 }
                             }
                         }
@@ -393,7 +393,7 @@
                             "application/json": {
                                 "schema": {
                                     "items": {
-                                        "$ref": "#/components/schemas/QuestionResponseI"
+                                        "$ref": "#/components/schemas/QuestionResponse"
                                     },
                                     "type": "array"
                                 }

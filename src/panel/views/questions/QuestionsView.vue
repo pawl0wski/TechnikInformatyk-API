@@ -16,22 +16,25 @@
 <script lang="ts">
 import QuestionCard from "../../components/question/QuestionCard.vue";
 import { defineComponent } from "vue";
-import QuestionModel from "../../models/questionModel";
 import { useQuestionStore } from "../../stores/questionStore";
+import QuestionModel from "../../models/questionModel";
 
 export default defineComponent({
     components: { QuestionCard },
     data(): {
-        questions: QuestionModel[];
         questionStore: ReturnType<typeof useQuestionStore>;
     } {
         const questionStore = useQuestionStore();
         return {
-            questions: questionStore.questions as QuestionModel[],
             questionStore,
         };
     },
-    async beforeCreate() {
+    computed: {
+        questions(): QuestionModel[] {
+            return this.questionStore.questions as QuestionModel[];
+        },
+    },
+    async mounted() {
         await this.questionStore.getContentFromApi();
     },
 });
