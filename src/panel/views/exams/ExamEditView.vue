@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col" v-if="exam != null">
+            <div v-if="exam != null" class="col">
                 <h1 class="my-5">Exam editing</h1>
                 <form>
                     <div class="mb-3">
