@@ -44,7 +44,7 @@ export default defineComponent({
         };
     },
     async mounted() {
-        await this.examStore.getContentFromApi();
+        await this.examStore.updateContentFromApi();
     },
     methods: {
         onCreateNewExamClick() {

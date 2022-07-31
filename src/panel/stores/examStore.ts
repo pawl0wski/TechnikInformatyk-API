@@ -12,18 +12,8 @@ export const useExamStore = defineStore({
         return { exams: [] };
     },
     actions: {
-        async getContentFromApi() {
-            const examsResponse =
-                await ApiGateway.withDefaultApiStore().getExams();
-
-            if (examsResponse.status == 200) {
-                this.exams = [];
-                for (const examResponse of examsResponse.data) {
-                    const exam = ExamModel.fromResponse(examResponse);
-                    exam.alreadyInDatabase = true;
-                    this.exams.push(exam);
-                }
-            }
+        async updateContentFromApi() {
+            this.exams = await ExamModel.getAllModelsFromApi();
         },
         getCertainExam(uuid: string): ExamModel | null {
             const examsWithCertainUuid = this.exams.filter(

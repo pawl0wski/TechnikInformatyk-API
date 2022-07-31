@@ -12,4 +12,9 @@ export const useQuestionStore = defineStore({
             questions: [],
         };
     },
+    actions: {
+        async getContentFromApi() {
+            this.questions = await QuestionModel.getAllModelsFromApi();
+        },
+    },
 });

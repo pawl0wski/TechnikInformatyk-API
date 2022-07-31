@@ -1,6 +1,8 @@
 import Model from "./model";
 import QuestionResponse from "../../interfaces/questionResponse";
 import QuestionRequest from "../../interfaces/questionRequest";
+import ApiGateway from "../lib/apiGateway/apiGateway";
+import ExamModel from "./examModel";
 
 export default class QuestionModel extends Model {
     uuid = "";
@@ -15,6 +17,21 @@ export default class QuestionModel extends Model {
 
     static fromResponse(questionResponse: QuestionResponse): QuestionModel {
         return Object.assign(new QuestionModel(), questionResponse);
+    }
+
+    static async getAllModelsFromApi(): Promise<QuestionModel[]> {
+        const apiGateway = ApiGateway.withDefaultApiStore();
+        const response = await apiGateway.getQuestions();
+
+        const models = [];
+        if (response.status == 200) {
+            for (const modelResponse of response.data) {
+                const question = QuestionModel.fromResponse(modelResponse);
+                question.alreadyInDatabase = true;
+                models.push(question);
+            }
+        }
+        return models;
     }
 
     private get _questionRequest(): QuestionRequest {

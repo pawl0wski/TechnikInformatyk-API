@@ -18,6 +18,21 @@ export default class ExamModel extends Model {
         return Object.assign(new ExamModel(), examResponse);
     }
 
+    static async getAllModelsFromApi(): Promise<ExamModel[]> {
+        const apiGateway = ApiGateway.withDefaultApiStore();
+        const response = await apiGateway.getExams();
+
+        const models = [];
+        if (response.status == 200) {
+            for (const modelResponse of response.data) {
+                const exam = ExamModel.fromResponse(modelResponse);
+                exam.alreadyInDatabase = true;
+                models.push(exam);
+            }
+        }
+        return models;
+    }
+
     private get _examRequest(): ExamRequest {
         return {
             description: this.description,
