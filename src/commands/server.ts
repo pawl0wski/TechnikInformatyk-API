@@ -40,6 +40,7 @@ function initializeExpress(): express.Express {
     app.use("/panel", express.static(path.join(__dirname, "../panel")));
 
     app.use(errorHandler);
+    app.use(cors());
 
     return app;
 }
