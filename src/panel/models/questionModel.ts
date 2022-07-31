@@ -18,7 +18,16 @@ export default class QuestionModel extends Model {
     }
 
     private get _questionRequest(): QuestionRequest {
-        return this as QuestionRequest;
+        return {
+            answerA: this.answerA,
+            answerB: this.answerB,
+            answerC: this.answerC,
+            answerD: this.answerD,
+            content: this.content,
+            correctAnswer: this.correctAnswer,
+            examUuids: this.examUuids,
+            uuid: this.uuid,
+        };
     }
 
     copy(): Model {

@@ -15,14 +15,7 @@ export default class ExamModel extends Model {
     private _apiGateway = ApiGateway.withDefaultApiStore();
 
     public static fromResponse(examResponse: ExamResponseI) {
-        const examModel = new ExamModel();
-        const { uuid, name, description, icon, type } = examResponse;
-        examModel.uuid = uuid;
-        examModel.name = name;
-        examModel.description = description;
-        examModel.icon = icon;
-        examModel.type = type;
-        return examModel;
+        return Object.assign(new ExamModel(), examResponse);
     }
 
     private get _examRequest(): ExamRequest {

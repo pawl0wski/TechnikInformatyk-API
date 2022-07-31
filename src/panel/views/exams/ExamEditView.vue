@@ -111,6 +111,7 @@ export default defineComponent({
                     await this.exam.createOrUpdateIfAlreadyInDatabase();
                 } catch (e) {
                     alert(e);
+                    throw e;
                 }
             }
         },
