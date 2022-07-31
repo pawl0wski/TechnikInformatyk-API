@@ -309,6 +309,37 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "operationId": "DeleteExam",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExamResponseI"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Exam"],
+                "security": [
+                    {
+                        "api_key": ["admin"]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
             }
         },
         "/images-snapshot": {

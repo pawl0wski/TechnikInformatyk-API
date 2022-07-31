@@ -1,4 +1,14 @@
-import { Body, Get, Path, Post, Put, Route, Security, Tags } from "tsoa";
+import {
+    Body,
+    Delete,
+    Get,
+    Path,
+    Post,
+    Put,
+    Route,
+    Security,
+    Tags,
+} from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import ExamRepository from "../../repositories/examRepository/examRepository";
 import ExamResponseI from "../../interfaces/examResponse";
@@ -45,5 +55,13 @@ export class ExamController extends Controller {
             examUuid,
             examRequest
         )) as ExamResponseI;
+    }
+
+    @Delete("{uuid}")
+    @Security("api_key", ["admin"])
+    public async deleteExam(
+        @Path("uuid") examUuid: string
+    ): Promise<ExamResponseI> {
+        return (await this._repository.deleteExam(examUuid)) as ExamResponseI;
     }
 }

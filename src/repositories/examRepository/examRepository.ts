@@ -7,12 +7,17 @@ export default class ExamRepository {
         return await Exam.findAll();
     }
 
+    async _getExamByUUIDOrThrowNotFoundError(examUuid: string): Promise<Exam> {
+        const exam = await Exam.findByPk(examUuid);
+        if (exam === null) throw new NotFoundError();
+        return exam;
+    }
+
     async updateExam(
         examUuid: string,
         updatedExam: ExamRequest
     ): Promise<Exam> {
-        const exam = await Exam.findByPk(examUuid);
-        if (exam === null) throw new NotFoundError();
+        const exam = await this._getExamByUUIDOrThrowNotFoundError(examUuid);
         return await exam.update(updatedExam);
     }
 
@@ -21,5 +26,11 @@ export default class ExamRepository {
             uuid: examUuid,
             ...newExam,
         });
+    }
+
+    async deleteExam(examUuid: string): Promise<Exam> {
+        const exam = await this._getExamByUUIDOrThrowNotFoundError(examUuid);
+        await exam.destroy();
+        return exam;
     }
 }
