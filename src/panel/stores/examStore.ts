@@ -12,7 +12,7 @@ export const useExamStore = defineStore({
         return { exams: [] };
     },
     actions: {
-        async updateContentFromApi() {
+        async updateStateFromApi() {
             this.exams = await ExamModel.getAllModelsFromApi();
         },
         getCertainExam(uuid: string): ExamModel | null {

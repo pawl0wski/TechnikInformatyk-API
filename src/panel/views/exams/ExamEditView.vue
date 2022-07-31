@@ -102,7 +102,7 @@ export default defineComponent({
         },
         async onSaveButtonPress() {
             await this.saveExam();
-            await useExamStore().updateContentFromApi();
+            await useExamStore().updateStateFromApi();
             alert("Exam saved");
         },
         async saveExam() {
@@ -117,7 +117,7 @@ export default defineComponent({
         },
         async onDeleteButtonPress() {
             await this.deleteExam();
-            await useExamStore().updateContentFromApi();
+            await useExamStore().updateStateFromApi();
             alert("Exam deleted");
             router.go(-1);
         },

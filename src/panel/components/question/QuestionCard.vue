@@ -1,5 +1,5 @@
 <template>
-    <div class="card" style="width: 100%">
+    <div class="card my-3" style="width: 100%">
         <div class="card-body">
             <h5 class="card-title">{{ question.uuid }}</h5>
             <p class="card-text">{{ question.content }}</p>
@@ -13,19 +13,16 @@
                     >{{ answer }}</small
                 >
             </p>
+            <p v-if="examNames.length > 0" class="card-text">
+                Used in: {{ examNames.join(", ") }}
+            </p>
         </div>
-        <ul class="list-group list-group-flush">
-            <li v-for="exam in exams" :key="exam.uuid" class="list-group-item">
-                {{ exam.name }}
-            </li>
-        </ul>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import QuestionModel from "../../models/questionModel";
-import ExamModel from "../../models/examModel";
 import { useExamStore } from "../../stores/examStore";
 
 export default defineComponent({
@@ -40,14 +37,15 @@ export default defineComponent({
             const { answerA, answerB, answerC, answerD } = this.question;
             return [answerA, answerB, answerC, answerD];
         },
-        exams(): ExamModel[] {
+        examNames(): string[] {
             const examStore = useExamStore();
-            const exams: ExamModel[] = [];
+            const examNames: string[] = [];
             for (const examUuid of this.question.examUuids) {
                 const exam = examStore.getCertainExam(examUuid);
-                if (exam != null) exams.push();
+                console.log(exam);
+                if (exam != null) examNames.push(exam.name);
             }
-            return exams;
+            return examNames;
         },
     },
 });

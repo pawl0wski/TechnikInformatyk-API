@@ -18,15 +18,17 @@ import QuestionCard from "../../components/question/QuestionCard.vue";
 import { defineComponent } from "vue";
 import { useQuestionStore } from "../../stores/questionStore";
 import QuestionModel from "../../models/questionModel";
+import { useExamStore } from "../../stores/examStore";
 
 export default defineComponent({
     components: { QuestionCard },
     data(): {
         questionStore: ReturnType<typeof useQuestionStore>;
+        examStore: ReturnType<typeof useExamStore>;
     } {
-        const questionStore = useQuestionStore();
         return {
-            questionStore,
+            examStore: useExamStore(),
+            questionStore: useQuestionStore(),
         };
     },
     computed: {
@@ -35,7 +37,8 @@ export default defineComponent({
         },
     },
     async mounted() {
-        await this.questionStore.getContentFromApi();
+        await this.questionStore.updateStateFromApi();
+        await this.examStore.updateStateFromApi();
     },
 });
 </script>

@@ -13,7 +13,7 @@ export const useQuestionStore = defineStore({
         };
     },
     actions: {
-        async getContentFromApi() {
+        async updateStateFromApi() {
             this.questions = await QuestionModel.getAllModelsFromApi();
         },
     },
