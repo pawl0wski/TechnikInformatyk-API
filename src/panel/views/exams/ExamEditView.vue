@@ -49,6 +49,19 @@
                             <option>subject</option>
                         </select>
                     </div>
+                    <button
+                        class="btn btn-danger me-2"
+                        @click.prevent="onDeleteButtonPress"
+                    >
+                        Delete
+                    </button>
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                        @click.prevent="onSaveButtonPress"
+                    >
+                        Save
+                    </button>
                 </form>
             </div>
         </div>
@@ -57,14 +70,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ExamResponseI from "../../../interfaces/examResponse";
 import { useExamStore } from "../../stores/examStore";
 import router from "../../router/router";
+import ExamModel from "../../models/examModel";
 
 export default defineComponent({
     data(): {
         uuid: string;
-        exam: ExamResponseI | null;
+        exam: ExamModel | null;
     } {
         const uuid = this.$route.params.uuid.toString();
         return {
@@ -76,7 +89,7 @@ export default defineComponent({
         this.exam = await this.getExamOrRedirectToHomeIfNotExists();
     },
     methods: {
-        async getExamOrRedirectToHomeIfNotExists(): Promise<ExamResponseI | null> {
+        async getExamOrRedirectToHomeIfNotExists(): Promise<ExamModel | null> {
             const examStore = useExamStore();
             await examStore.getContentFromApi();
 
@@ -84,8 +97,30 @@ export default defineComponent({
             if (exam === null) {
                 alert(`Can't find exam with uuid: ${this.uuid}`);
                 await router.replace({ name: "home" });
+                return null;
             }
-            return Object.assign({}, exam); // Copy exam object
+            return exam.copy();
+        },
+        async onSaveButtonPress() {
+            await this.saveExam();
+            await useExamStore().getContentFromApi();
+            alert("Exam saved");
+        },
+        async saveExam() {
+            if (this.exam != null) {
+                await this.exam.createOrUpdateIfAlreadyInDatabase();
+            }
+        },
+        async onDeleteButtonPress() {
+            await this.deleteExam();
+            await useExamStore().getContentFromApi();
+            alert("Exam deleted");
+            router.go(-1);
+        },
+        async deleteExam() {
+            if (this.exam != null) {
+                await this.exam.delete();
+            }
         },
     },
 });

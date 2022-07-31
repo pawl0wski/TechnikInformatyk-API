@@ -1,5 +1,6 @@
 import { useAuthStore } from "../../stores/authStore";
 import axios, { AxiosResponse } from "axios";
+import ExamRequest from "../../../interfaces/examRequest";
 
 export default class ApiGateway {
     private readonly _authStore: ReturnType<typeof useAuthStore>;
@@ -34,5 +35,34 @@ export default class ApiGateway {
 
     async getExams(): Promise<AxiosResponse> {
         return await axios.get(`/exam/`, this._defaultAxiosOptions);
+    }
+
+    async deleteExam(examUuid: string): Promise<AxiosResponse> {
+        return await axios.delete(
+            `/exam/${examUuid}`,
+            this._defaultAxiosOptions
+        );
+    }
+
+    async updateExam(
+        examUuid: string,
+        body: ExamRequest
+    ): Promise<AxiosResponse> {
+        return await axios.put(
+            `/exam/${examUuid}`,
+            body,
+            this._defaultAxiosOptions
+        );
+    }
+
+    async createExam(
+        examUuid: string,
+        body: ExamRequest
+    ): Promise<AxiosResponse> {
+        return await axios.put(
+            `/exam/${examUuid}`,
+            body,
+            this._defaultAxiosOptions
+        );
     }
 }

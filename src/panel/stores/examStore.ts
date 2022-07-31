@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
-import ExamResponseI from "../../interfaces/examResponse";
 import ApiGateway from "../lib/apiGateway/apiGateway";
+import ExamModel from "../models/examModel";
+import ExamResponseI from "../../interfaces/examResponse";
 
 interface ExamState {
-    exams: ExamResponseI[];
+    exams: ExamModel[];
 }
 
 export const useExamStore = defineStore({
@@ -16,10 +17,21 @@ export const useExamStore = defineStore({
             const examsResponse =
                 await ApiGateway.withDefaultApiStore().getExams();
 
-            if (examsResponse.status == 200) this.exams = examsResponse.data;
+            if (examsResponse.status == 200) {
+                this.exams = [];
+                for (const examResponse of examsResponse.data) {
+                    const exam = ExamModel.fromResponse(examResponse);
+                    exam.alreadyInDatabase = true;
+                    this.exams.push(exam);
+                }
+            }
         },
-        getCertainExam(uuid: string): ExamResponseI | null {
-            return this.exams.filter((e) => e.uuid == uuid)[0];
+        getCertainExam(uuid: string): ExamModel | null {
+            const examsWithCertainUuid = this.exams.filter(
+                (e) => e.uuid == uuid
+            );
+            if (examsWithCertainUuid.length === 0) return null;
+            return examsWithCertainUuid[0] as ExamModel;
         },
     },
     getters: {
