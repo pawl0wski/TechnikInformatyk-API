@@ -227,9 +227,9 @@ export function RegisterRoutes(app: express.Router) {
                     required: true,
                     dataType: "string",
                 },
-                updatedExam: {
+                examRequest: {
                     in: "body",
-                    name: "updatedExam",
+                    name: "examRequest",
                     required: true,
                     ref: "ExamRequest",
                 },
@@ -244,6 +244,51 @@ export function RegisterRoutes(app: express.Router) {
                 const controller = new ExamController();
 
                 const promise = controller.putExam.apply(
+                    controller,
+                    validatedArgs as any
+                );
+                promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        }
+    );
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post(
+        "/exam/:uuid",
+        authenticateMiddleware([{ api_key: ["admin"] }]),
+        ...fetchMiddlewares<RequestHandler>(ExamController),
+        ...fetchMiddlewares<RequestHandler>(ExamController.prototype.postExam),
+
+        function ExamController_postExam(
+            request: any,
+            response: any,
+            next: any
+        ) {
+            const args = {
+                examUuid: {
+                    in: "path",
+                    name: "uuid",
+                    required: true,
+                    dataType: "string",
+                },
+                examRequest: {
+                    in: "body",
+                    name: "examRequest",
+                    required: true,
+                    ref: "ExamRequest",
+                },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new ExamController();
+
+                const promise = controller.postExam.apply(
                     controller,
                     validatedArgs as any
                 );

@@ -15,4 +15,11 @@ export default class ExamRepository {
         if (exam === null) throw new NotFoundError();
         return await exam.update(updatedExam);
     }
+
+    async createExam(examUuid: string, newExam: ExamRequest): Promise<Exam> {
+        return await Exam.create({
+            uuid: examUuid,
+            ...newExam,
+        });
+    }
 }
