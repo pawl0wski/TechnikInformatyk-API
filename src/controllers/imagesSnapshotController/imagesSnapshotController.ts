@@ -1,12 +1,12 @@
-import { Get, Route, Tags, Request, Security } from "tsoa";
+import { Get, Request, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import express from "express";
 import EnvironmentConfig from "../../config/environmentConfig";
 import SnapshotService from "../../services/snapshotService/snapshotService";
 import * as os from "os";
+import * as fs from "fs";
 import { mkdtempSync, rmSync } from "fs";
 import path from "path";
-import * as fs from "fs";
 import NotFoundError from "../../errors/notFoundError";
 
 @Route("images-snapshot")

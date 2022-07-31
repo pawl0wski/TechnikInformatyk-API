@@ -1,4 +1,4 @@
-import { Get, Path, Route, Tags, Request, Security } from "tsoa";
+import { Get, Path, Request, Route, Security, Tags } from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import QuestionRepository from "../../repositories/questionRepository/questionRepository";
 import QuestionResponseI from "../../interfaces/questionResponse";

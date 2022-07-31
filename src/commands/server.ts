@@ -3,6 +3,7 @@ import morgan from "morgan";
 import chalk from "chalk";
 import Database from "../database/database";
 import EnvironmentConfiguration from "../config/environmentConfig";
+import EnvironmentConfig from "../config/environmentConfig";
 import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "../routes";
 import SwaggerDoc from "../swagger.json";
@@ -10,7 +11,6 @@ import CacheService from "../services/cacheService/cacheService";
 import CacheConfig from "../services/cacheService/config/cacheConfig";
 import SnapshotService from "../services/snapshotService/snapshotService";
 import errorHandler from "../middlewares/errorHandler";
-import EnvironmentConfig from "../config/environmentConfig";
 import path from "path";
 import cors from "cors";
 

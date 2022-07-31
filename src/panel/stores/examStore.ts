@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import ApiGateway from "../lib/apiGateway/apiGateway";
 import ExamModel from "../models/examModel";
-import ExamResponseI from "../../interfaces/examResponse";
 
 interface ExamState {
     exams: ExamModel[];

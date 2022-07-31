@@ -3,13 +3,13 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {
     Controller,
-    ValidationService,
+    fetchMiddlewares,
     FieldErrors,
-    ValidateError,
-    TsoaRoute,
     HttpStatusCodeLiteral,
     TsoaResponse,
-    fetchMiddlewares,
+    TsoaRoute,
+    ValidateError,
+    ValidationService,
 } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AuthorizationController } from "./controllers/authorizationController/authorizationController";
@@ -24,10 +24,10 @@ import { PingController } from "./controllers/pingController/pingController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { QuestionController } from "./controllers/questionController/questionController";
 import { expressAuthentication } from "./services/authenticationService/modules/expressAuthentication";
-// @ts-ignore - no great way to install types from subpackage
-const promiseAny = require("promise.any");
 import type { RequestHandler } from "express";
 import * as express from "express";
+// @ts-ignore - no great way to install types from subpackage
+const promiseAny = require("promise.any");
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
