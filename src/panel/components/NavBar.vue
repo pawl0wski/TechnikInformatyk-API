@@ -20,7 +20,6 @@
                     <li class="nav-item">
                         <router-link
                             :class="['nav-link', isNavLinkActive('exam')]"
-                            href="#"
                             :to="{ name: 'exams' }"
                         >
                             Exams
@@ -28,8 +27,15 @@
                     </li>
                     <li class="nav-item">
                         <router-link
+                            :class="['nav-link', isNavLinkActive('question')]"
+                            :to="{ name: 'questions' }"
+                        >
+                            Questions
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link
                             :class="['nav-link', isNavLinkActive('report')]"
-                            href="#"
                             :to="{ name: 'reports' }"
                         >
                             Reports
