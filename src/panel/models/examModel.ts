@@ -3,11 +3,11 @@ import ExamRequest from "../../interfaces/examRequest";
 import ExamResponseI from "../../interfaces/examResponse";
 
 export default class ExamModel {
-    uuid: string;
-    name: string;
-    description: string;
-    icon: string;
-    type: string;
+    uuid = "";
+    name = "";
+    description = "";
+    icon = "";
+    type = "main";
 
     alreadyInDatabase = false;
 
