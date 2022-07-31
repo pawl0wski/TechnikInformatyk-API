@@ -85,7 +85,7 @@ export default defineComponent({
                 alert(`Can't find exam with uuid: ${this.uuid}`);
                 await router.replace({ name: "home" });
             }
-            return exam;
+            return Object.assign({}, exam); // Copy exam object
         },
     },
 });
