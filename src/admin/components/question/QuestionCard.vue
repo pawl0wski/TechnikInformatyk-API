@@ -10,7 +10,7 @@
             />
             <button
                 v-if="showShowImageButton"
-                class="btn btn-primary"
+                class="btn btn-success mb-3"
                 @click="onShowImageClick"
             >
                 Show image
@@ -29,6 +29,9 @@
             <p v-if="examNames.length > 0" class="card-text">
                 Used in: {{ examNames.join(", ") }}
             </p>
+            <div class="d-flex">
+                <button class="btn btn-primary">Edit</button>
+            </div>
         </div>
     </div>
 </template>
