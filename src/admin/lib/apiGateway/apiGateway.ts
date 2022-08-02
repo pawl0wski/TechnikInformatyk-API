@@ -69,4 +69,11 @@ export default class ApiGateway {
             this._defaultAxiosOptions
         );
     }
+
+    async getQuestionImage(questionUuid: string): Promise<AxiosResponse> {
+        return await axios.get(
+            `/question/${questionUuid}/image/`,
+            this._defaultAxiosOptions
+        );
+    }
 }

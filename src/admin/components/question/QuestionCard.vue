@@ -3,6 +3,19 @@
         <div class="card-body">
             <h5 class="card-title">{{ question.uuid }}</h5>
             <p class="card-text">{{ question.content }}</p>
+            <img
+                v-if="imageBase64 !== undefined"
+                :src="imageSrc"
+                :alt="`Question ${question.uuid} image`"
+            />
+            <button
+                v-if="showShowImageButton"
+                class="btn btn-primary"
+                @click="onShowImageClick"
+            >
+                Show image
+            </button>
+
             <p v-for="(answer, i) in answers" :key="i" class="card-text">
                 <small
                     :class="
@@ -32,6 +45,9 @@ export default defineComponent({
             required: true,
         },
     },
+    data(): { imageBase64?: string } {
+        return { imageBase64: undefined };
+    },
     computed: {
         answers(): string[] {
             const { answerA, answerB, answerC, answerD } = this.question;
@@ -46,6 +62,17 @@ export default defineComponent({
                 if (exam != null) examNames.push(exam.name);
             }
             return examNames;
+        },
+        showShowImageButton() {
+            return this.imageBase64 == undefined && this.question.haveImage;
+        },
+        imageSrc() {
+            return this.imageBase64;
+        },
+    },
+    methods: {
+        async onShowImageClick() {
+            this.imageBase64 = await this.question.getImageInBase64();
         },
     },
 });
