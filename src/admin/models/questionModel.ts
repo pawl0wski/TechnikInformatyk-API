@@ -78,26 +78,12 @@ export default class QuestionModel extends Model {
         const imageResponse = await this._apiGateway.getQuestionImage(
             this.uuid
         );
-        const imageBlob = new Blob([imageResponse.data]);
-        return await this._convertImageBlobToImageBase64(imageBlob);
+        return this._convertImageResponseDataToBase64Image(imageResponse.data);
     }
 
-    async _convertImageBlobToImageBase64(imageBlob: Blob): Promise<string> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(imageBlob);
-            reader.onload = () => {
-                let result = reader.result;
-                if (typeof result == "string") {
-                    result = result.replace(
-                        "application/octet-stream",
-                        "image/jpeg"
-                    );
-                    resolve(result);
-                }
-                resolve("");
-            };
-            reader.onerror = (error) => reject(error);
-        });
+    async _convertImageResponseDataToBase64Image(
+        data: string
+    ): Promise<string> {
+        return Buffer.from(data, "binary").toString("base64");
     }
 }

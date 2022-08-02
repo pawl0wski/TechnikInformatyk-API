@@ -66,7 +66,7 @@ export default defineComponent({
             return this.imageBase64 == undefined && this.question.haveImage;
         },
         imageSrc() {
-            return this.imageBase64;
+            return "data:image/jpeg;base64," + this.imageBase64;
         },
     },
     methods: {
