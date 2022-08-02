@@ -71,9 +71,9 @@ export default class ApiGateway {
     }
 
     async getQuestionImage(questionUuid: string): Promise<AxiosResponse> {
-        return await axios.get(
-            `/question/${questionUuid}/image/`,
-            this._defaultAxiosOptions
-        );
+        return await axios.get(`/question/${questionUuid}/image/`, {
+            responseType: "arraybuffer",
+            ...this._defaultAxiosOptions,
+        });
     }
 }
