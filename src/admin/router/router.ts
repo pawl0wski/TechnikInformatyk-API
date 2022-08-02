@@ -9,7 +9,7 @@ import RouterGuard from "./guard/routerGuard";
 import ExamEditView from "../views/exams/ExamEditView.vue";
 
 const router = createRouter({
-    history: createWebHistory("/panel/"),
+    history: createWebHistory("/admin/"),
     routes: [
         {
             path: "",
