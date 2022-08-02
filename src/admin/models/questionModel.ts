@@ -2,6 +2,7 @@ import Model from "./model";
 import QuestionResponse from "../../interfaces/questionResponse";
 import QuestionRequest from "../../interfaces/questionRequest";
 import ApiGateway from "../lib/apiGateway/apiGateway";
+import buffer from "buffer";
 
 export default class QuestionModel extends Model {
     uuid = "";
@@ -84,6 +85,6 @@ export default class QuestionModel extends Model {
     async _convertImageResponseDataToBase64Image(
         data: string
     ): Promise<string> {
-        return Buffer.from(data, "binary").toString("base64");
+        return buffer.Buffer.from(data, "binary").toString("base64");
     }
 }

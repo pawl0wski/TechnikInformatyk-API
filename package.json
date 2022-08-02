@@ -19,6 +19,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "buffer": "^6.0.3",
         "chalk": "^4.1.2",
         "commander": "^9.3.0",
         "cors": "^2.8.5",
