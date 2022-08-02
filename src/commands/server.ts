@@ -37,7 +37,7 @@ function initializeExpress(): express.Express {
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
     RegisterRoutes(app);
-    app.use("/panel", express.static(path.join(__dirname, "../panel")));
+    app.use("/admin", express.static(path.join(__dirname, "../admin")));
 
     app.use(errorHandler);
 

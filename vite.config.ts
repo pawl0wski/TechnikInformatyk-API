@@ -3,10 +3,10 @@ import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    root: "src/panel/",
+    root: "src/admin/",
     plugins: [vue()],
     build: {
-        outDir: "../../dist/panel",
+        outDir: "../../dist/admin",
     },
-    base: "/panel/",
+    base: "/admin/",
 } as UserConfigExport);
