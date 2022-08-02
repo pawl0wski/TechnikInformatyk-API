@@ -44,17 +44,6 @@ export default defineComponent({
     },
 
     methods: {
-        async applyApiKeyInStore(apiKey: string) {
-            this.authStore.setApiKey(apiKey);
-            this.apiKeyCheckingStatus = CheckingApiKeyStatus.pending;
-        },
-        updateApiKeyCheckingStatusByProvidingKeyCorrectness(
-            isApiKeyCorrect: boolean
-        ) {
-            this.apiKeyCheckingStatus = isApiKeyCorrect
-                ? CheckingApiKeyStatus.correct
-                : CheckingApiKeyStatus.incorrect;
-        },
         async afterCredentialsFormSubmit(apiKey: string) {
             try {
                 await this.applyApiKeyInStore(apiKey);
@@ -70,6 +59,19 @@ export default defineComponent({
                 this.apiKeyCheckingStatus = CheckingApiKeyStatus.error;
                 throw e;
             }
+        },
+
+        async applyApiKeyInStore(apiKey: string) {
+            this.authStore.setApiKey(apiKey);
+            this.apiKeyCheckingStatus = CheckingApiKeyStatus.pending;
+        },
+
+        updateApiKeyCheckingStatusByProvidingKeyCorrectness(
+            isApiKeyCorrect: boolean
+        ) {
+            this.apiKeyCheckingStatus = isApiKeyCorrect
+                ? CheckingApiKeyStatus.correct
+                : CheckingApiKeyStatus.incorrect;
         },
     },
 });
