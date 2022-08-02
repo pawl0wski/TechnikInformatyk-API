@@ -58,7 +58,6 @@ export default defineComponent({
             const examNames: string[] = [];
             for (const examUuid of this.question.examUuids) {
                 const exam = examStore.getCertainExam(examUuid);
-                console.log(exam);
                 if (exam != null) examNames.push(exam.name);
             }
             return examNames;
