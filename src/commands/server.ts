@@ -53,6 +53,9 @@ async function serverCommand() {
         console.log(
             chalk.green(`Api running on url: http://localhost:${PORT}`)
         );
+        console.log(
+            chalk.red(`Admin panel on url: http://localhost:${PORT}/admin`)
+        );
     });
 }
 
