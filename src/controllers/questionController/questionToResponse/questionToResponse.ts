@@ -18,6 +18,7 @@ export class QuestionToResponse {
 
     private _createResponseWithDefaultValues(): QuestionResponse {
         return {
+            uuid: "",
             answerA: "",
             answerB: "",
             answerC: "",
@@ -26,7 +27,6 @@ export class QuestionToResponse {
             correctAnswer: 0,
             examUuids: [],
             haveImage: false,
-            uuid: "",
         };
     }
 
