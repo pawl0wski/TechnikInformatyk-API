@@ -73,7 +73,7 @@ import { defineComponent } from "vue";
 import { useExamStore } from "../../stores/examStore";
 import router from "../../router/router";
 import ExamModel from "../../models/examModel";
-import ModelCopyOrRedirect from "../../lib/modelOrRedirect/modelCopyOrRedirect";
+import CopyModelOrRedirect from "../../lib/modelOrRedirect/copyModelOrRedirect";
 
 export default defineComponent({
     data(): {
@@ -91,7 +91,7 @@ export default defineComponent({
     },
     methods: {
         async getExamOrRedirectToHomeIfNotExists(): Promise<ExamModel | null> {
-            return (await ModelCopyOrRedirect.redirectToHome({
+            return (await CopyModelOrRedirect.redirectToHome({
                 getModel: async () => {
                     const examStore = useExamStore();
                     return examStore.getCertainExam(this.uuid);

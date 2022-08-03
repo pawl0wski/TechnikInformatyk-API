@@ -4,15 +4,15 @@ import Model from "../../models/model";
 
 type GetModelFunction = () => Promise<Model | null>;
 
-export default class ModelCopyOrRedirect {
+export default class CopyModelOrRedirect {
     private readonly _getModel: GetModelFunction;
     private readonly _routeLocation: RouteLocationRaw;
 
     static redirectToHome(options: {
         getModel: GetModelFunction;
-    }): ModelCopyOrRedirect {
+    }): CopyModelOrRedirect {
         const { getModel } = options;
-        return new ModelCopyOrRedirect({
+        return new CopyModelOrRedirect({
             getModel,
             routeLocation: {
                 name: "home",
