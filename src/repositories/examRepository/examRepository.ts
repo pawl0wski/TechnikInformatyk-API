@@ -18,19 +18,17 @@ export default class ExamRepository {
         examUuid: string,
         updatedExam: ExamRequest
     ): Promise<Exam> {
-        const exam = await this._getExamByUUIDOrThrowNotFoundError(examUuid);
+        const exam = await this.getExam(examUuid);
         return await exam.update(updatedExam);
     }
 
     async deleteExam(examUuid: string): Promise<Exam> {
-        const exam = await this._getExamByUUIDOrThrowNotFoundError(examUuid);
+        const exam = await this.getExam(examUuid);
         await exam.destroy();
         return exam;
     }
 
-    private async _getExamByUUIDOrThrowNotFoundError(
-        examUuid: string
-    ): Promise<Exam> {
+    async getExam(examUuid: string): Promise<Exam> {
         const exam = await Exam.findByPk(examUuid);
         if (exam === null) throw new NotFoundError();
         return exam;
