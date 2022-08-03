@@ -28,6 +28,14 @@ export default class ExamRepository {
         return exam;
     }
 
+    async examUuidsToExam(examUuids: string[]): Promise<Exam[]> {
+        const exams: Exam[] = [];
+        for (const examUuid of examUuids) {
+            exams.push(await this.getExam(examUuid));
+        }
+        return exams;
+    }
+
     async getExam(examUuid: string): Promise<Exam> {
         const exam = await Exam.findByPk(examUuid);
         if (exam === null) throw new NotFoundError();
