@@ -42,17 +42,13 @@ export class QuestionToResponse {
             correctAnswer,
             uuid,
         } = this._question;
-        response = {
-            uuid,
-            answerA,
-            answerB,
-            answerC,
-            answerD,
-            content,
-            correctAnswer,
-            examUuids: [],
-            haveImage: false,
-        };
+        response.uuid = uuid;
+        response.answerA = answerA;
+        response.answerB = answerB;
+        response.answerC = answerC;
+        response.answerD = answerD;
+        response.content = content;
+        response.correctAnswer = correctAnswer;
         return response;
     }
 
