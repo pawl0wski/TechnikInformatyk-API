@@ -1,5 +1,4 @@
 export default interface QuestionRequest {
-    uuid: string;
     content: string;
     answerA: string;
     answerB: string;
