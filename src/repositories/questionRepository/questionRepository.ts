@@ -31,6 +31,12 @@ export default class QuestionRepository {
         });
     }
 
+    async deleteQuestion(questionUuid: string): Promise<Question> {
+        const question = await this.getQuestion(questionUuid);
+        await question.destroy();
+        return question;
+    }
+
     async getQuestion(questionUuid: string): Promise<Question> {
         const question = await Question.findByPk(questionUuid, {
             include: [Exam],
