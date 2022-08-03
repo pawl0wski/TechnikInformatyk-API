@@ -491,6 +491,37 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "operationId": "DeleteQuestion",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QuestionResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Question"],
+                "security": [
+                    {
+                        "api_key": ["admin"]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
             }
         },
         "/question/{uuid}/image": {

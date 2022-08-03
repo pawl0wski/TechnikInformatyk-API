@@ -1,4 +1,14 @@
-import { Body, Get, Path, Put, Request, Route, Security, Tags } from "tsoa";
+import {
+    Body,
+    Delete,
+    Get,
+    Path,
+    Put,
+    Request,
+    Route,
+    Security,
+    Tags,
+} from "tsoa";
 import { Controller } from "@tsoa/runtime";
 import QuestionRepository from "../../repositories/questionRepository/questionRepository";
 import QuestionResponse from "../../interfaces/questionResponse";
@@ -44,6 +54,17 @@ export class QuestionController extends Controller {
             questionRequest
         );
         return new QuestionToResponse(question).toResponse();
+    }
+
+    @Delete("{uuid}")
+    @Security("api_key", ["admin"])
+    public async deleteQuestion(
+        @Path("uuid") questionUuid: string
+    ): Promise<QuestionResponse> {
+        const deletedQuestion = await this._repository.deleteQuestion(
+            questionUuid
+        );
+        return new QuestionToResponse(deletedQuestion).toResponse();
     }
 
     @Get("{uuid}/image")
