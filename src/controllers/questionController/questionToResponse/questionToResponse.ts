@@ -54,7 +54,7 @@ export class QuestionToResponse {
 
     private _setExamUuids(response: QuestionResponse): QuestionResponse {
         const examUuids = [];
-        for (const exam of this._question.exams) {
+        for (const exam of this._question.exams ?? []) {
             examUuids.push(exam.uuid);
         }
         response.examUuids = examUuids;
