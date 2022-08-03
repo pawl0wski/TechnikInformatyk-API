@@ -3,6 +3,7 @@ import NotFoundError from "../errors/notFoundError";
 import AuthenticationError from "../errors/authenticationError";
 import { ValidationError } from "sequelize";
 import { ValidateError } from "@tsoa/runtime";
+import { Exception } from "tsoa";
 
 export interface ErrorResultI {
     message: string;
@@ -14,33 +15,35 @@ export default function errorHandler(
     res: Response,
     next: NextFunction
 ) {
-    if (err instanceof NotFoundError) {
-        sendStatus(res, {
-            statusCode: 404,
-            error: err,
-            message: err.message,
-        });
-    } else if (err instanceof AuthenticationError) {
-        sendStatus(res, {
-            statusCode: 401,
-            error: err,
-            message: err.message,
-        });
-    } else if (err instanceof ValidateError) {
-        sendStatus(res, {
-            statusCode: err.status,
-            message: err.fields,
-            error: err,
-        });
-    } else if (err instanceof Error) {
-        sendStatus(res, {
-            statusCode: 500,
-            error: err,
-            message: "Internal Server Error",
-        });
+    if (err instanceof Error) {
+        if (isErrorWhichCanBeSend(err)) {
+            sendStatus(res, {
+                statusCode: (err as Exception).status,
+                error: err,
+                message: getMessageForError(err),
+            });
+        } else {
+            sendStatus(res, {
+                statusCode: 500,
+                error: err,
+                message: "Internal Server Error",
+            });
+        }
     }
 
     next();
+}
+
+function isErrorWhichCanBeSend(err: Error): boolean {
+    return "status" in err;
+}
+
+function getMessageForError(err: Error): string | object {
+    if (err instanceof ValidateError) {
+        return err.fields;
+    } else {
+        return err.message;
+    }
 }
 
 function sendStatus(
