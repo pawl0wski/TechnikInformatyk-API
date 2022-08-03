@@ -92,6 +92,24 @@ const models: TsoaRoute.Models = {
         additionalProperties: false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    QuestionRequest: {
+        dataType: "refObject",
+        properties: {
+            content: { dataType: "string", required: true },
+            answerA: { dataType: "string", required: true },
+            answerB: { dataType: "string", required: true },
+            answerC: { dataType: "string", required: true },
+            answerD: { dataType: "string", required: true },
+            correctAnswer: { dataType: "double", required: true },
+            examUuids: {
+                dataType: "array",
+                array: { dataType: "string" },
+                required: true,
+            },
+        },
+        additionalProperties: false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -418,10 +436,10 @@ export function RegisterRoutes(app: express.Router) {
         authenticateMiddleware([{ api_key: ["client"] }]),
         ...fetchMiddlewares<RequestHandler>(QuestionController),
         ...fetchMiddlewares<RequestHandler>(
-            QuestionController.prototype.getExams
+            QuestionController.prototype.getQuestion
         ),
 
-        function QuestionController_getExams(
+        function QuestionController_getQuestion(
             request: any,
             response: any,
             next: any
@@ -436,7 +454,54 @@ export function RegisterRoutes(app: express.Router) {
 
                 const controller = new QuestionController();
 
-                const promise = controller.getExams.apply(
+                const promise = controller.getQuestion.apply(
+                    controller,
+                    validatedArgs as any
+                );
+                promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        }
+    );
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.put(
+        "/question/:uuid",
+        authenticateMiddleware([{ api_key: ["admin"] }]),
+        ...fetchMiddlewares<RequestHandler>(QuestionController),
+        ...fetchMiddlewares<RequestHandler>(
+            QuestionController.prototype.putQuestion
+        ),
+
+        function QuestionController_putQuestion(
+            request: any,
+            response: any,
+            next: any
+        ) {
+            const args = {
+                questionUuid: {
+                    in: "path",
+                    name: "uuid",
+                    required: true,
+                    dataType: "string",
+                },
+                questionRequest: {
+                    in: "body",
+                    name: "questionRequest",
+                    required: true,
+                    ref: "QuestionRequest",
+                },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new QuestionController();
+
+                const promise = controller.putQuestion.apply(
                     controller,
                     validatedArgs as any
                 );

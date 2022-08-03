@@ -118,6 +118,46 @@
                 ],
                 "type": "object",
                 "additionalProperties": false
+            },
+            "QuestionRequest": {
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    },
+                    "answerA": {
+                        "type": "string"
+                    },
+                    "answerB": {
+                        "type": "string"
+                    },
+                    "answerC": {
+                        "type": "string"
+                    },
+                    "answerD": {
+                        "type": "string"
+                    },
+                    "correctAnswer": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "examUuids": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "content",
+                    "answerA",
+                    "answerB",
+                    "answerC",
+                    "answerD",
+                    "correctAnswer",
+                    "examUuids"
+                ],
+                "type": "object",
+                "additionalProperties": false
             }
         },
         "securitySchemes": {
@@ -385,7 +425,7 @@
         },
         "/question": {
             "get": {
-                "operationId": "GetExams",
+                "operationId": "GetQuestion",
                 "responses": {
                     "200": {
                         "description": "Ok",
@@ -408,6 +448,49 @@
                     }
                 ],
                 "parameters": []
+            }
+        },
+        "/question/{uuid}": {
+            "put": {
+                "operationId": "PutQuestion",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QuestionResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": ["Question"],
+                "security": [
+                    {
+                        "api_key": ["admin"]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/QuestionRequest"
+                            }
+                        }
+                    }
+                }
             }
         },
         "/question/{uuid}/image": {
