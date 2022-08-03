@@ -11,7 +11,7 @@ interface AuthState {
 export const useAuthStore = defineStore({
     id: "auth",
     state: (): AuthState => {
-        const savedAuthState = sessionStorage.getItem("AuthState");
+        const savedAuthState = localStorage.getItem("AuthState");
 
         return savedAuthState == null
             ? {
@@ -55,7 +55,7 @@ export const useAuthStore = defineStore({
             this.correct = false;
         },
         save() {
-            sessionStorage.setItem("AuthState", JSON.stringify(this.$state));
+            localStorage.setItem("AuthState", JSON.stringify(this.$state));
         },
     },
     getters: {
