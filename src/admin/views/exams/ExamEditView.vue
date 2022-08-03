@@ -73,6 +73,7 @@ import { defineComponent } from "vue";
 import { useExamStore } from "../../stores/examStore";
 import router from "../../router/router";
 import ExamModel from "../../models/examModel";
+import ModelCopyOrRedirect from "../../lib/modelOrRedirect/modelCopyOrRedirect";
 
 export default defineComponent({
     data(): {
@@ -90,15 +91,12 @@ export default defineComponent({
     },
     methods: {
         async getExamOrRedirectToHomeIfNotExists(): Promise<ExamModel | null> {
-            const examStore = useExamStore();
-
-            let exam = examStore.getCertainExam(this.uuid);
-            if (exam === null) {
-                alert(`Can't find exam with uuid: ${this.uuid}`);
-                await router.replace({ name: "home" });
-                return null;
-            }
-            return exam.copy();
+            return (await ModelCopyOrRedirect.redirectToHome({
+                getModel: async () => {
+                    const examStore = useExamStore();
+                    return examStore.getCertainExam(this.uuid);
+                },
+            }).getOrRedirect()) as ExamModel;
         },
         async onSaveButtonPress() {
             await this.saveExam();
