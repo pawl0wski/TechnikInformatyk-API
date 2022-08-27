@@ -37,7 +37,8 @@ function initializeExpress(): express.Express {
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
     RegisterRoutes(app);
-    app.use("/admin", express.static(path.join(__dirname, "../admin")));
+    if (EnvironmentConfig.adminPanelEnabled)
+        app.use("/admin", express.static(path.join(__dirname, "../admin")));
 
     app.use(errorHandler);
 
