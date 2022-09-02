@@ -41,6 +41,7 @@ function initializeExpress(): express.Express {
         app.use("/admin", express.static(path.join(__dirname, "../admin")));
 
     app.use(errorHandler);
+    app.use(cors());
 
     return app;
 }
