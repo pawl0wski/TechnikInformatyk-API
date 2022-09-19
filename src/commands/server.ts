@@ -11,7 +11,6 @@ import CacheService from "../services/cacheService/cacheService";
 import CacheConfig from "../services/cacheService/config/cacheConfig";
 import SnapshotService from "../services/snapshotService/snapshotService";
 import errorHandler from "../middlewares/errorHandler";
-import path from "path";
 import cors from "cors";
 
 async function initializeSingletons() {
@@ -37,8 +36,6 @@ function initializeExpress(): express.Express {
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
     RegisterRoutes(app);
-    if (EnvironmentConfig.adminPanelEnabled)
-        app.use("/admin", express.static(path.join(__dirname, "../admin")));
 
     app.use(errorHandler);
     app.use(cors());
@@ -54,9 +51,6 @@ async function serverCommand() {
     app.listen(PORT, () => {
         console.log(
             chalk.green(`Api running on url: http://localhost:${PORT}`)
-        );
-        console.log(
-            chalk.red(`Admin panel on url: http://localhost:${PORT}/admin`)
         );
     });
 }

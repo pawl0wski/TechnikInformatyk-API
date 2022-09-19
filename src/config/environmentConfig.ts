@@ -78,7 +78,4 @@ export default class EnvironmentConfig {
         return EnvironmentConfig._getStringEnv("REDIS_PREFIX");
     }
 
-    public static get adminPanelEnabled() {
-        return EnvironmentConfig._getBoolEnv("ADMINPANEL_ENABLED");
-    }
 }
