@@ -33,7 +33,7 @@
         "sequelize-typescript": "^2.1.3",
         "swagger-ui-express": "^4.5.0",
         "tar": "^6.1.11",
-        "tsoa": "^4.1.1"
+        "tsoa": "^5.1.1"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.5",
